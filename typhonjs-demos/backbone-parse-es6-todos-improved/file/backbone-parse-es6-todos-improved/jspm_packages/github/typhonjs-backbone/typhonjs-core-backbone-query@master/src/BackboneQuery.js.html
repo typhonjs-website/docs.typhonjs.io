@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../../../">
+  <title data-ice="title">typhonjs-core-backbone-query/src/BackboneQuery.js | backbone-parse-es6-todos-improved API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a><a href="graphs/jspm_packages.html">Graphs</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1462781609355" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js" data-scm-type="github">site/js</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/App.js" data-scm-type="github">App.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/App.js~App.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/App.js#L27" data-scm-type="github">App</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-1" id="folder-1" checked><label for="folder-1" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/collections" data-scm-type="github">site/js/collections</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-1" id="file-1" checked><label for="file-1" class="nav-file" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/collections/todoList.js" data-scm-type="github">todoList.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/collections/todoList.js~TodoList.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/collections/todoList.js#L16" data-scm-type="github">TodoList</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-todoList" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/collections/todoList.js#L72" data-scm-type="github">todoList</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-2" id="folder-2" checked><label for="folder-2" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/models" data-scm-type="github">site/js/models</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-2" id="file-2" checked><label for="file-2" class="nav-file" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/models/appState.js" data-scm-type="github">appState.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/models/appState.js~AppState.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/models/appState.js#L10" data-scm-type="github">AppState</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-appState" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/models/appState.js#L31" data-scm-type="github">appState</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-3" id="file-3" checked><label for="file-3" class="nav-file" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/models/Item.js" data-scm-type="github">Item.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/models/Item.js~Item.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/models/Item.js#L10" data-scm-type="github">Item</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-3" id="folder-3" checked><label for="folder-3" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/router" data-scm-type="github">site/js/router</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-4" id="file-4" checked><label for="file-4" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/router/AppRouter.js" data-scm-type="github">AppRouter.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/router/AppRouter.js~AppRouter.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/router/AppRouter.js#L20" data-scm-type="github">AppRouter</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-4" id="folder-4" checked><label for="folder-4" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views" data-scm-type="github">site/js/views</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-5" id="file-5" checked><label for="file-5" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views/ItemView.js" data-scm-type="github">ItemView.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/views/ItemView.js~ItemView.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views/ItemView.js#L14" data-scm-type="github">ItemView</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-6" id="file-6" checked><label for="file-6" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views/LogInView.js" data-scm-type="github">LogInView.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/views/LogInView.js~LogInView.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views/LogInView.js#L12" data-scm-type="github">LogInView</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-7" id="file-7" checked><label for="file-7" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views/ManageTodosView.js" data-scm-type="github">ManageTodosView.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/site/js/views/ManageTodosView.js~ManageTodosView.html" data-scm-link="https://github.com/typhonjs-demos/backbone-parse-es6-todos-improved/tree/master/site/js/views/ManageTodosView.js#L23" data-scm-type="github">ManageTodosView</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-1" id="group-1"><label for="group-1" class="nav-header">JSPM Managed Source</label>
+   <ul>
+      
+   <li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-0" id="package-0"><label for="package-0" class="nav-package nav-is-alias" data-package-version="master" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6" data-scm-type="github">backbone (backbone-parse-es6)</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-5" id="folder-5" checked><label for="folder-5" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-8" id="file-8" checked><label for="file-8" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/BackboneParseObject.js" data-scm-type="github">BackboneParseObject.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone-parse/backbone-parse-es6@master/src/BackboneParseObject.js~BackboneParseObject.html" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/BackboneParseObject.js#L9" data-scm-type="github">BackboneParseObject</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-9" id="file-9" checked><label for="file-9" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/ParseCollection.js" data-scm-type="github">ParseCollection.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone-parse/backbone-parse-es6@master/src/ParseCollection.js~ParseCollection.html" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/ParseCollection.js#L63" data-scm-type="github">ParseCollection</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-10" id="file-10" checked><label for="file-10" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/ParseModel.js" data-scm-type="github">ParseModel.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone-parse/backbone-parse-es6@master/src/ParseModel.js~ParseModel.html" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/ParseModel.js#L75" data-scm-type="github">ParseModel</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-11" id="file-11" checked><label for="file-11" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/modelExtend.js" data-scm-type="github">modelExtend.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-modelExtend" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/modelExtend.js#L13" data-scm-type="github">modelExtend</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-12" id="file-12" checked><label for="file-12" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/parseExtend.js" data-scm-type="github">parseExtend.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-parseExtend" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/parseExtend.js#L35" data-scm-type="github">parseExtend</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-13" id="file-13" checked><label for="file-13" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/parseSync.js" data-scm-type="github">parseSync.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-parseSync" data-scm-link="https://github.com/typhonjs-backbone-parse/backbone-parse-es6/tree/master/src/parseSync.js#L90" data-scm-type="github">parseSync</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-1" id="package-1"><label for="package-1" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6" data-scm-type="github">backbone-es6</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-6" id="folder-6" checked><label for="folder-6" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-14" id="file-14" checked><label for="file-14" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Backbone.js" data-scm-type="github">Backbone.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/Backbone.js~Backbone.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Backbone.js#L33" data-scm-type="github">Backbone</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-15" id="file-15" checked><label for="file-15" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Collection.js" data-scm-type="github">Collection.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/Collection.js~Collection.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Collection.js#L232" data-scm-type="github">Collection</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-16" id="file-16" checked><label for="file-16" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Debug.js" data-scm-type="github">Debug.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/Debug.js~Debug.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Debug.js#L13" data-scm-type="github">Debug</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-17" id="file-17" checked><label for="file-17" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/History.js" data-scm-type="github">History.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/History.js~History.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/History.js#L66" data-scm-type="github">History</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-18" id="file-18" checked><label for="file-18" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Model.js" data-scm-type="github">Model.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/Model.js~Model.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Model.js#L153" data-scm-type="github">Model</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-19" id="file-19" checked><label for="file-19" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Router.js" data-scm-type="github">Router.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/Router.js~Router.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Router.js#L167" data-scm-type="github">Router</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-20" id="file-20" checked><label for="file-20" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Utils.js" data-scm-type="github">Utils.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/Utils.js~Utils.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/Utils.js#L98" data-scm-type="github">Utils</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-21" id="file-21" checked><label for="file-21" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/View.js" data-scm-type="github">View.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/backbone-es6@master/src/View.js~View.html" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/View.js#L70" data-scm-type="github">View</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-22" id="file-22" checked><label for="file-22" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/extend.js" data-scm-type="github">extend.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-extend" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/extend.js#L21" data-scm-type="github">extend</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-23" id="file-23" checked><label for="file-23" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/sync.js" data-scm-type="github">sync.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-sync" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/sync.js#L42" data-scm-type="github">sync</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-24" id="file-24" checked><label for="file-24" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/BackboneProxy.js" data-scm-type="github">BackboneProxy.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-BackboneProxy" data-scm-link="https://github.com/typhonjs-backbone/backbone-es6/tree/master/src/BackboneProxy.js#L19" data-scm-type="github">BackboneProxy</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-2" id="package-2"><label for="package-2" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-common" data-scm-type="github">typhonjs-core-backbone-common</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-7" id="folder-7" checked><label for="folder-7" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-common/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-25" id="file-25" checked><label for="file-25" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-common/tree/master/src/typhonExtend.js" data-scm-type="github">typhonExtend.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-typhonExtend" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-common/tree/master/src/typhonExtend.js#L12" data-scm-type="github">typhonExtend</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-3" id="package-3"><label for="package-3" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events" data-scm-type="github">typhonjs-core-backbone-events</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-8" id="folder-8" checked><label for="folder-8" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-26" id="file-26" checked><label for="file-26" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events/tree/master/src/Events.js" data-scm-type="github">Events.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/typhonjs-core-backbone-events@master/src/Events.js~Events.html" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events/tree/master/src/Events.js#L315" data-scm-type="github">Events</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-27" id="file-27" checked><label for="file-27" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events/tree/master/src/TyphonEvents.js" data-scm-type="github">TyphonEvents.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/typhonjs-core-backbone-events@master/src/TyphonEvents.js~TyphonEvents.html" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events/tree/master/src/TyphonEvents.js#L20" data-scm-type="github">TyphonEvents</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-4" id="package-4"><label for="package-4" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events-logged" data-scm-type="github">typhonjs-core-backbone-events-logged</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-9" id="folder-9" checked><label for="folder-9" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events-logged/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-28" id="file-28" checked><label for="file-28" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events-logged/tree/master/src/TyphonLoggedEvents.js" data-scm-type="github">TyphonLoggedEvents.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/typhonjs-core-backbone-events-logged@master/src/TyphonLoggedEvents.js~TyphonLoggedEvents.html" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-events-logged/tree/master/src/TyphonLoggedEvents.js#L27" data-scm-type="github">TyphonLoggedEvents</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-5" id="package-5"><label for="package-5" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-query" data-scm-type="github">typhonjs-core-backbone-query</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-10" id="folder-10" checked><label for="folder-10" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-query/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-29" id="file-29" checked><label for="file-29" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-query/tree/master/src/BackboneQuery.js" data-scm-type="github">BackboneQuery.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-backbone/typhonjs-core-backbone-query@master/src/BackboneQuery.js~BackboneQuery.html" data-scm-link="https://github.com/typhonjs-backbone/typhonjs-core-backbone-query/tree/master/src/BackboneQuery.js#L541" data-scm-type="github">BackboneQuery</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-6" id="package-6"><label for="package-6" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-logging" data-scm-type="github">typhonjs-core-logging</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-11" id="folder-11" checked><label for="folder-11" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-logging/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-30" id="file-30" checked><label for="file-30" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-logging/tree/master/src/ConsoleLogger.js" data-scm-type="github">ConsoleLogger.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-common/typhonjs-core-logging@master/src/ConsoleLogger.js~ConsoleLogger.html" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-logging/tree/master/src/ConsoleLogger.js#L9" data-scm-type="github">ConsoleLogger</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-31" id="file-31" checked><label for="file-31" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-logging/tree/master/src/Logger.js" data-scm-type="github">Logger.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-common/typhonjs-core-logging@master/src/Logger.js~Logger.html" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-logging/tree/master/src/Logger.js#L31" data-scm-type="github">Logger</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navPackage" class="has-children"><input type="checkbox" name="package-7" id="package-7"><label for="package-7" class="nav-package" data-package-version="master" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-utils" data-scm-type="github">typhonjs-core-utils</label>
+         <ul>
+            
+         <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-12" id="folder-12" checked><label for="folder-12" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-utils/tree/master/src" data-scm-type="github">src</label>
+               <ul>
+                  
+               <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-32" id="file-32" checked><label for="file-32" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-utils/tree/master/src/Utils.js" data-scm-type="github">Utils.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/backbone-parse-es6-todos-improved/jspm_packages/github/typhonjs-common/typhonjs-core-utils@master/src/Utils.js~Utils.html" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-utils/tree/master/src/Utils.js#L6" data-scm-type="github">Utils</a></span></li>
+</ul>
+                  </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-33" id="file-33" checked><label for="file-33" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-utils/tree/master/src/btoa.js" data-scm-type="github">btoa.js</label>
+                     <ul>
+                        
+                     <li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-btoa" data-scm-link="https://github.com/typhonjs-common/typhonjs-core-utils/tree/master/src/btoa.js#L94" data-scm-type="github">btoa</a></span></li>
+</ul>
+                  </li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">typhonjs-core-backbone-query/src/BackboneQuery.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * A fork of Backbone Query...
+ *
+ * Backbone Query - A lightweight query API for Backbone Collections
+ * (c)2012 - Dave Tonge
+ * May be freely distributed according to MIT license.
+ * https://github.com/davidgtonge/backbone_query
+ *
+ *
+ * (c)2015-present Michael Leahy
+ * https://github.com/typhonjs/typhonjs-core-backbone-query
+ */
+
+&apos;use strict&apos;;
+
+import _ from &apos;underscore&apos;;
+
+/**
+ * BackboneQuery -- Provides client side sorting based on a query API.
+ * -------------
+ *
+ * Forked from https://github.com/davidgtonge/backbone_query
+ *
+ * A lightweight (3KB minified) utility for Backbone projects, that works in the Browser and on the Server. Adds the
+ * ability to search for models with a Query API similar to MongoDB.
+ *
+ * The huge benefit of using BackboneQuery is that queries can be stored as JSON.
+ *
+ * Usage
+ * -----
+ *
+ * The major difference of this implementation is that the API is not attached to a collection, but can be run against
+ * any collection by invoking the methods with a target collection.
+ *
+ * Find
+ * -----
+ * **_ $equal _**
+ *
+ * Performs a strict equality test using ===. If no operator is provided and the query value isn&apos;t a regex then `$equal`
+ * is assumed.
+ *
+ * If the attribute in the model is an array then the query value is searched for in the array in the same way as
+ * `$contains`.
+ *
+ * If the query value is an object (including array) then a deep comparison is performed using underscores `_.isEqual`.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: &quot;Test&quot; });
+ * // Returns all models which have a &quot;title&quot; attribute of &quot;Test&quot;
+ *
+ *
+ * BackboneQuery.find(collection, { title: { $equal: &quot;Test&quot; } }); // Same as above
+ * BackboneQuery.find(collection, { colors: &quot;red&quot; });
+ * // Returns models which contain the value &quot;red&quot; in a &quot;colors&quot; attribute that is an array.
+ *
+ *
+ * BackboneQuery.find(collection, { colors: [&quot;red&quot;, &quot;yellow&quot;] });
+ * // Returns models which contain a colors attribute with the array [&quot;red&quot;, &quot;yellow&quot;]
+ * ```
+ *
+ * **_ $contains _**
+ *
+ * Assumes that the model property is an array and searches for the query value in the array.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $contains: &quot;red&quot; } });
+ * // Returns models which contain the value &quot;red&quot; in a &quot;colors&quot; attribute that is an array.
+ * e.g. a model with this attribute colors:[&quot;red&quot;, &quot;yellow&quot;, &quot;blue&quot;] would be returned.
+ * ```
+ *
+ *
+ * **_ $ne _**
+ *
+ * &quot;Not equal&quot;, the opposite of $equal, returns all models which don&apos;t have the query value
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: { $ne: &quot;Test&quot; } });
+ * // Returns all models which don&apos;t have a &quot;title&quot; attribute of &quot;Test&quot;
+ * ```
+ *
+ *
+ * **_ $lt, $lte, $gt, $gte _**
+ *
+ * These conditional operators can be used for greater than and less than comparisons in queries
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { likes: { $lt:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of less than 10
+ *
+ *
+ * BackboneQuery.find(collection, { likes: { $lte:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of less than or equal to 10
+ *
+ *
+ * BackboneQuery.find(collection, { likes: { $gt:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of greater than 10
+ *
+ *
+ * BackboneQuery.find(collection, { likes: { $gte:10 } });
+ * // Returns all models which have a &quot;likes&quot; attribute of greater than or equal to 10
+ * ```
+ *
+ *
+ * **_ $between _**
+ *
+ * To check if a value is in-between 2 query values use the $between operator and supply an array with the min and max
+ * value.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { likes: { $between: [5, 15] } });
+ * // Returns all models which have a &quot;likes&quot; attribute of greater than 5 and less then 15
+ * ```
+ *
+ *
+ * **_ $in _**
+ *
+ * An array of possible values can be supplied using $in, a model will be returned if any of the supplied values is
+ * matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: { $in: [&quot;About&quot;, &quot;Home&quot;, &quot;Contact&quot;] } });
+ * // Returns all models which have a title attribute of either &quot;About&quot;, &quot;Home&quot;, or &quot;Contact&quot;
+ * ```
+ *
+ *
+ * **_ $nin _**
+ *
+ * &quot;Not in&quot;, the opposite of $in. A model will be returned if none of the supplied values is matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { title: { $nin: [&quot;About&quot;, &quot;Home&quot;, &quot;Contact&quot;] } });
+ * // Returns all models which don&apos;t have a title attribute of either &quot;About&quot;, &quot;Home&quot;, or &quot;Contact&quot;
+ * ```
+ *
+ *
+ * **_ $all _**
+ *
+ * Assumes the model property is an array and only returns models where all supplied values are matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $all: [&quot;red&quot;, &quot;yellow&quot;] } });
+ * // Returns all models which have &quot;red&quot; and &quot;yellow&quot; in their colors attribute.
+ * // A model with the attribute colors:[&quot;red&quot;,&quot;yellow&quot;,&quot;blue&quot;] would be returned.
+ * // But a model with the attribute colors:[&quot;red&quot;,&quot;blue&quot;] would not be returned.
+ * ```
+ *
+ *
+ * **_ $any _**
+ *
+ * Assumes the model property is an array and returns models where any of the supplied values are matched.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $any: [&quot;red&quot;, &quot;yellow&quot;] } });
+ * // Returns models which have either &quot;red&quot; or &quot;yellow&quot; in their colors attribute.
+ * ```
+ *
+ *
+ * **_ $size _**
+ *
+ * Assumes the model property has a length (i.e. is either an array or a string). Only returns models the model
+ * property&apos;s length matches the supplied values.
+ *
+ * ** Example: **
+ * ```
+ * BackboneQuery.find(collection, { colors: { $size:2 } });
+ * // Returns all models which 2 values in the colors attribute
+ * ```
+ *
+ *
+ * $exists or $has
+ *
+ * Checks for the existence of an attribute. Can be supplied either true or false.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $exists: true } });
+ *
+ * // Returns all models which have a &quot;title&quot; attribute
+ *
+ * BackboneQuery.find(collection, { title: { $has: false } });
+ *
+ * // Returns all models which don&apos;t have a &quot;title&quot; attribute
+ *
+ *
+ *
+ * $like
+ *
+ * Assumes the model attribute is a string and checks if the supplied query value is a substring of the property.
+ * Uses indexOf rather than regex for performance reasons.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;Test&quot; } });
+ *
+ * //Returns all models which have a &quot;title&quot; attribute that
+ *
+ * //contains the string &quot;Test&quot;, e.g. &quot;Testing&quot;, &quot;Tests&quot;, &quot;Test&quot;, etc.
+ *
+ *
+ *
+ * $likeI
+ *
+ * The same as above but performs a case insensitive search using indexOf and toLowerCase (still faster than Regex).
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $likeI: &quot;Test&quot; } });
+ *
+ * //Returns all models which have a &quot;title&quot; attribute that
+ *
+ * //contains the string &quot;Test&quot;, &quot;test&quot;, &quot;tEst&quot;,&quot;tesT&quot;, etc.
+ *
+ *
+ *
+ * $regex
+ *
+ * Checks if the model attribute matches the supplied regular expression. The regex query can be supplied without
+ * the `$regex` keyword.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { content: { $regex: /coffeescript/gi } });
+ *
+ * // Checks for a regex match in the content attribute
+ *
+ * BackboneQuery.find(collection, { content: /coffeescript/gi });
+ *
+ * // Same as above
+ *
+ *
+ *
+ * $cb
+ *
+ * A callback function can be supplied as a test. The callback will receive the attribute and should return either
+ * true or false. `this` will be set to the current model, this can help with tests against computed properties.
+ *
+ * Example:
+ *
+ * BackboneQuery.find(collection, { title: { $cb: function(attr){ return attr.charAt(0) === &quot;c&quot;; } } });
+ *
+ * // Returns all models that have a title attribute that starts with &quot;c&quot;
+ *
+ * BackboneQuery.find(collection, { computed_test: { $cb: function(){ return this.computed_property() &gt; 10; } } });
+ *
+ * // Returns all models where the computed_property method returns a value greater than 10.
+ *
+ * For callbacks that use `this` rather than the model attribute, the key name supplied is arbitrary and has no
+ * effect on the results. If the only test you were performing was like the above test it would make more sense to
+ * simply use `Collection.filter`. However if you are performing other tests or are using the
+ * paging / sorting / caching options of backbone query, then this functionality is useful.
+ *
+ *
+ *
+ * $elemMatch
+ *
+ * This operator allows you to perform queries in nested arrays similar to MongoDB For example you may have a
+ * collection of models in with this kind of data structure:
+ *
+ * Example:
+ *
+ * let posts = new Collection([
+ *
+ *    {title: &quot;Home&quot;, comments:[
+ *
+ *       {text:&quot;I like this post&quot;},
+ *
+ *       {text:&quot;I love this post&quot;},
+ *
+ *       {text:&quot;I hate this post&quot;}
+ *
+ *    ]},
+ *
+ *    {title: &quot;About&quot;, comments:[
+ *
+ *       {text:&quot;I like this page&quot;},
+ *
+ *       {text:&quot;I love this page&quot;},
+ *
+ *       {text:&quot;I really like this page&quot;}
+ *
+ *    ]}
+ *
+ * ]);
+ *
+ *
+ * To search for posts which have the text &quot;really&quot; in any of the comments you could search like this:
+ *
+ * BackboneQuery.find(posts, {
+ *
+ *    comments: {
+ *
+ *       $elemMatch: {
+ *
+ *          text: /really/i
+ *
+ *       }
+ *
+ *    }
+ *
+ * });
+ *
+ *
+ * All of the operators above can be performed on `$elemMatch` queries, e.g. `$all`, `$size` or `$lt`. `$elemMatch`
+ * queries also accept compound operators, for example this query searches for all posts that have at least one
+ * comment without the word &quot;really&quot; and with the word &quot;totally&quot;.
+ *
+ * BackboneQuery.find(posts, {
+ *
+ *    comments: {
+ *
+ *       $elemMatch: {
+ *
+ *          $not: {
+ *
+ *             text: /really/i
+ *
+ *          },
+ *
+ *          $and: {
+ *
+ *             text: /totally/i
+ *
+ *          }
+ *       }
+ *
+ *    }
+ *
+ * });
+ *
+ *
+ *
+ * $computed
+ *
+ * This operator allows you to perform queries on computed properties. For example you may want to perform a query
+ * for a persons full name, even though the first and last name are stored separately in your db / model. For
+ * example:
+ *
+ * Example:
+ *
+ * class TestModel extends Backbone.Model {
+ *
+ *    full_name() {
+ *
+ *       return (this.get(&apos;first_name&apos;)) + &quot; &quot; + (this.get(&apos;last_name&apos;));
+ *
+ *    }
+ *
+ * });
+ *
+ * let a = new TestModel({
+ *
+ *    first_name: &quot;Dave&quot;,
+ *
+ *    last_name: &quot;Tonge&quot;
+ *
+ * });
+ *
+ * let b = new TestModel({
+ *
+ *    first_name: &quot;John&quot;,
+ *
+ *    last_name: &quot;Smith&quot;
+ *
+ * });
+ *
+ * let collection = new Collection([a, b]);
+ *
+ * BackboneQuery.find(collection, { full_name: { $computed: &quot;Dave Tonge&quot; } });
+ *
+ * // Returns the model with the computed `full_name` equal to Dave Tonge
+ *
+ * BackboneQuery.find(collection, { full_name: { $computed: { $likeI: &quot;john smi&quot; } } });
+ *
+ * // Any of the previous operators can be used (including elemMatch is required)
+ *
+ *
+ *
+ * Combined Queries
+ * ----------------
+ * Multiple queries can be combined together. By default all supplied queries use the `$and` operator. However it is
+ * possible to specify either `$or`, `$nor`, `$not` to implement alternate logic.
+ *
+ *
+ * $and
+ *
+ * BackboneQuery.find(collection, { $and: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 }}});
+ *
+ * // Returns all models that contain &quot;News&quot; in the title and have more than 10 likes.
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } });
+ *
+ * // Same as above as $and is assumed if not supplied
+ *
+ *
+ *
+ * $or
+ *
+ * BackboneQuery.find(collection, { $or: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } } });
+ *
+ * // Returns all models that contain &quot;News&quot; in the title OR have more than 10 likes.
+ *
+ *
+ * $nor
+ *
+ * The opposite of `$or`
+ *
+ * BackboneQuery.find(collection, { $nor: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } } });
+ *
+ * // Returns all models that don&apos;t contain &quot;News&quot; in the title NOR have more than 10 likes.
+ *
+ *
+ * $not
+ *
+ * The opposite of `$and`
+ *
+ * BackboneQuery.find(collection, { $not: { title: { $like: &quot;News&quot; }, likes: { $gt: 10 } } });
+ *
+ * // Returns all models that don&apos;t contain &quot;News&quot; in the title AND DON&apos;T have more than 10 likes.
+ *
+ *
+ * If you need to perform multiple queries on the same key, then you can supply the query as an array:
+ *
+ * BackboneQuery.find(collection, {
+ *
+ *    $or:[
+ *
+ *       {title:&quot;News&quot;},
+ *
+ *       {title:&quot;About&quot;}
+ *
+ *    ]
+ *
+ * });
+ *
+ * // Returns all models with the title &quot;News&quot; or &quot;About&quot;.
+ *
+ *
+ * Compound Queries
+ * ----------------
+ * It is possible to use multiple combined queries, for example searching for models that have a specific title
+ * attribute, and either a category of &quot;abc&quot; or a tag of &quot;xyz&quot;.
+ *
+ * BackboneQuery.find(collection, {
+ *
+ *    $and: { title: { $like: &quot;News&quot; } },
+ *
+ *    $or: {likes: { $gt: 10 }, color: { $contains:&quot;red&quot; } }
+ *
+ * });
+ *
+ * //Returns models that have &quot;News&quot; in their title and either have more than 10 likes or contain the color red.
+ *
+ *
+ * Sorting
+ * -------
+ * Optional `sortBy` and `order` attributes can be supplied as part of an options object. `sortBy` can either be a
+ * model key or a callback function which will be called with each model in the array.
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;News&quot; } }, { sortBy: &quot;likes&quot; });
+ *
+ * // Returns all models that contain &quot;News&quot; in the title, sorted according to their &quot;likes&quot; attribute (ascending)
+ *
+ * BackboneQuery.find(collection, { title: { $like: &quot;News&quot; } }, { sortBy: &quot;likes&quot;, order: &quot;desc&quot; });
+ *
+ * // Same as above, but &quot;descending&quot;
+ *
+ * BackboneQuery.find(collection,
+ *
+ *    { title: { $like: &quot;News&quot; } },
+ *
+ *    { sortBy: function(model){ return model.get(&quot;title&quot;).charAt(1); } }
+ *
+ * );
+ *
+ * // Results sorted according to 2nd character of the title attribute
+ *
+ *
+ *
+ * Paging
+ * ------
+ * To return only a subset of the results paging properties can be supplied as part of an options object. A limit
+ * property must be supplied and optionally a offset or a page property can be supplied.
+ *
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10 });
+ *
+ * // Returns the first 10 models that have more than 10 likes.
+ *
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10, offset: 5 });
+ *
+ * // Returns 10 models that have more than 10 likes starting at the 6th model in the results.
+ *
+ * BackboneQuery.find(collection, { likes: { $gt: 10 } }, { limit: 10, page: 2 });
+ *
+ * // Returns 10 models that have more than 10 likes starting at the 11th model in the results (page 2).
+ *
+ *
+ * When using the paging functionality, you will normally need to know the number of pages so that you can render
+ * the correct interface for the user. Backbone Query can send the number of pages of results to a supplied callback.
+ * The callback should be passed as a pager property on the options object. This callback will also receive the
+ * sliced models as a second variable.
+ *
+ * Here is an example of a simple paging setup using the pager callback option:
+ *
+ * TODO Provide example!
+ *
+ * Caching Results
+ * ---------------
+ * To enable caching set the cache flag to true in the options object. This can greatly improve performance when
+ * paging through results as the unpaged results will be saved. This options is not enabled by default as if models
+ * are changed, added to, or removed from the collection, then the query cache will be out of date. If you know that
+ * your data is static and won&apos;t change then caching can be enabled without any problems. If your data is dynamic
+ * (as in most Backbone Apps) then a helper cache reset method is provided: `reset_query_cache`. This method should
+ * be bound to your collections change, add and remove events (depending on how your data can be changed).
+ *
+ * Cache will be saved in a `_query_cache` property on each collection where a cache query is performed.
+ *
+ * @example
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit: 10, page: 1, cache: true });
+ * //The first query will operate as normal and return the first page of results
+ *
+ * BackboneQuery.find(collection, { likes:{ $gt: 10 } }, { limit:10, page: 2, cache: true });
+ * //The second query has an identical query object to the first query, so therefore the results will be retrieved
+ * //from the cache, before the paging parameters are applied.
+ *
+ * // Binding the reset_query_cache method
+ * MyCollection extends Backbone.Collection {
+ *    initialize() {
+ *       this.bind(&quot;change&quot;, () =&gt; { BackboneQuery.resetQueryCache(this) }, this);
+ *    }
+ * });
+ */
+export default class BackboneQuery
+{
+   /**
+    * Returns a sorted array of models from the collection that match the query.
+    *
+    * @param {Collection}  collection  - Target collection
+    * @param {string}      query       - Query string
+    * @param {Object}      options     - Optional parameters
+    * @returns {*}
+    */
+   static find(collection, query, options = {})
+   {
+      let models;
+
+      if (options.cache)
+      {
+         models = s_GET_CACHE(collection, query, options);
+      }
+      else
+      {
+         models = s_GET_SORTED_MODELS(collection, query, options);
+      }
+
+      if (options.limit)
+      {
+         models = s_PAGE_MODELS(models, options);
+      }
+
+      return models;
+   }
+
+   /**
+    * Returns the first model that matches the query.
+    *
+    * @param {Collection}  collection  - Target collection
+    * @param {string}      query       - Query string
+    * @returns {*}
+    */
+   static findOne(collection, query)
+   {
+      return BackboneQuery.find(collection, query)[0];
+   }
+
+   /**
+    * Resets the query cache of the target collection.
+    *
+    * @param {Collection}  collection  - Target collection
+    */
+   static resetQueryCache(collection)
+   {
+      collection._queryCache = {};
+   }
+
+   /**
+    * Returns a sorted array of all models from the collection that match the query.
+    *
+    * @param {Collection}  collection  - Target collection
+    * @param {string}      query       - Query string
+    * @returns {Array&lt;*&gt;}
+    */
+   static sortAll(collection, query)
+   {
+      return s_SORT_MODELS(collection.models, query);
+   }
+
+   /**
+    * Runs a query and returns a new collection with the results. Useful for chaining.
+    *
+    * @param {Collection}  collection     - Target collection
+    * @param {string}      query          - Query string
+    * @param {Object}      queryOptions   - Optional parameters for query.
+    * @param {Object}      options        - Optional parameters (used to construct the new collection).
+    * @returns {Collection}
+    */
+   static whereBy(collection, query, queryOptions = {}, options = {})
+   {
+      return new collection.constructor(BackboneQuery.find(collection, query, queryOptions), options);
+   }
+}
+
+// Private / internal methods ---------------------------------------------------------------------------------------
+
+const __slice = [].slice;
+const __hasProp = {}.hasOwnProperty;
+const __indexOf = [].indexOf || function(item)
+ {
+    for (let i = 0, l = this.length; i &lt; l; i++)
+    {
+       if (i in this &amp;&amp; this[i] === item) { return i; }
+    }
+
+    return -1;
+ };
+
+/**
+ * Detects if any value in the array matches a test.
+ *
+ * @param {Array&lt;*&gt;} array - An array to detect.
+ * @param {function} test  - A test function.
+ * @returns {boolean}
+ */
+const s_DETECT = function(array, test)
+{
+   let _i, _len;
+
+   for (_i = 0, _len = array.length; _i &lt; _len; _i++)
+   {
+      const val = array[_i];
+      if (test(val)) { return true; }
+   }
+
+   return false;
+};
+
+/**
+ * Filters an array only adding results that `test` passes.
+ *
+ * @param {Array&lt;*&gt;} array - An array to filter.
+ * @param {function} test  - A test function.
+ * @returns {Array&lt;*&gt;}
+ */
+const s_FILTER = function(array, test)
+{
+   const _results = [];
+   let _i, _len;
+
+   for (_i = 0, _len = array.length; _i &lt; _len; _i++)
+   {
+      const val = array[_i];
+      if (test(val)) { _results.push(val); }
+   }
+
+   return _results;
+};
+
+/**
+ * Gets the query cache from a collection.
+ *
+ * @param {Collection}  collection  - Target collection
+ * @param {string}      query       - A query
+ * @param {Object}      options     - Optional parameters
+ * @returns {*}
+ */
+const s_GET_CACHE = function(collection, query, options)
+{
+   let models;
+   const _ref = collection._queryCache;
+   const queryString = JSON.stringify(query);
+   const cache = _ref !== null ? _ref : collection._queryCache = {};
+   models = cache[queryString];
+
+   if (!models)
+   {
+      models = s_GET_SORTED_MODELS(collection, query, options);
+      cache[queryString] = models;
+   }
+
+   return models;
+};
+
+/**
+ * Runs a query then sorts the models.
+ *
+ * @param {Collection}  collection  - Target collection
+ * @param {string}      query       - A query
+ * @param {Object}      options     - Optional parameters
+ * @returns {*}
+ */
+const s_GET_SORTED_MODELS = function(collection, query, options)
+{
+   let models;
+   models = s_RUN_QUERY(collection.models, query);
+
+   if (options.sortBy)
+   {
+      models = s_SORT_MODELS(models, options);
+   }
+
+   return models;
+};
+
+/**
+ * Tests an item and returns a string representation of the type or `false` if no type matched.
+ *
+ * @param {*}  item  - Item to test.
+ * @returns {string|boolean}
+ */
+const s_GET_TYPE = function(item)
+{
+   if (_.isRegExp(item))
+   {
+      return &apos;$regex&apos;;
+   }
+
+   if (_.isDate(item))
+   {
+      return &apos;$date&apos;;
+   }
+
+   if (_.isObject(item) &amp;&amp; !_.isArray(item))
+   {
+      return &apos;object&apos;;
+   }
+
+   if (_.isArray(item))
+   {
+      return &apos;array&apos;;
+   }
+
+   if (_.isString(item))
+   {
+      return &apos;string&apos;;
+   }
+
+   if (_.isNumber(item))
+   {
+      return &apos;number&apos;;
+   }
+
+   if (_.isBoolean(item))
+   {
+      return &apos;boolean&apos;;
+   }
+
+   if (_.isFunction(item))
+   {
+      return &apos;function&apos;;
+   }
+
+   return false;
+};
+
+/**
+ *
+ * @param {Array&lt;Model&gt;}   models         -
+ * @param {Array&lt;*&gt;}       query          - An array of sub-queries.
+ * @param {boolean}        andOr          -
+ * @param {function}       filterFunction -
+ * @param {string}         itemType       -
+ * @returns {*}
+ */
+const s_ITERATOR = function(models, query, andOr, filterFunction, itemType)
+{
+   if (itemType === null)
+   {
+      itemType = false;
+   }
+
+   return filterFunction(models, (model) =&gt;
+   {
+      let _i, _len, test;
+
+      for (_i = 0, _len = query.length; _i &lt; _len; _i++)
+      {
+         const q = query[_i];
+
+         const attr = (function()
+         {
+            switch (itemType)
+            {
+               case &apos;elemMatch&apos;:
+                  return model[q.key];
+
+               case &apos;computed&apos;:
+
+                  return model[q.key]();
+
+               default:
+                  return model.get(q.key);
+            }
+         })();
+
+         test = s_TEST_MODEL_ATTRIBUTE(q.type, attr);
+
+         if (test)
+         {
+            test = s_PERFORM_QUERY(q.type, q.value, attr, model, q.key);
+         }
+
+         if (andOr === test)
+         {
+            return andOr;
+         }
+      }
+      return !andOr;
+   });
+};
+
+/**
+ * @returns {{}|*}
+ */
+const s_MAKE_OBJ = function()
+{
+   let current;
+   const args = 1 &lt;= arguments.length ? __slice.call(arguments, 0) : [];
+   const o = {};
+   current = o;
+
+   while (args.length)
+   {
+      const key = args.shift();
+      const val = (args.length === 1 ? args.shift() : {});
+      current = current[key] = val;
+   }
+
+   return o;
+};
+
+/**
+ * Pages models
+ *
+ * @param {Array&lt;Model&gt;}   models   - Array of models to page.
+ * @param {Object}         options  - Optional parameters
+ * @returns {*}
+ */
+const s_PAGE_MODELS = function(models, options)
+{
+   let start;
+
+   if (options.offset)
+   {
+      start = options.offset;
+   }
+   else if (options.page)
+   {
+      start = (options.page - 1) * options.limit;
+   }
+   else
+   {
+      start = 0;
+   }
+
+   const end = start + options.limit;
+   const sliced_models = models.slice(start, end);
+
+   if (options.pager &amp;&amp; _.isFunction(options.pager))
+   {
+      const total_pages = Math.ceil(models.length / options.limit);
+      options.pager(total_pages, sliced_models);
+   }
+
+   return sliced_models;
+};
+
+/**
+ * Function to parse raw queries
+ *
+ * Allows queries of the following forms:
+ * query
+ * name: &quot;test&quot;
+ * id: $gte: 10
+ *
+ * query [
+ *    {name:&quot;test&quot;}
+ *    {id:$gte:10}
+ * ]
+ *
+ * @param {*}  rawQuery - raw query
+ * @return {Array} parsed query
+ */
+const s_PARSE_SUB_QUERY = function(rawQuery)
+{
+   let _i, _len, key, o, queryArray;
+
+   if (_.isArray(rawQuery))
+   {
+      queryArray = rawQuery;
+   }
+   else
+   {
+      queryArray = (function()
+      {
+         const _results = [];
+
+         for (key in rawQuery)
+         {
+            if (!__hasProp.call(rawQuery, key)) { continue; }
+            const val = rawQuery[key];
+            _results.push(s_MAKE_OBJ(key, val));
+         }
+         return _results;
+      })();
+   }
+
+   const _results = [];
+
+   for (_i = 0, _len = queryArray.length; _i &lt; _len; _i++)
+   {
+      const query = queryArray[_i];
+
+      for (key in query)
+      {
+         if (!__hasProp.call(query, key)) { continue; }
+
+         const queryParam = query[key];
+         o = { key };
+
+         const paramType = s_GET_TYPE(queryParam);
+         switch (paramType)
+         {
+            case &apos;$regex&apos;:
+            case &apos;$date&apos;:
+               o.type = paramType;
+               o.value = queryParam;
+               break;
+            case &apos;object&apos;:
+               if (key === &apos;$and&apos; || key === &apos;$or&apos; || key === &apos;$nor&apos; || key === &apos;$not&apos;)
+               {
+                  o.value = s_PARSE_SUB_QUERY(queryParam);
+                  o.type = key;
+                  o.key = null;
+               }
+               else
+               {
+                  for (const type in queryParam)
+                  {
+                     const value = queryParam[type];
+                     if (s_TEST_QUERY_VALUE(type, value))
+                     {
+                        const test = type;
+                        o.type = type;
+                        switch (test)
+                        {
+                           case &apos;$elemMatch&apos;:
+                           case &apos;$relationMatch&apos;:
+                              o.value = s_PARSE_QUERY(value);
+                              break;
+
+                           case &apos;$computed&apos;:
+                           {
+                              const q = s_MAKE_OBJ(key, value);
+                              o.value = s_PARSE_SUB_QUERY(q);
+                              break;
+                           }
+
+                           default:
+                              o.value = value;
+                        }
+                     }
+                  }
+               }
+               break;
+            default:
+               o.type = &apos;$equal&apos;;
+               o.value = queryParam;
+         }
+
+         if ((o.type === &apos;$equal&apos;) &amp;&amp; (paramType === &apos;object&apos; || paramType === &apos;array&apos;))
+         {
+            o.type = &apos;$oEqual&apos;;
+         }
+      }
+      _results.push(o);
+   }
+
+   return _results;
+};
+
+/**
+ * Parses query string.
+ *
+ * @param {string}   query - A query
+ * @returns {*[]}
+ */
+const s_PARSE_QUERY = function(query)
+{
+   let key;
+   const queryKeys = _(query).keys();
+   const compoundKeys = [&quot;$and&quot;, &quot;$not&quot;, &quot;$or&quot;, &quot;$nor&quot;];
+   const compoundQuery = _.intersection(compoundKeys, queryKeys);
+
+   if (compoundQuery.length === 0)
+   {
+      return [{ type: &quot;$and&quot;, parsedQuery: s_PARSE_SUB_QUERY(query) }];
+   }
+   else
+   {
+      if (compoundQuery.length !== queryKeys.length)
+      {
+         if (__indexOf.call(compoundQuery, &quot;$and&quot;) &lt; 0)
+         {
+            query.$and = {};
+            compoundQuery.unshift(&quot;$and&quot;);
+         }
+         for (key in query)
+         {
+            if (!__hasProp.call(query, key)) { continue; }
+            const val = query[key];
+
+            if (!(__indexOf.call(compoundKeys, key) &lt; 0)) { continue; }
+
+            query.$and[key] = val;
+            delete query[key];
+         }
+      }
+
+      return (function()
+      {
+         let _i, _len;
+         const _results = [];
+
+         for (_i = 0, _len = compoundQuery.length; _i &lt; _len; _i++)
+         {
+            const type = compoundQuery[_i];
+            _results.push({ type, parsedQuery: s_PARSE_SUB_QUERY(query[type]) });
+         }
+         return _results;
+      })();
+   }
+};
+
+/**
+ * Performs a query
+ *
+ * @param {string}   type  -
+ * @param {*}        value -
+ * @param {*}        attr  -
+ * @param {*}        model -
+ * @returns {*}
+ */
+const s_PERFORM_QUERY = function(type, value, attr, model)
+{
+   switch (type)
+   {
+      case &apos;$equal&apos;:
+         if (_(attr).isArray()) { return __indexOf.call(attr, value) &gt;= 0; }
+         else { return attr === value; }
+
+      case &apos;$oEqual&apos;:
+         return _(attr).isEqual(value);
+
+      case &apos;$contains&apos;:
+         return __indexOf.call(attr, value) &gt;= 0;
+
+      case &apos;$ne&apos;:
+         return attr !== value;
+
+      case &apos;$lt&apos;:
+         return attr &lt; value;
+
+      case &apos;$gt&apos;:
+         return attr &gt; value;
+
+      case &apos;$lte&apos;:
+         return attr &lt;= value;
+
+      case &apos;$gte&apos;:
+         return attr &gt;= value;
+
+      case &apos;$between&apos;:
+         return (value[0] &lt; attr &amp;&amp; attr &lt; value[1]);
+
+      case &apos;$in&apos;:
+         return __indexOf.call(value, attr) &gt;= 0;
+
+      case &apos;$nin&apos;:
+         return __indexOf.call(value, attr) &lt; 0;
+
+      case &apos;$all&apos;:
+         return _(value).all((item) =&gt; { return __indexOf.call(attr, item) &gt;= 0; });
+
+      case &apos;$any&apos;:
+         return _(attr).any((item) =&gt; { return __indexOf.call(value, item) &gt;= 0; });
+
+      case &apos;$size&apos;:
+         return attr.length === value;
+
+      case &apos;$exists&apos;:
+      case &apos;$has&apos;:
+         return (attr !== null) === value;
+
+      case &apos;$like&apos;:
+         return attr.includes(value);
+
+      case &apos;$likeI&apos;:
+         return attr.toLowerCase().includes(value.toLowerCase());
+
+      case &apos;$regex&apos;:
+         return value.test(attr);
+
+      case &apos;$cb&apos;:
+         return value.call(model, attr);
+
+      case &apos;$elemMatch&apos;:
+         return (s_RUN_QUERY(attr, value, &apos;elemMatch&apos;)).length &gt; 0;
+
+      case &apos;$relationMatch&apos;:
+         return (s_RUN_QUERY(attr.models, value, &apos;relationMatch&apos;)).length &gt; 0;
+
+      case &apos;$computed&apos;:
+         return s_ITERATOR([model], value, false, s_DETECT, &apos;computed&apos;);
+
+      case &apos;$and&apos;:
+      case &apos;$or&apos;:
+      case &apos;$nor&apos;:
+      case &apos;$not&apos;:
+         return (s_PROCESS_QUERY[type]([model], value)).length === 1;
+
+      default:
+         return false;
+   }
+};
+
+/**
+ * @type {{$and: Function, $or: Function, $nor: Function, $not: Function}}
+ */
+const s_PROCESS_QUERY =
+{
+   $and: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, false, s_FILTER, itemType);
+   },
+   $or: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, true, s_FILTER, itemType);
+   },
+   $nor: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, true, s_REJECT, itemType);
+   },
+   $not: function(models, query, itemType)
+   {
+      return s_ITERATOR(models, query, false, s_REJECT, itemType);
+   }
+};
+
+/**
+ * Creates an array of rejected values of an array that doesn&apos;t match a test function.
+ *
+ * @param {Array&lt;*&gt;} array - An array to reject.
+ * @param {function} test  - A test function.
+ * @returns {Array&lt;*&gt;}
+ */
+const s_REJECT = function(array, test)
+{
+   const _results = [];
+   let _i, _len;
+
+   for (_i = 0, _len = array.length; _i &lt; _len; _i++)
+   {
+      const val = array[_i];
+
+      if (!test(val)) { _results.push(val); }
+   }
+
+   return _results;
+};
+
+/**
+ * Runs a query.
+ *
+ * @param {*}        items    -
+ * @param {string}   query    - A query
+ * @param {*}        itemType -
+ * @returns {*}
+ */
+const s_RUN_QUERY = function(items, query, itemType)
+{
+   if (!itemType)
+   {
+      query = s_PARSE_QUERY(query);
+   }
+
+   const reduceIterator = function(memo, queryItem)
+   {
+      return s_PROCESS_QUERY[queryItem.type](memo, queryItem.parsedQuery, itemType);
+   };
+
+   return _.reduce(query, reduceIterator, items);
+};
+
+/**
+ * Sorts models.
+ *
+ * @param {Array&lt;Model&gt;}   models   -
+ * @param {string}         query    - A query
+ * @returns {*}
+ */
+const s_SORT_MODELS = function(models, query)
+{
+   if (_(query.sortBy).isString())
+   {
+      const first = _(models).first();
+      if (_.isUndefined(first) || first === null) { return []; }
+
+      const firstValue = first.get(query.sortBy);
+
+      if (_.isString(firstValue))
+      {
+         models = _(models).sortBy((model) =&gt;
+         {
+            return model.get(query.sortBy).toLocaleLowerCase();
+         });
+      }
+      else
+      {
+         models = _(models).sortBy((model) =&gt;
+         {
+            return model.get(query.sortBy);
+         });
+      }
+   }
+   else if (_(query.sortBy).isFunction())
+   {
+      models = _(models).sortBy(query.sortBy);
+   }
+
+   if (query.order === &apos;desc&apos;)
+   {
+      models = models.reverse();
+   }
+   else if (query.order === false)
+   {
+      models = models.reverse();
+   }
+
+   return models;
+};
+
+/**
+ * Tests a model attribute based on the query type.
+ *
+ * @param {string}   type  - Query type
+ * @param {*}        value - A value
+ * @returns {*}
+ */
+const s_TEST_MODEL_ATTRIBUTE = function(type, value)
+{
+   switch (type)
+   {
+      case &apos;$like&apos;:
+      case &apos;$likeI&apos;:
+      case &apos;$regex&apos;:
+         return _(value).isString();
+      case &apos;$contains&apos;:
+      case &apos;$all&apos;:
+      case &apos;$any&apos;:
+      case &apos;$elemMatch&apos;:
+         return _(value).isArray();
+      case &apos;$size&apos;:
+         return _(value).isArray() || _(value).isString();
+      case &apos;$in&apos;:
+      case &apos;$nin&apos;:
+         return value !== null;
+      case &apos;$relationMatch&apos;:
+         return (value !== null) &amp;&amp; value.models;
+      default:
+         return true;
+   }
+};
+
+/**
+ * Tests a value based on the query type.
+ *
+ * @param {string}   type  - Query type
+ * @param {*}        value - A value
+ * @returns {*}
+ */
+const s_TEST_QUERY_VALUE = function(type, value)
+{
+   switch (type)
+   {
+      case &apos;$in&apos;:
+      case &apos;$nin&apos;:
+      case &apos;$all&apos;:
+      case &apos;$any&apos;:
+         return _(value).isArray();
+
+      case &apos;$size&apos;:
+         return _(value).isNumber();
+
+      case &apos;$regex&apos;:
+         return _(value).isRegExp();
+
+      case &apos;$like&apos;:
+      case &apos;$likeI&apos;:
+         return _(value).isString();
+
+      case &apos;$between&apos;:
+         return _(value).isArray() &amp;&amp; (value.length === 2);
+
+      case &apos;$cb&apos;:
+         return _(value).isFunction();
+
+      default:
+         return true;
+   }
+};</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
