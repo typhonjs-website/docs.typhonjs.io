@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Function | ESDoc API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-esdoc/esdoc.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464897966588" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/." data-scm-type="github">.</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/ESDoc.js" data-scm-type="github">ESDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/ESDoc.js~ESDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/ESDoc.js#L23" data-scm-type="github">ESDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-1" id="file-1" checked><label for="file-1" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/ESDocCLI.js" data-scm-type="github">ESDocCLI.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/ESDocCLI.js~ESDocCLI.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/ESDocCLI.js#L17" data-scm-type="github">ESDocCLI</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-1" id="folder-1" checked><label for="folder-1" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc" data-scm-type="github">Doc</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-2" id="file-2" checked><label for="file-2" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/AbstractDoc.js" data-scm-type="github">AbstractDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/AbstractDoc.js~AbstractDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/AbstractDoc.js#L13" data-scm-type="github">AbstractDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-3" id="file-3" checked><label for="file-3" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/AssignmentDoc.js" data-scm-type="github">AssignmentDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/AssignmentDoc.js~AssignmentDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/AssignmentDoc.js#L6" data-scm-type="github">AssignmentDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-4" id="file-4" checked><label for="file-4" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/ClassDoc.js" data-scm-type="github">ClassDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/ClassDoc.js~ClassDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/ClassDoc.js#L9" data-scm-type="github">ClassDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-5" id="file-5" checked><label for="file-5" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/ExternalDoc.js" data-scm-type="github">ExternalDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/ExternalDoc.js~ExternalDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/ExternalDoc.js#L8" data-scm-type="github">ExternalDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-6" id="file-6" checked><label for="file-6" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/FileDoc.js" data-scm-type="github">FileDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/FileDoc.js~FileDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/FileDoc.js#L7" data-scm-type="github">FileDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-7" id="file-7" checked><label for="file-7" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/FunctionDoc.js" data-scm-type="github">FunctionDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/FunctionDoc.js~FunctionDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/FunctionDoc.js#L8" data-scm-type="github">FunctionDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-8" id="file-8" checked><label for="file-8" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/MemberDoc.js" data-scm-type="github">MemberDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/MemberDoc.js~MemberDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/MemberDoc.js#L8" data-scm-type="github">MemberDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-9" id="file-9" checked><label for="file-9" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/MethodDoc.js" data-scm-type="github">MethodDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/MethodDoc.js~MethodDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/MethodDoc.js#L8" data-scm-type="github">MethodDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-10" id="file-10" checked><label for="file-10" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/TestDoc.js" data-scm-type="github">TestDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/TestDoc.js~TestDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/TestDoc.js#L7" data-scm-type="github">TestDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-11" id="file-11" checked><label for="file-11" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/TestFileDoc.js" data-scm-type="github">TestFileDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/TestFileDoc.js~TestFileDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/TestFileDoc.js#L6" data-scm-type="github">TestFileDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-12" id="file-12" checked><label for="file-12" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/TypedefDoc.js" data-scm-type="github">TypedefDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/TypedefDoc.js~TypedefDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/TypedefDoc.js#L8" data-scm-type="github">TypedefDoc</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-13" id="file-13" checked><label for="file-13" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/VariableDoc.js" data-scm-type="github">VariableDoc.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Doc/VariableDoc.js~VariableDoc.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Doc/VariableDoc.js#L8" data-scm-type="github">VariableDoc</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-2" id="folder-2" checked><label for="folder-2" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Factory" data-scm-type="github">Factory</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-14" id="file-14" checked><label for="file-14" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Factory/DocFactory.js" data-scm-type="github">DocFactory.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Factory/DocFactory.js~DocFactory.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Factory/DocFactory.js#L24" data-scm-type="github">DocFactory</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-15" id="file-15" checked><label for="file-15" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Factory/TestDocFactory.js" data-scm-type="github">TestDocFactory.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Factory/TestDocFactory.js~TestDocFactory.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Factory/TestDocFactory.js#L15" data-scm-type="github">TestDocFactory</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-3" id="folder-3" checked><label for="folder-3" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser" data-scm-type="github">Parser</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-16" id="file-16" checked><label for="file-16" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser/CommentParser.js" data-scm-type="github">CommentParser.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Parser/CommentParser.js~CommentParser.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser/CommentParser.js#L10" data-scm-type="github">CommentParser</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-17" id="file-17" checked><label for="file-17" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser/ESParser.js" data-scm-type="github">ESParser.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Parser/ESParser.js~ESParser.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser/ESParser.js#L14" data-scm-type="github">ESParser</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-18" id="file-18" checked><label for="file-18" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser/ParamParser.js" data-scm-type="github">ParamParser.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Parser/ParamParser.js~ParamParser.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Parser/ParamParser.js#L8" data-scm-type="github">ParamParser</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-4" id="folder-4" checked><label for="folder-4" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin" data-scm-type="github">Plugin</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-19" id="file-19" checked><label for="file-19" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js" data-scm-type="github">Plugin.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~Plugin.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L6" data-scm-type="github">Plugin</a></span></li>
+<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L137" data-scm-type="github">PluginEvent</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L154" data-scm-type="github">plugin</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-5" id="folder-5" checked><label for="folder-5" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher" data-scm-type="github">Publisher</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-20" id="file-20" checked><label for="file-20" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/publish.js" data-scm-type="github">publish.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-publish" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/publish.js#L27" data-scm-type="github">publish</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-6" id="folder-6" checked><label for="folder-6" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder" data-scm-type="github">Publisher/Builder</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-21" id="file-21" checked><label for="file-21" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/ASTDocBuilder.js" data-scm-type="github">ASTDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/ASTDocBuilder.js~ASTDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/ASTDocBuilder.js#L6" data-scm-type="github">ASTDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-22" id="file-22" checked><label for="file-22" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/ClassDocBuilder.js" data-scm-type="github">ClassDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/ClassDocBuilder.js~ClassDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/ClassDocBuilder.js#L8" data-scm-type="github">ClassDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-23" id="file-23" checked><label for="file-23" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/CoverageBuilder.js" data-scm-type="github">CoverageBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/CoverageBuilder.js~CoverageBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/CoverageBuilder.js#L7" data-scm-type="github">CoverageBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-24" id="file-24" checked><label for="file-24" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/DocBuilder.js" data-scm-type="github">DocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/DocBuilder.js~DocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/DocBuilder.js#L12" data-scm-type="github">DocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-25" id="file-25" checked><label for="file-25" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/DocResolver.js" data-scm-type="github">DocResolver.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/DocResolver.js~DocResolver.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/DocResolver.js#L8" data-scm-type="github">DocResolver</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-26" id="file-26" checked><label for="file-26" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/FileDocBuilder.js" data-scm-type="github">FileDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/FileDocBuilder.js~FileDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/FileDocBuilder.js#L7" data-scm-type="github">FileDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-27" id="file-27" checked><label for="file-27" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/IdentifiersDocBuilder.js" data-scm-type="github">IdentifiersDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/IdentifiersDocBuilder.js~IdentifiersDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/IdentifiersDocBuilder.js#L8" data-scm-type="github">IdentifiersDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-28" id="file-28" checked><label for="file-28" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/IndexDocBuilder.js" data-scm-type="github">IndexDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/IndexDocBuilder.js~IndexDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/IndexDocBuilder.js#L11" data-scm-type="github">IndexDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-29" id="file-29" checked><label for="file-29" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/LintDocBuilder.js" data-scm-type="github">LintDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/LintDocBuilder.js~LintDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/LintDocBuilder.js#L13" data-scm-type="github">LintDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-30" id="file-30" checked><label for="file-30" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/ManualDocBuilder.js" data-scm-type="github">ManualDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/ManualDocBuilder.js~ManualDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/ManualDocBuilder.js#L10" data-scm-type="github">ManualDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-31" id="file-31" checked><label for="file-31" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/SearchIndexBuilder.js" data-scm-type="github">SearchIndexBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/SearchIndexBuilder.js~SearchIndexBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/SearchIndexBuilder.js#L7" data-scm-type="github">SearchIndexBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-32" id="file-32" checked><label for="file-32" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/SingleDocBuilder.js" data-scm-type="github">SingleDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/SingleDocBuilder.js~SingleDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/SingleDocBuilder.js#L8" data-scm-type="github">SingleDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-33" id="file-33" checked><label for="file-33" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/SourceDocBuilder.js" data-scm-type="github">SourceDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/SourceDocBuilder.js~SourceDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/SourceDocBuilder.js#L10" data-scm-type="github">SourceDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-34" id="file-34" checked><label for="file-34" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/StaticFileBuilder.js" data-scm-type="github">StaticFileBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/StaticFileBuilder.js~StaticFileBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/StaticFileBuilder.js#L7" data-scm-type="github">StaticFileBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-35" id="file-35" checked><label for="file-35" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/TestDocBuilder.js" data-scm-type="github">TestDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/TestDocBuilder.js~TestDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/TestDocBuilder.js#L7" data-scm-type="github">TestDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-36" id="file-36" checked><label for="file-36" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/TestFileDocBuilder.js" data-scm-type="github">TestFileDocBuilder.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Publisher/Builder/TestFileDocBuilder.js~TestFileDocBuilder.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/TestFileDocBuilder.js#L7" data-scm-type="github">TestFileDocBuilder</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-37" id="file-37" checked><label for="file-37" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/util.js" data-scm-type="github">util.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-dateForUTC" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/util.js#L102" data-scm-type="github">dateForUTC</a></span></li>
+<li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-markdown" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/util.js#L62" data-scm-type="github">markdown</a></span></li>
+<li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-parseExample" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/util.js#L125" data-scm-type="github">parseExample</a></span></li>
+<li data-ice="doc" class="nav-kind-function"><span data-ice="docLink"><a href="function/index.html#static-function-shorten" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Publisher/Builder/util.js#L13" data-scm-type="github">shorten</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-7" id="folder-7" checked><label for="folder-7" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef" data-scm-type="github">Typedef</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-38" id="file-38" checked><label for="file-38" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">typedef.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-AST" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">AST</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-ASTNode" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">ASTNode</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-CoverageObject" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">CoverageObject</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-DocObject" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">DocObject</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-DocTypedef" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">DocTypedef</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-ESDocCLIArgv" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">ESDocCLIArgv</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-ESDocConfig" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">ESDocConfig</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-IceCap" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">IceCap</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-IceCapInstanceTypedef" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">IceCapInstanceTypedef</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-ManualConfigItem" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">ManualConfigItem</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-NPMPackageObject" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">NPMPackageObject</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-PackageTypedef" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">PackageTypedef</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-ParsedParam" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">ParsedParam</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-Taffy" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">Taffy</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-TaffyCursor" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">TaffyCursor</a></span></li>
+<li data-ice="doc" class="nav-kind-typedef"><span data-ice="docLink"><a href="typedef/index.html#static-typedef-Tag" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Typedef/typedef.js" data-scm-type="github">Tag</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+<li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-8" id="folder-8" checked><label for="folder-8" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util" data-scm-type="github">Util</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-39" id="file-39" checked><label for="file-39" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/ASTNodeContainer.js" data-scm-type="github">ASTNodeContainer.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Util/ASTNodeContainer.js~ASTNodeContainer.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/ASTNodeContainer.js#L1" data-scm-type="github">ASTNodeContainer</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-aSTNodeContainer" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/ASTNodeContainer.js#L17" data-scm-type="github">aSTNodeContainer</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-40" id="file-40" checked><label for="file-40" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/ASTUtil.js" data-scm-type="github">ASTUtil.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Util/ASTUtil.js~ASTUtil.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/ASTUtil.js#L11" data-scm-type="github">ASTUtil</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-41" id="file-41" checked><label for="file-41" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/InvalidCodeLogger.js" data-scm-type="github">InvalidCodeLogger.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Util/InvalidCodeLogger.js~InvalidCodeLogger.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/InvalidCodeLogger.js#L6" data-scm-type="github">InvalidCodeLogger</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-invalidCodeLogger" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/InvalidCodeLogger.js#L63" data-scm-type="github">invalidCodeLogger</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-42" id="file-42" checked><label for="file-42" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/NamingUtil.js" data-scm-type="github">NamingUtil.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Util/NamingUtil.js~NamingUtil.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/NamingUtil.js#L8" data-scm-type="github">NamingUtil</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-43" id="file-43" checked><label for="file-43" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/NPMUtil.js" data-scm-type="github">NPMUtil.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Util/NPMUtil.js~NPMUtil.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/NPMUtil.js#L7" data-scm-type="github">NPMUtil</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-44" id="file-44" checked><label for="file-44" class="nav-file" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/PathResolver.js" data-scm-type="github">PathResolver.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Util/PathResolver.js~PathResolver.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Util/PathResolver.js#L13" data-scm-type="github">PathResolver</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">Function</h1>
+<div data-ice="summaries"><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Static Public Summary</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-dateForUTC">dateForUTC</a></span></span><span data-ice="signature">(date: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>get UTC date string.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-markdown">markdown</a></span></span><span data-ice="signature">(text: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, breaks: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>convert markdown text to html.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-parseExample">parseExample</a></span></span><span data-ice="signature">(example: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): {body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, caption: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>parse <code>@example</code> value.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-publish">publish</a></span></span><span data-ice="signature">(values: <span><span><a href="typedef/index.html#static-typedef-DocObject">DocObject</a></span><span>[]</span></span>, asts: <span><span><a href="typedef/index.html#static-typedef-AST">AST</a></span><span>[]</span></span>, config: <span><a href="typedef/index.html#static-typedef-ESDocConfig">ESDocConfig</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>publish document as HTML.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-shorten">shorten</a></span></span><span data-ice="signature">(doc: <span><a href="typedef/index.html#static-typedef-DocObject">DocObject</a></span>, asMarkdown: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>shorten description.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div data-ice="details"><h2 data-ice="title">Static Public </h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-dateForUTC">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">dateForUTC</span><span data-ice="signature">(date: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/Publisher/Builder/util.js.html#lineNumber102">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {dateForUTC} from &apos;<span><a href="file/src/Publisher/Builder/util.js.html#lineNumber102">esdoc/src/Publisher/Builder/util.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>get UTC date string.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">date</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>target date object.</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p></p><p>UTC date string(yyyy-mm-dd hh:mm:ss)</p>
+<p></p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-markdown">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">markdown</span><span data-ice="signature">(text: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, breaks: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/Publisher/Builder/util.js.html#lineNumber62">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {markdown} from &apos;<span><a href="file/src/Publisher/Builder/util.js.html#lineNumber62">esdoc/src/Publisher/Builder/util.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>convert markdown text to html.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">text</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>markdown text.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">breaks</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: false</li></ul></td>
+      <td data-ice="description"><p></p><p>if true, break line. FYI gfm is not breaks.</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p></p><p>html.</p>
+<p></p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-parseExample">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">parseExample</span><span data-ice="signature">(example: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): {body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, caption: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/Publisher/Builder/util.js.html#lineNumber125">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {parseExample} from &apos;<span><a href="file/src/Publisher/Builder/util.js.html#lineNumber125">esdoc/src/Publisher/Builder/util.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>parse <code>@example</code> value.
+<code>@example</code> value can have <code>&lt;caption&gt;</code> tag.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">example</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>target example value.</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{body: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, caption: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>}</td>
+        <td class="return-desc" data-ice="returnDescription"><p></p><p>parsed example value.</p>
+<p></p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-publish">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">publish</span><span data-ice="signature">(values: <span><span><a href="typedef/index.html#static-typedef-DocObject">DocObject</a></span><span>[]</span></span>, asts: <span><span><a href="typedef/index.html#static-typedef-AST">AST</a></span><span>[]</span></span>, config: <span><a href="typedef/index.html#static-typedef-ESDocConfig">ESDocConfig</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/Publisher/publish.js.html#lineNumber27">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import publish from &apos;<span><a href="file/src/Publisher/publish.js.html#lineNumber27">esdoc/src/Publisher/publish.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>publish document as HTML.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">values</td>
+      <td data-ice="type"><span><span><a href="typedef/index.html#static-typedef-DocObject">DocObject</a></span><span>[]</span></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>all doc objects.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">asts</td>
+      <td data-ice="type"><span><span><a href="typedef/index.html#static-typedef-AST">AST</a></span><span>[]</span></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>all ASTs.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">config</td>
+      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-ESDocConfig">ESDocConfig</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>ESDoc config object.</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="tests">
+    <h4>Test:</h4>
+    <ul>
+      
+    <li data-ice="test"><span><a href="test-file/src/UnitTest/NotIncludeSourceTest.js.html#lineNumber7">Source code:</a></span></li>
+</ul>
+  </div>
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-shorten">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">shorten</span><span data-ice="signature">(doc: <span><a href="typedef/index.html#static-typedef-DocObject">DocObject</a></span>, asMarkdown: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/Publisher/Builder/util.js.html#lineNumber13">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {shorten} from &apos;<span><a href="file/src/Publisher/Builder/util.js.html#lineNumber13">esdoc/src/Publisher/Builder/util.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>shorten description.
+e.g. <code>this is JavaScript. this is Java.</code> =&gt; <code>this is JavaScript.</code>.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">doc</td>
+      <td data-ice="type"><span><a href="typedef/index.html#static-typedef-DocObject">DocObject</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>target doc object.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">asMarkdown</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+      <td data-ice="appendix"><ul><li>optional</li>
+<li>default: false</li></ul></td>
+      <td data-ice="description"><p></p><p>is true, test as markdown and convert to html.</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+        <td class="return-desc" data-ice="returnDescription"><p></p><p>shorten description.</p>
+<p></p>
+</td>
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <div data-ice="todo"><h4>TODO:</h4><ul><li><span>shorten before process markdown.</span></li></ul></div>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
