@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464897966588" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464899699411" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -191,8 +191,8 @@
                <ul>
                   
                <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~Plugin.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L6" data-scm-type="github">Plugin</a></span></li>
-<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L137" data-scm-type="github">PluginEvent</a></span></li>
-<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L154" data-scm-type="github">plugin</a></span></li>
+<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L144" data-scm-type="github">PluginEvent</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L161" data-scm-type="github">plugin</a></span></li>
 </ul>
             </li>
 </ul>
@@ -462,10 +462,12 @@ class Plugin {
   /**
    * handle code.
    * @param {string} code - original code.
+   * @param {string} filePath - source code file path.
    * @returns {string} handled code.
    */
-  onHandleCode(code) {
+  onHandleCode(code, filePath) {
     const ev = new PluginEvent({code});
+    ev.data.filePath = filePath;
     this._execHandler(&apos;onHandleCode&apos;, ev);
     return ev.data.code;
   }
@@ -473,11 +475,13 @@ class Plugin {
   /**
    * handle code parser.
    * @param {function(code: string)} parser - original js parser.
-   * @returns {function(code: string)} handled parser.
+   * @param {object} option - default Espree options.
+   * @param {string} filePath - source code file path.
+   * @param {string} code - original code.   * @returns {function(code: string)} handled parser.
    */
-  onHandleCodeParser(parser) {
+  onHandleCodeParser(parser, option, filePath, code) {
     const ev = new PluginEvent();
-    ev.data.parser = parser;
+    ev.data = { parser, option, filePath, code };
     this._execHandler(&apos;onHandleCodeParser&apos;, ev);
     return ev.data.parser;
   }
@@ -485,10 +489,13 @@ class Plugin {
   /**
    * handle AST.
    * @param {AST} ast - original ast.
-   * @returns {AST} handled AST.
+   * @param {string} filePath - source code file path.
+   * @param {string} code - original code.   * @returns {AST} handled AST.
    */
-  onHandleAST(ast) {
+  onHandleAST(ast, filePath, code) {
     const ev = new PluginEvent({ast});
+    ev.data.filePath = filePath;
+    ev.data.code = code;
     this._execHandler(&apos;onHandleAST&apos;, ev);
     return ev.data.ast;
   }

@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464897966588" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464899699411" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -191,8 +191,8 @@
                <ul>
                   
                <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~Plugin.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L6" data-scm-type="github">Plugin</a></span></li>
-<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L137" data-scm-type="github">PluginEvent</a></span></li>
-<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L154" data-scm-type="github">plugin</a></span></li>
+<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L144" data-scm-type="github">PluginEvent</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L161" data-scm-type="github">plugin</a></span></li>
 </ul>
             </li>
 </ul>
@@ -574,7 +574,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/Plugin/Plugin.js~Plugin.html#instance-method-onHandleAST">onHandleAST</a></span></span><span data-ice="signature">(ast: <span><a href="typedef/index.html#static-typedef-AST">AST</a></span>): <span><a href="typedef/index.html#static-typedef-AST">AST</a></span></span>
+           <span data-ice="name"><span><a href="class/src/Plugin/Plugin.js~Plugin.html#instance-method-onHandleAST">onHandleAST</a></span></span><span data-ice="signature">(ast: <span><a href="typedef/index.html#static-typedef-AST">AST</a></span>, filePath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -600,7 +600,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/Plugin/Plugin.js~Plugin.html#instance-method-onHandleCode">onHandleCode</a></span></span><span data-ice="signature">(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+           <span data-ice="name"><span><a href="class/src/Plugin/Plugin.js~Plugin.html#instance-method-onHandleCode">onHandleCode</a></span></span><span data-ice="signature">(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, filePath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -626,7 +626,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/Plugin/Plugin.js~Plugin.html#instance-method-onHandleCodeParser">onHandleCodeParser</a></span></span><span data-ice="signature">(parser: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span></span>
+           <span data-ice="name"><span><a href="class/src/Plugin/Plugin.js~Plugin.html#instance-method-onHandleCodeParser">onHandleCodeParser</a></span></span><span data-ice="signature">(parser: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span>, option: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, filePath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -944,7 +944,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber128">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber135">source</a></span></span>
     </span>
   </h3>
 
@@ -981,11 +981,11 @@
     
     
     
-    <span data-ice="name">onHandleAST</span><span data-ice="signature">(ast: <span><a href="typedef/index.html#static-typedef-AST">AST</a></span>): <span><a href="typedef/index.html#static-typedef-AST">AST</a></span></span>
+    <span data-ice="name">onHandleAST</span><span data-ice="signature">(ast: <span><a href="typedef/index.html#static-typedef-AST">AST</a></span>, filePath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber96">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber101">source</a></span></span>
     </span>
   </h3>
 
@@ -1013,6 +1013,22 @@
 <p></p>
 </td>
     </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">filePath</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>source code file path.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">code</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>original code.   * @returns {AST} handled AST.</p>
+<p></p>
+</td>
+    </tr>
 </tbody>
   </table>
 </div>
@@ -1022,10 +1038,8 @@
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span><a href="typedef/index.html#static-typedef-AST">AST</a></span></td>
-        <td class="return-desc" data-ice="returnDescription"><p></p><p>handled AST.</p>
-<p></p>
-</td>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1052,11 +1066,11 @@
     
     
     
-    <span data-ice="name">onHandleCode</span><span data-ice="signature">(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span data-ice="name">onHandleCode</span><span data-ice="signature">(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, filePath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber73">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber74">source</a></span></span>
     </span>
   </h3>
 
@@ -1081,6 +1095,14 @@
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p></p><p>original code.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">filePath</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>source code file path.</p>
 <p></p>
 </td>
     </tr>
@@ -1123,11 +1145,11 @@
     
     
     
-    <span data-ice="name">onHandleCodeParser</span><span data-ice="signature">(parser: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span></span>
+    <span data-ice="name">onHandleCodeParser</span><span data-ice="signature">(parser: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span>, option: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, filePath: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber84">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
@@ -1155,6 +1177,30 @@
 <p></p>
 </td>
     </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">option</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>default Espree options.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">filePath</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>source code file path.</p>
+<p></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">code</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>original code.   * @returns {function(code: string)} handled parser.</p>
+<p></p>
+</td>
+    </tr>
 </tbody>
   </table>
 </div>
@@ -1164,10 +1210,8 @@
     <h4>Return:</h4>
     <table>
       <tr>
-        <td class="return-type" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(code: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span></span></td>
-        <td class="return-desc" data-ice="returnDescription"><p></p><p>handled parser.</p>
-<p></p>
-</td>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
       </tr>
     </table>
     <div data-ice="returnProperties">
@@ -1269,7 +1313,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
@@ -1348,7 +1392,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber107">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Plugin/Plugin.js.html#lineNumber114">source</a></span></span>
     </span>
   </h3>
 

@@ -4719,7 +4719,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import fs from 'fs-extra';\nimport path from 'path';\nimport espree from 'espree';\nimport Plugin from '../Plugin/Plugin.js';\n\nconst esmRegex = /(^\\s*|[}\\);\\n]\\s*)(import\\s*(['\"]|(\\*\\s+as\\s+)?[^\"'\\(\\)\\n;]+\\s*from\\s*['\"]|\\{)|export\\s+\\*\\s+from\\s+[\"']|export\\s* (\\{|default|function|class|var|const|let|async\\s+function))/;\n\n/**\n * ECMAScript Parser class.\n *\n * @example\n * let ast = ESParser.parse('./src/foo.js');\n */\nexport default class ESParser {\n  /**\n   * parse ECMAScript source code.\n   * @param {string} filePath - source code file path.\n   * @returns {AST} AST of source code.\n   */\n  static parse(filePath) {\n    let code = fs.readFileSync(filePath, {encode: 'utf8'}).toString();\n\n    code = Plugin.onHandleCode(code);\n\n    if (code.charAt(0) === '#') {\n      code = code.replace(/^#!/, '//');\n    }\n\n    let option = {\n      comments: true,\n      attachComment: true,\n      loc: true,\n      ecmaVersion: 6,\n      ecmaFeatures:\n      {\n        jsx: true\n      }\n    };\n\n    let parser = (code) => {\n      option.sourceType = esmRegex.test(code) ? 'module' : 'script';\n      return espree.parse(code, option);\n    };\n\n    parser = Plugin.onHandleCodeParser(parser);\n\n    let ast = parser(code);\n\n    ast = Plugin.onHandleAST(ast);\n\n    return ast;\n  }\n}\n",
+    "content": "import fs from 'fs-extra';\nimport path from 'path';\nimport espree from 'espree';\nimport Plugin from '../Plugin/Plugin.js';\n\nconst esmRegex = /(^\\s*|[}\\);\\n]\\s*)(import\\s*(['\"]|(\\*\\s+as\\s+)?[^\"'\\(\\)\\n;]+\\s*from\\s*['\"]|\\{)|export\\s+\\*\\s+from\\s+[\"']|export\\s* (\\{|default|function|class|var|const|let|async\\s+function))/;\n\n/**\n * ECMAScript Parser class.\n *\n * @example\n * let ast = ESParser.parse('./src/foo.js');\n */\nexport default class ESParser {\n  /**\n   * parse ECMAScript source code.\n   * @param {string} filePath - source code file path.\n   * @returns {AST} AST of source code.\n   */\n  static parse(filePath) {\n    let code = fs.readFileSync(filePath, {encode: 'utf8'}).toString();\n\n    code = Plugin.onHandleCode(code, filePath);\n\n    if (code.charAt(0) === '#') {\n      code = code.replace(/^#!/, '//');\n    }\n\n    let option = {\n      comments: true,\n      attachComment: true,\n      loc: true,\n      ecmaVersion: 6,\n      ecmaFeatures:\n      {\n        jsx: true\n      }\n    };\n\n    let parser = (code) => {\n      option.sourceType = esmRegex.test(code) ? 'module' : 'script';\n      return espree.parse(code, option);\n    };\n\n    parser = Plugin.onHandleCodeParser(parser, option, filePath, code);\n\n    let ast = parser(code);\n\n    ast = Plugin.onHandleAST(ast, filePath, code);\n\n    return ast;\n  }\n}\n",
     "___id": "T000002R000199",
     "___s": true
   },
@@ -5134,7 +5134,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import path from 'path';\n\n/**\n * Plugin system for your plugin.\n */\nclass Plugin {\n  /**\n   * create instance.\n   */\n  constructor()  {\n    this._plugins = null;\n  }\n\n  /**\n   * initialize with plugin property.\n   * @param {Array<{name: string, option: object}>} plugins - expect config.plugins property.\n   */\n  init(plugins = []) {\n    this._plugins = copy(plugins);\n  }\n\n  /**\n   * exec plugin handler.\n   * @param {string} handlerName - handler name(e.g. onHandleCode)\n   * @param {PluginEvent} ev - plugin event object.\n   * @param {boolean} [giveOption=false] - if true, event has plugin option.\n   * @private\n   */\n  _execHandler(handlerName, ev, giveOption = false) {\n    for (let item of this._plugins) {\n      let plugin;\n      if (item.name.match(/^[.\\/]/)) {\n        const pluginPath = path.resolve(item.name);\n        plugin = require(pluginPath);\n      } else {\n        module.paths.push('./node_modules');\n        plugin = require(item.name);\n        module.paths.pop();\n      }\n\n      if (!plugin[handlerName]) continue;\n\n      if (giveOption) ev.data.option = item.option;\n\n      plugin[handlerName](ev);\n    }\n  }\n\n  /**\n   * handle start.\n   */\n  onStart() {\n    const ev = new PluginEvent();\n    this._execHandler('onStart', ev, true);\n  }\n\n  /**\n   * handle config.\n   * @param {ESDocConfig} config - original esdoc config.\n   * @returns {ESDocConfig} handled config.\n   */\n  onHandleConfig(config) {\n    const ev = new PluginEvent({config});\n    this._execHandler('onHandleConfig', ev);\n    return ev.data.config;\n  }\n\n  /**\n   * handle code.\n   * @param {string} code - original code.\n   * @returns {string} handled code.\n   */\n  onHandleCode(code) {\n    const ev = new PluginEvent({code});\n    this._execHandler('onHandleCode', ev);\n    return ev.data.code;\n  }\n\n  /**\n   * handle code parser.\n   * @param {function(code: string)} parser - original js parser.\n   * @returns {function(code: string)} handled parser.\n   */\n  onHandleCodeParser(parser) {\n    const ev = new PluginEvent();\n    ev.data.parser = parser;\n    this._execHandler('onHandleCodeParser', ev);\n    return ev.data.parser;\n  }\n\n  /**\n   * handle AST.\n   * @param {AST} ast - original ast.\n   * @returns {AST} handled AST.\n   */\n  onHandleAST(ast) {\n    const ev = new PluginEvent({ast});\n    this._execHandler('onHandleAST', ev);\n    return ev.data.ast;\n  }\n\n  /**\n   * handle tag.\n   * @param {Tag} tag - original tag(s).\n   * @returns {Tag} handled tag.\n   */\n  onHandleTag(tag) {\n    const ev = new PluginEvent({tag});\n    this._execHandler('onHandleTag', ev);\n    return ev.data.tag;\n  }\n\n  /**\n   * handle HTML.\n   * @param {string} html - original HTML.\n   * @param {string} fileName - the fileName of the HTML file.\n   * @returns {string} handled HTML.\n   */\n  onHandleHTML(html, fileName) {\n    const ev = new PluginEvent({html, fileName});\n    this._execHandler('onHandleHTML', ev);\n    return ev.data.html;\n  }\n\n  /**\n   * handle complete\n   */\n  onComplete() {\n    const ev = new PluginEvent();\n    this._execHandler('onComplete', ev);\n  }\n}\n\n/**\n * Plugin Event class.\n */\nexport class PluginEvent {\n  /**\n   * create instance.\n   * @param {Object} data - event content.\n   */\n  constructor(data = {}) {\n    this.data = copy(data);\n  }\n}\n\nfunction copy(obj) {\n  return JSON.parse(JSON.stringify(obj));\n}\n\n/**\n * Instance of Plugin class.\n */\nexport default new Plugin();\n",
+    "content": "import path from 'path';\n\n/**\n * Plugin system for your plugin.\n */\nclass Plugin {\n  /**\n   * create instance.\n   */\n  constructor()  {\n    this._plugins = null;\n  }\n\n  /**\n   * initialize with plugin property.\n   * @param {Array<{name: string, option: object}>} plugins - expect config.plugins property.\n   */\n  init(plugins = []) {\n    this._plugins = copy(plugins);\n  }\n\n  /**\n   * exec plugin handler.\n   * @param {string} handlerName - handler name(e.g. onHandleCode)\n   * @param {PluginEvent} ev - plugin event object.\n   * @param {boolean} [giveOption=false] - if true, event has plugin option.\n   * @private\n   */\n  _execHandler(handlerName, ev, giveOption = false) {\n    for (let item of this._plugins) {\n      let plugin;\n      if (item.name.match(/^[.\\/]/)) {\n        const pluginPath = path.resolve(item.name);\n        plugin = require(pluginPath);\n      } else {\n        module.paths.push('./node_modules');\n        plugin = require(item.name);\n        module.paths.pop();\n      }\n\n      if (!plugin[handlerName]) continue;\n\n      if (giveOption) ev.data.option = item.option;\n\n      plugin[handlerName](ev);\n    }\n  }\n\n  /**\n   * handle start.\n   */\n  onStart() {\n    const ev = new PluginEvent();\n    this._execHandler('onStart', ev, true);\n  }\n\n  /**\n   * handle config.\n   * @param {ESDocConfig} config - original esdoc config.\n   * @returns {ESDocConfig} handled config.\n   */\n  onHandleConfig(config) {\n    const ev = new PluginEvent({config});\n    this._execHandler('onHandleConfig', ev);\n    return ev.data.config;\n  }\n\n  /**\n   * handle code.\n   * @param {string} code - original code.\n   * @param {string} filePath - source code file path.\n   * @returns {string} handled code.\n   */\n  onHandleCode(code, filePath) {\n    const ev = new PluginEvent({code});\n    ev.data.filePath = filePath;\n    this._execHandler('onHandleCode', ev);\n    return ev.data.code;\n  }\n\n  /**\n   * handle code parser.\n   * @param {function(code: string)} parser - original js parser.\n   * @param {object} option - default Espree options.\n   * @param {string} filePath - source code file path.\n   * @param {string} code - original code.   * @returns {function(code: string)} handled parser.\n   */\n  onHandleCodeParser(parser, option, filePath, code) {\n    const ev = new PluginEvent();\n    ev.data = { parser, option, filePath, code };\n    this._execHandler('onHandleCodeParser', ev);\n    return ev.data.parser;\n  }\n\n  /**\n   * handle AST.\n   * @param {AST} ast - original ast.\n   * @param {string} filePath - source code file path.\n   * @param {string} code - original code.   * @returns {AST} handled AST.\n   */\n  onHandleAST(ast, filePath, code) {\n    const ev = new PluginEvent({ast});\n    ev.data.filePath = filePath;\n    ev.data.code = code;\n    this._execHandler('onHandleAST', ev);\n    return ev.data.ast;\n  }\n\n  /**\n   * handle tag.\n   * @param {Tag} tag - original tag(s).\n   * @returns {Tag} handled tag.\n   */\n  onHandleTag(tag) {\n    const ev = new PluginEvent({tag});\n    this._execHandler('onHandleTag', ev);\n    return ev.data.tag;\n  }\n\n  /**\n   * handle HTML.\n   * @param {string} html - original HTML.\n   * @param {string} fileName - the fileName of the HTML file.\n   * @returns {string} handled HTML.\n   */\n  onHandleHTML(html, fileName) {\n    const ev = new PluginEvent({html, fileName});\n    this._execHandler('onHandleHTML', ev);\n    return ev.data.html;\n  }\n\n  /**\n   * handle complete\n   */\n  onComplete() {\n    const ev = new PluginEvent();\n    this._execHandler('onComplete', ev);\n  }\n}\n\n/**\n * Plugin Event class.\n */\nexport class PluginEvent {\n  /**\n   * create instance.\n   * @param {Object} data - event content.\n   */\n  constructor(data = {}) {\n    this.data = copy(data);\n  }\n}\n\nfunction copy(obj) {\n  return JSON.parse(JSON.stringify(obj));\n}\n\n/**\n * Instance of Plugin class.\n */\nexport default new Plugin();\n",
     "___id": "T000002R000210",
     "___s": true
   },
@@ -5151,7 +5151,7 @@
     "importPath": "esdoc/src/Plugin/Plugin.js",
     "importStyle": "{PluginEvent}",
     "description": "Plugin Event class.",
-    "lineNumber": 137,
+    "lineNumber": 144,
     "interface": false,
     "___id": "T000002R000211",
     "___s": true
@@ -5166,7 +5166,7 @@
     "longname": "src/Plugin/Plugin.js~PluginEvent#constructor",
     "access": null,
     "description": "create instance.",
-    "lineNumber": 142,
+    "lineNumber": 149,
     "params": [
       {
         "nullable": null,
@@ -5194,7 +5194,7 @@
     "longname": "src/Plugin/Plugin.js~PluginEvent#data",
     "access": null,
     "description": null,
-    "lineNumber": 143,
+    "lineNumber": 150,
     "undocument": true,
     "type": {
       "types": [
@@ -5217,7 +5217,7 @@
     "importPath": "esdoc/src/Plugin/Plugin.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 147,
+    "lineNumber": 154,
     "undocument": true,
     "params": [
       {
@@ -5461,7 +5461,7 @@
     "longname": "src/Plugin/Plugin.js~Plugin#onHandleCode",
     "access": null,
     "description": "handle code.",
-    "lineNumber": 73,
+    "lineNumber": 74,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5479,6 +5479,17 @@
         "name": "code",
         "description": "<p>original code.</p>\n",
         "descriptionRaw": "original code."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filePath",
+        "description": "<p>source code file path.</p>\n",
+        "descriptionRaw": "source code file path."
       }
     ],
     "return": {
@@ -5504,13 +5515,7 @@
     "longname": "src/Plugin/Plugin.js~Plugin#onHandleCodeParser",
     "access": null,
     "description": "handle code parser.",
-    "lineNumber": 84,
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{function(code: string)} handled parser."
-      }
-    ],
+    "lineNumber": 88,
     "params": [
       {
         "nullable": null,
@@ -5522,16 +5527,45 @@
         "name": "parser",
         "description": "<p>original js parser.</p>\n",
         "descriptionRaw": "original js parser."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "option",
+        "description": "<p>default Espree options.</p>\n",
+        "descriptionRaw": "default Espree options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filePath",
+        "description": "<p>source code file path.</p>\n",
+        "descriptionRaw": "source code file path."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "code",
+        "description": "<p>original code.   * @returns {function(code: string)} handled parser.</p>\n",
+        "descriptionRaw": "original code.   * @returns {function(code: string)} handled parser."
       }
     ],
     "return": {
-      "nullable": null,
       "types": [
-        "function(code: string)"
-      ],
-      "spread": false,
-      "description": "<p>handled parser.</p>\n",
-      "descriptionRaw": "handled parser."
+        "*"
+      ]
     },
     "generator": false,
     "___id": "T000002R000224",
@@ -5547,13 +5581,7 @@
     "longname": "src/Plugin/Plugin.js~Plugin#onHandleAST",
     "access": null,
     "description": "handle AST.",
-    "lineNumber": 96,
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{AST} handled AST."
-      }
-    ],
+    "lineNumber": 101,
     "params": [
       {
         "nullable": null,
@@ -5565,16 +5593,34 @@
         "name": "ast",
         "description": "<p>original ast.</p>\n",
         "descriptionRaw": "original ast."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filePath",
+        "description": "<p>source code file path.</p>\n",
+        "descriptionRaw": "source code file path."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "code",
+        "description": "<p>original code.   * @returns {AST} handled AST.</p>\n",
+        "descriptionRaw": "original code.   * @returns {AST} handled AST."
       }
     ],
     "return": {
-      "nullable": null,
       "types": [
-        "AST"
-      ],
-      "spread": false,
-      "description": "<p>handled AST.</p>\n",
-      "descriptionRaw": "handled AST."
+        "*"
+      ]
     },
     "generator": false,
     "___id": "T000002R000225",
@@ -5590,7 +5636,7 @@
     "longname": "src/Plugin/Plugin.js~Plugin#onHandleTag",
     "access": null,
     "description": "handle tag.",
-    "lineNumber": 107,
+    "lineNumber": 114,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5633,7 +5679,7 @@
     "longname": "src/Plugin/Plugin.js~Plugin#onHandleHTML",
     "access": null,
     "description": "handle HTML.",
-    "lineNumber": 119,
+    "lineNumber": 126,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5687,7 +5733,7 @@
     "longname": "src/Plugin/Plugin.js~Plugin#onComplete",
     "access": null,
     "description": "handle complete",
-    "lineNumber": 128,
+    "lineNumber": 135,
     "params": [],
     "generator": false,
     "___id": "T000002R000228",
@@ -5706,7 +5752,7 @@
     "importPath": "esdoc/src/Plugin/Plugin.js",
     "importStyle": "plugin",
     "description": "Instance of Plugin class.",
-    "lineNumber": 154,
+    "lineNumber": 161,
     "type": {
       "types": [
         "src/Plugin/Plugin.js~Plugin"

@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464897966588" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1464899699411" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -191,8 +191,8 @@
                <ul>
                   
                <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~Plugin.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L6" data-scm-type="github">Plugin</a></span></li>
-<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L137" data-scm-type="github">PluginEvent</a></span></li>
-<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L154" data-scm-type="github">plugin</a></span></li>
+<li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugin/Plugin.js~PluginEvent.html" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L144" data-scm-type="github">PluginEvent</a></span></li>
+<li data-ice="doc" class="nav-kind-variable"><span data-ice="docLink"><a href="variable/index.html#static-variable-plugin" data-scm-link="https://github.com/typhonjs-node-esdoc/esdoc/tree/master/src/Plugin/Plugin.js#L161" data-scm-type="github">plugin</a></span></li>
 </ul>
             </li>
 </ul>
@@ -414,7 +414,7 @@ export default class ESParser {
   static parse(filePath) {
     let code = fs.readFileSync(filePath, {encode: &apos;utf8&apos;}).toString();
 
-    code = Plugin.onHandleCode(code);
+    code = Plugin.onHandleCode(code, filePath);
 
     if (code.charAt(0) === &apos;#&apos;) {
       code = code.replace(/^#!/, &apos;//&apos;);
@@ -436,11 +436,11 @@ export default class ESParser {
       return espree.parse(code, option);
     };
 
-    parser = Plugin.onHandleCodeParser(parser);
+    parser = Plugin.onHandleCodeParser(parser, option, filePath, code);
 
     let ast = parser(code);
 
-    ast = Plugin.onHandleAST(ast);
+    ast = Plugin.onHandleAST(ast, filePath, code);
 
     return ast;
   }
