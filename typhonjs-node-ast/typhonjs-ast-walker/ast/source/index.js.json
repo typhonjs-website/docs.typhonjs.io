@@ -1,0 +1,291 @@
+{
+  "type": "Program",
+  "start": 0,
+  "end": 137,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 8,
+      "column": 31
+    }
+  },
+  "range": [
+    0,
+    137
+  ],
+  "body": [
+    {
+      "type": "ExpressionStatement",
+      "start": 0,
+      "end": 13,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 13
+        }
+      },
+      "range": [
+        0,
+        13
+      ],
+      "expression": {
+        "type": "Literal",
+        "start": 0,
+        "end": 12,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 12
+          }
+        },
+        "range": [
+          0,
+          12
+        ],
+        "value": "use strict",
+        "raw": "'use strict'"
+      }
+    },
+    {
+      "type": "ImportDeclaration",
+      "start": 15,
+      "end": 54,
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 39
+        }
+      },
+      "range": [
+        15,
+        54
+      ],
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "start": 22,
+          "end": 31,
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 7
+            },
+            "end": {
+              "line": 3,
+              "column": 16
+            }
+          },
+          "range": [
+            22,
+            31
+          ],
+          "local": {
+            "type": "Identifier",
+            "start": 22,
+            "end": 31,
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 7
+              },
+              "end": {
+                "line": 3,
+                "column": 16
+              }
+            },
+            "range": [
+              22,
+              31
+            ],
+            "name": "ASTWalker"
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "start": 37,
+        "end": 53,
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 22
+          },
+          "end": {
+            "line": 3,
+            "column": 38
+          }
+        },
+        "range": [
+          37,
+          53
+        ],
+        "value": "./ASTWalker.js",
+        "raw": "'./ASTWalker.js'"
+      },
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Provides a default ASTWalker instance.\n ",
+          "start": 56,
+          "end": 105,
+          "range": [
+            56,
+            105
+          ],
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 0
+            },
+            "end": {
+              "line": 7,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "start": 106,
+      "end": 137,
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 31
+        }
+      },
+      "range": [
+        106,
+        137
+      ],
+      "declaration": {
+        "type": "NewExpression",
+        "start": 121,
+        "end": 136,
+        "loc": {
+          "start": {
+            "line": 8,
+            "column": 15
+          },
+          "end": {
+            "line": 8,
+            "column": 30
+          }
+        },
+        "range": [
+          121,
+          136
+        ],
+        "callee": {
+          "type": "Identifier",
+          "start": 125,
+          "end": 134,
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 19
+            },
+            "end": {
+              "line": 8,
+              "column": 28
+            }
+          },
+          "range": [
+            125,
+            134
+          ],
+          "name": "ASTWalker"
+        },
+        "arguments": [],
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * Provides a default ASTWalker instance.\n ",
+            "start": 56,
+            "end": 105,
+            "range": [
+              56,
+              105
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 0
+              },
+              "end": {
+                "line": 7,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Provides a default ASTWalker instance.\n ",
+          "start": 56,
+          "end": 105,
+          "range": [
+            56,
+            105
+          ],
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 0
+            },
+            "end": {
+              "line": 7,
+              "column": 3
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sourceType": "module",
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n * Provides a default ASTWalker instance.\n ",
+      "start": 56,
+      "end": 105,
+      "range": [
+        56,
+        105
+      ],
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 3
+        }
+      }
+    }
+  ]
+}
