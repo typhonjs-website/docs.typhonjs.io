@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">typhonjs-escomplex API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1465767399241" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src" data-scm-type="github">src</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/ESComplex.js" data-scm-type="github">ESComplex.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/ESComplex.js~ESComplex.html" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/ESComplex.js#L11" data-scm-type="github">ESComplex</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-1" id="file-1" checked><label for="file-1" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/Parser.js" data-scm-type="github">Parser.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Parser.js~Parser.html" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/Parser.js#L26" data-scm-type="github">Parser</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p><img src="https://i.imgur.com/XBZF3h9.png" alt="typhonjs-escomplex"></p>
+<p><a href="https://www.npmjs.com/package/typhonjs-escomplex"><img src="https://img.shields.io/npm/v/typhonjs-escomplex.svg?label=npm" alt="NPM"></a>
+<a href="http://docs.typhonjs.io/typhonjs-node-escomplex/typhonjs-escomplex/"><img src="http://docs.typhonjs.io/typhonjs-node-escomplex/typhonjs-escomplex/badge.svg" alt="Documentation"></a>
+<a href="https://en.wikipedia.org/wiki/Indent_style#Allman_style"><img src="https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat" alt="Code Style"></a>
+<a href="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat" alt="License"></a>
+<a href="https://gitter.im/typhonjs/TyphonJS"><img src="https://img.shields.io/gitter/room/typhonjs/TyphonJS.svg" alt="Gitter"></a></p>
+<p><a href="https://travis-ci.org/typhonjs-node-escomplex/typhonjs-escomplex"><img src="https://travis-ci.org/typhonjs-node-escomplex/typhonjs-escomplex.svg?branch=master" alt="Build Status"></a>
+<a href="https://codecov.io/github/typhonjs-node-escomplex/typhonjs-escomplex"><img src="https://img.shields.io/codecov/c/github/typhonjs-node-escomplex/typhonjs-escomplex.svg" alt="Coverage"></a>
+<a href="https://www.versioneye.com/user/projects/575dc05d7757a0003bd4c2a3"><img src="https://www.versioneye.com/user/projects/575dc05d7757a0003bd4c2a3/badge.svg?style=flat" alt="Dependency Status"></a></p>
+<p>Please note that this is a permanent fork / rewrite of escomplex for next generation Javascript complexity reports. This future NPM module utilizes <a href="https://github.com/babel/babylon">babylon</a> w/ all plugins enabled to parse JS source code feeding the rest of the AST / processing modules which are available separately. Please review the <a href="https://github.com/typhonjs-node-escomplex">typhonjs-node-escomplex</a> organization for all of the separate components which may be used independently if direct AST processing is necessary.</p>
+<p>Work is swiftly being finished, so please be patient as a public launch is imminent. </p>
+<p>More information forthcoming. This NPM module is currently not published, but can be linked to from Github as a dependency in <code>package.json</code> as follows:</p>
+<pre><code><code class="source-code prettyprint">&quot;dependencies&quot;: {
+  &quot;typhonjs-escomplex&quot;: &quot;git+https://git@github.com/typhonjs-node-escomplex/typhonjs-escomplex.git&quot;,
+}</code>
+</code></pre><p>An ES6 example follows:</p>
+<pre><code><code class="source-code prettyprint">import escomplex from &apos;typhonjs-escomplex&apos;;
+
+const report = escomplex.analyze(&lt;some JS source code&gt;);
+
+// ------
+
+const sources = 
+[
+   { code: &lt;some JS source code&gt;, path: &apos;a/file/path/1&apos; },
+   { code: &lt;some JS source code&gt;, path: &apos;a/file/path/2&apos; }
+]);
+
+const results = escomplex.analyzeProject(sources);</code>
+</code></pre><p>A CJS example follows:</p>
+<pre><code><code class="source-code prettyprint">var escomplex = require(&apos;typhonjs-escomplex&apos;);
+
+var report = escomplex.analyze(&lt;some JS source code&gt;);
+
+// ------
+
+var sources = 
+[
+   { code: &lt;some JS source code&gt;, path: &apos;a/file/path/1&apos; },
+   { code: &lt;some JS source code&gt;, path: &apos;a/file/path/2&apos; }
+]);
+
+var results = escomplex.analyzeProject(sources);</code>
+</code></pre><hr>
+<p>Old ESComplex README info:</p>
+<p>Software complexity analysis
+of JavaScript-family abstract syntax trees.
+The back-end for <a href="https://github.com/jared-stilwell/complexity-report">complexity-report</a>.</p>
+<ul>
+<li><a href="#metrics">Metrics</a></li>
+<li><a href="#links-to-research">Links to research</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#arguments">Arguments</a><ul>
+<li><a href="#ast">ast</a></li>
+<li><a href="#walker">walker</a></li>
+<li><a href="#options">options</a></li>
+</ul>
+</li>
+<li><a href="#result">Result</a><ul>
+<li><a href="#for-a-single-module">For a single module</a></li>
+<li><a href="#for-multiple-modules">For multiple modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#related-projects">Related projects</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id="metrics">Metrics</h2>
+<p>Currently the library reports on:</p>
+<ul>
+<li>Lines of code:
+Both physical (the number of lines in a module or function)
+and logical (a count of the imperative statements).
+A crude measure.</li>
+<li>Number of parameters:
+Analysed statically
+from the function signature,
+so no accounting is made
+for functions that rely on the <code>arguments</code> object.
+Lower is better.</li>
+<li>Cyclomatic complexity:
+Defined by Thomas J. McCabe in 1976,
+this is a count of the number of cycles
+in the program flow control graph.
+Effectively the number of distinct paths
+through a block of code.
+Lower is better.</li>
+<li>Cyclomatic complexity density:
+Proposed as a modification
+to cyclomatic complexity
+by Geoffrey K. Gill and Chris F. Kemerer in 1991,
+this metric simply re-expresses it
+as a percentage of the logical lines of code.
+Lower is better.</li>
+<li>Halstead metrics:
+Defined by Maurice Halstead in 1977,
+these metrics are calculated
+from the numbers of operators
+and operands in each function.
+Lower is better.</li>
+<li>Maintainability index:
+Defined by Paul Oman &amp; Jack Hagemeister in 1991,
+this is a logarithmic scale
+from negative infinity to 171,
+calculated from
+the logical lines of code,
+the cyclomatix complexity
+and the Halstead effort.
+Higher is better.</li>
+<li>Dependencies:
+A count of the calls
+to CommonJS and AMD <code>require</code>.
+Analysed statically
+from the function signature,
+so no accounting is made
+for dynamic calls
+where a variable or function is
+obscuring the nature of the dependency.
+Lower is better.</li>
+<li>First-order density:
+The percentage of all possible internal dependencies
+that are actually realised in the project.
+Lower is better.</li>
+<li>Change cost:
+The percentage of modules affected,
+on average,
+when one module in the project
+is changed.
+Lower is better.</li>
+<li>Core size:
+The percentage of modules
+that are both widely depended on
+and themselves depend on other modules.
+Lower is better.</li>
+</ul>
+<p>It is important to note
+that none of these metrics
+can compete with the insight
+of a competent developer.
+At best,
+they are an automatable warning system,
+which can help to identify areas of code
+that warrant closer inspection
+by a human being.</p>
+<h2 id="links-to-research">Links to research</h2>
+<ul>
+<li><a href="http://www.literateprogramming.com/mccabe.pdf">A Complexity Measure</a>,
+by Thomas J McCabe.</li>
+<li><a href="http://www.pitt.edu/~ckemerer/CK%20research%20papers/CyclomaticComplexityDensity_GillKemerer91.pdf">Cyclomatic Complexity Density and Software Maintenance Productivity</a>,
+by Geoffrey K. Gill and Chris F. Kemerer.</li>
+<li><a href="http://horst-zuse.homepage.t-online.de/z-halstead-final-05-1.pdf">Resolving the Mysteries of the Halstead Measures</a>,
+by Horst Zuse.</li>
+<li><a href="http://www.people.hbs.edu/cbaldwin/DR2/MRBDesignStructure17thSep1.pdf">Exploring the Structure of Complex Software Designs: An Empirical Study of Open Source and Proprietary Code</a>,
+by Alan MacCormack, John Rusnak and Carliss Baldwin.</li>
+<li><a href="http://sdm.mit.edu/docs/akaikine_thesis.pdf">The Impact of Software Design Structure on Product Maintenance Costs and Measurement of Economic Benefits of Product Redesign</a>,
+by Andrei Akaikine.</li>
+<li><a href="https://avandeursen.com/2014/08/29/think-twice-before-using-the-maintainability-index/">Think Twice Before Using the &#x201C;Maintainability Index&#x201D;</a> by Arie van Deursen.</li>
+<li><a href="http://www.rose-hulman.edu/Users/faculty/young/CS-Classes/csse575/Resources/maintainabilityMeas05314233.pdf">A Systematic Review of Software Maintainability Prediction and Metrics</a>,
+by Mehwish Riaz, Emilia Mendes and Ewan Tempero.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>The library is published on npm
+under the name <code>escomplex</code>.
+To install,
+you can add it to the dependencies
+in your <code>package.json</code> file
+or simply run:</p>
+<pre><code><code class="source-code prettyprint">npm i escomplex --save</code>
+</code></pre><h2 id="usage">Usage</h2>
+<p>You can load escomplex
+in your own code
+by calling <code>require</code>:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">const escomplex = require(&apos;escomplex&apos;);</code>
+</code></pre>
+<p>escomplex exports two primary functions,
+<code>analyze</code> and <code>processResults</code></p>
+<h3 id="analyse">analyse</h3>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">const result = escomplex.analyse(source, options);</code>
+</code></pre>
+<h4 id="arguments">Arguments</h4>
+<h5 id="ast">ast</h5>
+<p>The first argument, <code>source</code>, must be either a string or an array of objects. If it is an array, each object should include a <code>path</code> property that is either a relative or full path to the equivalent module on disk and a <code>code</code> with the contents of the module. As well as identifying each of the result objects, the path property is also used during dependency analysis.</p>
+<h5 id="options">options</h5>
+<p>The third argument, <code>options</code>,
+is an optional object
+containing properties that modify
+some of the complexity calculations:</p>
+<ul>
+<li><code>options.logicalor</code>:
+Boolean indicating whether operator <code>||</code>
+should be considered a source of cyclomatic complexity,
+defaults to <code>true</code>.</li>
+<li><code>options.switchcase</code>:
+Boolean indicating whether <code>switch</code> statements
+should be considered a source of cyclomatic complexity,
+defaults to <code>true</code>.</li>
+<li><code>options.forin</code>:
+Boolean indicating whether <code>for</code>...<code>in</code> loops
+should be considered a source of cyclomatic complexity,
+defaults to <code>false</code>.</li>
+<li><code>options.trycatch</code>:
+Boolean indicating whether <code>catch</code> clauses
+should be considered a source of cyclomatic complexity,
+defaults to <code>false</code>.</li>
+<li><code>options.newmi</code>:
+Boolean indicating whether the maintainability
+index should be rebased on a scale from 0 to 100,
+defaults to <code>false</code>.</li>
+<li><code>options.skipCalculation</code>:
+<em>only valid for when source is an array of files</em>
+Boolean indicating if we should skip processing of certain values,
+such as the adjacency and visibility matrixes,
+core sizes, and average values loc, etc.</li>
+<li><code>options.noCoreSize</code>:
+Skips creating the visibility matrix and calculating the coreSize,
+which can be very expensive for large projects</li>
+</ul>
+<h3 id="processresults">processResults</h3>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">const noCoreSize = false;
+escomplex.processResults(result, noCoreSize);</code>
+</code></pre>
+<p>This function takes a report object
+and computes aggregate scores for all individual files and also adjacency and visibility matrices. This is useful for combining together multiple report objects and recomputing aggregate scores.</p>
+<h4 id="arguments">Arguments</h4>
+<h5 id="result">Result</h5>
+<p>A result object of the form:</p>
+<pre><code class="lang-JavaScript"><code class="source-code prettyprint">var result = {
+  reports: [
+    {
+      // same format as module return
+    }
+  ]
+}</code>
+</code></pre>
+<h4 id="nocoresize">noCoreSize</h4>
+<p>a boolean indicating not to calculate the visibilityMatrix or core size</p>
+<h3 id="result-format">Result Format</h3>
+<p>Both <code>analyze</code> and <code>processResults</code>
+return a report of the following format,
+with some variation depending on the given options.</p>
+<h4 id="for-a-single-module">For a single module</h4>
+<p>If a single abstract syntax tree object
+is passed in the <code>ast</code> argument,
+the result will be a report object
+that looks like the following:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">{
+    maintainability: 171,
+    dependencies: [],
+    aggregate: {
+        sloc: {
+            logical: 0,
+            physical: 0
+        },
+        params: 0,
+        cyclomatic: 1,
+        cyclomaticDensity: 1,
+        halstead: {
+            vocabulary: 0,
+            difficulty: 0,
+            volume: 0,
+            effort: 0,
+            bugs: 0,
+            time: 0
+        }
+    },
+    functions: [
+        {
+            name: &apos;&apos;,
+            line: 0,
+            sloc: {
+                logical: 0,
+                physical: 0
+            },
+            params: 0,
+            cyclomatic: 1,
+            cyclomaticDensity: 1,
+            halstead: {
+                vocabulary: 0,
+                difficulty: 0,
+                volume: 0,
+                effort: 0,
+                bugs: 0,
+                time: 0
+            }
+        },
+        ...
+    ]
+}</code>
+</code></pre>
+<p>The meaning of those values, briefly,
+is as follows
+(see <a href="#metrics">metrics</a>
+for more information
+on each one):</p>
+<ul>
+<li><code>report.maintainability</code>:
+The maintainability index for the module.</li>
+<li><code>report.dependencies</code>:
+The array of CommonJS/AMD dependencies for the module.</li>
+<li><code>report.aggregate.sloc.physical</code>:
+Physical lines of code for the module.
+Will be <code>undefined</code>
+if the syntax tree
+is not annotated
+with line number data.</li>
+<li><code>report.aggregate.sloc.logical</code>:
+Logical lines of code for the module.</li>
+<li><code>report.aggregate.params</code>:
+Parameter count for the module.</li>
+<li><code>report.aggregate.cyclomatic</code>:
+Cyclomatic complexity for the module.</li>
+<li><code>report.aggregate.cyclomaticDensity</code>:
+Cyclomatic complexity density for the module.</li>
+<li><code>report.aggregate.halstead.vocabulary</code>:
+Halstead vocabulary size for the module.</li>
+<li><code>report.aggregate.halstead.difficulty</code>:
+Halstead difficulty for the module.</li>
+<li><code>report.aggregate.halstead.volume</code>:
+Halstead volume for the module.</li>
+<li><code>report.aggregate.halstead.effort</code>:
+Halstead effort for the module.</li>
+<li><code>report.aggregate.halstead.bugs</code>:
+Halstead bugs for the module.</li>
+<li><code>report.aggregate.halstead.time</code>:
+Halstead time for the module.</li>
+<li><code>report.functions[n].name</code>:
+Function name.</li>
+<li><code>report.functions[n].line</code>:
+Line number that the function starts on.
+Will be <code>undefined</code>
+if the syntax tree
+is not annotated
+with line number data.</li>
+<li><code>report.functions[n].sloc.physical</code>:
+Physical lines of code for the function.
+Will be <code>undefined</code>
+if the syntax tree
+is not annotated
+with line number data.</li>
+<li><code>report.functions[n].sloc.logical</code>:
+Logical lines of code for the function.</li>
+<li><code>report.functions[n].params</code>:
+Parameter count for the function.</li>
+<li><code>report.functions[n].cyclomatic</code>:
+Cyclomatic complexity for the function.</li>
+<li><code>report.functions[n].cyclomaticDensity</code>:
+Cyclomatic complexity density for the function.</li>
+<li><code>report.functions[n].halstead.vocabulary</code>:
+Halstead vocabulary size for the function.</li>
+<li><code>report.functions[n].halstead.difficulty</code>:
+Halstead difficulty for the function.</li>
+<li><code>report.functions[n].halstead.volume</code>:
+Halstead volume for the function.</li>
+<li><code>report.functions[n].halstead.effort</code>:
+Halstead effort for the function.</li>
+<li><code>report.functions[n].halstead.bugs</code>:
+Halstead bugs for the function.</li>
+<li><code>report.functions[n].halstead.time</code>:
+Halstead time for the function.</li>
+</ul>
+<h4 id="for-multiple-modules">For multiple modules</h4>
+<p>If an array of sources is passed in the <code>source</code> argument, the result will be an object
+that looks like the following:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">{
+    reports: [
+        ...
+    ],
+    adjacencyMatrix: [
+        [ 0 ]
+    ],
+    firstOrderDensity: 0,
+    visibilityMatrix: [
+        [ 0 ]
+    ],
+    changeCost: 100,
+    coreSize: 100,
+    loc: 0,
+    cyclomatic: 1,
+    effort: 0,
+    params: 0,
+    maintainability: 171
+}</code>
+</code></pre>
+<p>Those properties
+are defined as follows:</p>
+<ul>
+<li><code>result.reports</code>:
+An array of report objects,
+each one in the same format
+<a href="#for-a-single-module">described above</a>
+but with an extra property <code>path</code>
+that matches the <code>path</code> property
+from its corresponding syntax tree.
+This <code>path</code> property is required
+because the reports array gets sorted
+during dependency analysis.</li>
+<li><code>result.adjacencyMatrix</code>:
+The adjacency
+design structure matrix (DSM)
+for the project.
+This is a two-dimensional array,
+each dimension with the same order and length
+as the <code>reports</code> array.
+Each row and column
+represents its equivalent
+indexed module
+from the <code>reports</code> array,
+with values along the horizontal
+being <code>1</code>
+when that module
+directly depends on another
+and values along the vertical
+being <code>1</code>
+when that module
+is directly depended on by another.
+All other values are <code>0</code>.</li>
+<li><code>result.firstOrderDensity</code>:
+The first-order density for the project.</li>
+<li><code>result.visibilityMatrix</code>:
+The visibility DSM for the project.
+Like the adjacency matrix,
+but expanded to incorporate
+indirect dependencies.
+Will be missing if <code>noCoreSize</code> is passed
+as an option.</li>
+<li><code>result.changeCost</code>:
+The change cost for the project.
+Will be missing if <code>noCoreSize</code> is passed
+as an option.</li>
+<li><code>result.coreSize</code>:
+The core size for the project.</li>
+<li><code>result.loc</code>:
+The average per-function
+count of logical lines of code.</li>
+<li><code>result.cyclomatic</code>:
+The average per-function
+cyclomatic complexity.</li>
+<li><code>result.effort</code>:
+The average per-function
+Halstead effort.</li>
+<li><code>result.params</code>:
+The average per-function
+parameter count.</li>
+<li><code>result.maintainability</code>:
+The average per-module
+maintainability index.</li>
+</ul>
+<h2 id="related-projects">Related projects</h2>
+<ul>
+<li><a href="https://github.com/es-analysis/plato">plato</a>:
+JavaScript source code visualization, static analysis, and complexity tool.</li>
+<li><a href="https://github.com/bahmutov/js-complexity-viz">jsc</a>:
+JavaScript source code complexity tool.</li>
+<li><a href="https://github.com/cliffano/bob">bob</a>:
+Minimalist-omakase build tool for node.js projects.</li>
+<li><a href="https://github.com/auchenberg/cardio">cardio</a>:
+A web application health tool.</li>
+<li><a href="https://github.com/vigetlabs/grunt-complexity">grunt-complexity</a>:
+A JavaScript complexity analysis grunt task.</li>
+<li><a href="https://github.com/sahlas/brackets-crjs">brackets-crjs</a>:
+Brackets extension.</li>
+<li><a href="https://github.com/slyg/jscomplexity">jscomplexity</a>:
+JS cyclomatic complexity report generator.</li>
+<li><a href="https://github.com/lorenzofox3/karma-complexity-preprocessor">karma-complexity-processor</a>:
+A preprocessor for karma runner to give some metrics about code complexity.</li>
+<li><a href="https://github.com/spion/crlint.js">crlint</a>:
+JS linter based on complexity report results.</li>
+</ul>
+<h2 id="development">Development</h2>
+<p>Refer to the <a href="https://github.com/jared-stilwell/escomplex/blob/master/CONTRIBUTING.md">contribution guidelines</a>
+before submitting a pull request.</p>
+<p>Source code is in <code>/src</code>.
+Unit tests are in <code>/test</code>.
+You can run the tests with <code>npm test</code>.
+You can run the linter with <code>npm run lint</code>.
+Make sure you&apos;ve installed
+all the dependencies
+with <code>npm install</code>
+first.</p>
+<h2 id="license">License</h2>
+<p><a href="https://github.com/typhonjs-node-escomplex/escomplex/blob/master/LICENSE">MPLv2</a></p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,1776 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/ESComplex.js",
+    "memberof": null,
+    "longname": "src/ESComplex.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "'use strict';\n\nimport ESComplexModule  from 'typhonjs-escomplex-module/src/ESComplexModule.js';\nimport ESComplexProject from 'typhonjs-escomplex-project/src/ESComplexProject.js';\n\nimport Parser           from './Parser.js';\n\n/**\n * Next generation code complexity reporting for Javascript abstract syntax trees (AST).\n */\nexport default class ESComplex\n{\n   /**\n    * Initializes ESComplex.\n    *\n    * @param {object}   options - module and project options including user plugins to load including:\n    * ```\n    * (object)             module - Provides an object hash of the following options for the module runtime:\n    *    (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n    *    (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.\n    *\n    * (object)             project - Provides an object hash of the following options for the project runtime:\n    *    (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n    *    (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.\n    * ```\n    */\n   constructor(options = {})\n   {\n      if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }\n\n      this._escomplexModule = new ESComplexModule(options.module);\n      this._escomplexProject = new ESComplexProject(options);\n   }\n\n   /**\n    * Parses the given source code then processes the generated AST and calculates metrics via plugins.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) module analyze options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyze(source, options, parserOptions)\n   {\n      if (typeof source !== 'string') { throw new TypeError('analyze error: `source` is not a `string`.'); }\n\n      return this._escomplexModule.analyze(Parser.parse(source, parserOptions), options);\n   }\n\n   /**\n    * Processes the given ast and calculates metrics via plugins.\n    *\n    * @param {object|Array}   ast - Javascript AST.\n    * @param {object}         options - (Optional) module analyze options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyzeAST(ast, options)\n   {\n      return this._escomplexModule.analyze(ast, options);\n   }\n\n   /**\n    * Processes the given sources and calculates project metrics via plugins.\n    *\n    * @param {Array}    sources - Array of object hashes containing `code` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   analyzeProject(sources, options, parserOptions)\n   {\n      // Parse sources and map entries to include `ast` entry from `code`.\n      const modules = sources.map((source) =>\n      {\n         try\n         {\n            return { ast: Parser.parse(source.code, parserOptions), path: source.path };\n         }\n         catch (error)\n         {\n            if (options.ignoreErrors) { return null; }\n\n            error.message = `${source.path}: ${error.message}`;\n            throw error;\n         }\n      })\n      .filter((source) => !!source);\n\n      return this._escomplexProject.analyze(modules, options);\n   }\n\n   /**\n    * Processes the given modules and calculates project metrics via plugins.\n    *\n    * @param {Array}    modules - Array of object hashes containing `ast` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   analyzeProjectAST(modules, options)\n   {\n      return this._escomplexProject.analyze(modules, options);\n   }\n\n   /**\n    * Provides a convenience method to parse the given source code and return the babylon AST.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - babylon generated AST.\n    */\n   parse(source, options)\n   {\n      return Parser.parse(source, options);\n   }\n\n   /**\n    * Processes existing project results and calculates metrics via plugins.\n    *\n    * @param {object}   results - An object hash with a `reports` entry that is an Array of module results.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   processProjectResults(results, options)\n   {\n      return this._escomplexProject.processResults(results, options);\n   }\n\n   // Asynchronous Promise based methods ----------------------------------------------------------------------------\n\n   /**\n    * Wraps in a Promise parsing of the given source code then processes the generated AST and calculates metrics via\n    * plugins.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) module analyze options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyzeThen(source, options, parserOptions)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyze(source, options, parserOptions)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given ast and calculates metrics via plugins.\n    *\n    * @param {object|Array}   ast - Javascript AST.\n    * @param {object}         options - (Optional) module analyze options.\n    *\n    * @returns {Promise<object>} - A single module report.\n    */\n   analyzeASTThen(ast, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeAST(ast, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given sources and calculates project metrics via plugins.\n    *\n    * @param {Array}    sources - Array of object hashes containing `code` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   analyzeProjectThen(sources, options, parserOptions)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeProject(sources, options, parserOptions)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given modules and calculates project metrics via plugins.\n    *\n    * @param {Array}    modules - Array of object hashes containing `ast` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   analyzeProjectASTThen(modules, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeProjectAST(modules, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise a convenience method to parse the given source code and return the babylon AST.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {Promise<object>} - babylon generated AST.\n    */\n   parseThen(source, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.parse(source, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing existing project results and calculates metrics via plugins.\n    *\n    * @param {object}   results - An object hash with a `reports` entry that is an Array of module results.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   processProjectResultsThen(results, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.processProjectResults(results, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n}\n",
+    "___id": "T000002R000002",
+    "___s": true
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "ESComplex",
+    "memberof": "src/ESComplex.js",
+    "longname": "src/ESComplex.js~ESComplex",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-escomplex/src/ESComplex.js",
+    "importStyle": "ESComplex",
+    "description": "Next generation code complexity reporting for Javascript abstract syntax trees (AST).",
+    "lineNumber": 11,
+    "interface": false,
+    "___id": "T000002R000003",
+    "___s": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#constructor",
+    "access": null,
+    "description": "Initializes ESComplex.",
+    "lineNumber": 27,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>module and project options including user plugins to load including:</p>\n<pre><code><code class=\"source-code prettyprint\">(object)             module - Provides an object hash of the following options for the module runtime:\n   (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n   (Array&lt;Object&gt;)   plugins - A list of ESComplexModule plugins that have already been instantiated.\n\n(object)             project - Provides an object hash of the following options for the project runtime:\n   (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n   (Array&lt;Object&gt;)   plugins - A list of ESComplexProject plugins that have already been instantiated.</code>\n</code></pre>",
+        "descriptionRaw": "module and project options including user plugins to load including:\n```\n(object)             module - Provides an object hash of the following options for the module runtime:\n   (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n   (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.\n\n(object)             project - Provides an object hash of the following options for the project runtime:\n   (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n   (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.\n```"
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000004",
+    "___s": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_escomplexModule",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#_escomplexModule",
+    "access": null,
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000005",
+    "___s": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_escomplexProject",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#_escomplexProject",
+    "access": null,
+    "description": null,
+    "lineNumber": 32,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000006",
+    "___s": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyze",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyze",
+    "access": null,
+    "description": "Parses the given source code then processes the generated AST and calculates metrics via plugins.",
+    "lineNumber": 44,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} - A single module report."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "<p>Javascript source code.</p>\n",
+        "descriptionRaw": "Javascript source code."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) module analyze options.</p>\n",
+        "descriptionRaw": "(Optional) module analyze options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "parserOptions",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "<p>A single module report.</p>\n",
+      "descriptionRaw": "A single module report."
+    },
+    "generator": false,
+    "___id": "T000002R000007",
+    "___s": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeAST",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeAST",
+    "access": null,
+    "description": "Processes the given ast and calculates metrics via plugins.",
+    "lineNumber": 59,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} - A single module report."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object",
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "ast",
+        "description": "<p>Javascript AST.</p>\n",
+        "descriptionRaw": "Javascript AST."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) module analyze options.</p>\n",
+        "descriptionRaw": "(Optional) module analyze options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "<p>A single module report.</p>\n",
+      "descriptionRaw": "A single module report."
+    },
+    "generator": false,
+    "___id": "T000002R000008",
+    "___s": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeProject",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeProject",
+    "access": null,
+    "description": "Processes the given sources and calculates project metrics via plugins.",
+    "lineNumber": 73,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "sources",
+        "description": "<p>Array of object hashes containing <code>code</code> and <code>path</code> entries.</p>\n",
+        "descriptionRaw": "Array of object hashes containing `code` and `path` entries."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) project processing options.</p>\n",
+        "descriptionRaw": "(Optional) project processing options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "parserOptions",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "{reports: Array<{}>}"
+      ],
+      "spread": false,
+      "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module results.</p>\n",
+      "descriptionRaw": "An object hash with a `reports` entry that is an Array of module results."
+    },
+    "generator": false,
+    "___id": "T000002R000009",
+    "___s": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeProjectAST",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeProjectAST",
+    "access": null,
+    "description": "Processes the given modules and calculates project metrics via plugins.",
+    "lineNumber": 103,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "modules",
+        "description": "<p>Array of object hashes containing <code>ast</code> and <code>path</code> entries.</p>\n",
+        "descriptionRaw": "Array of object hashes containing `ast` and `path` entries."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) project processing options.</p>\n",
+        "descriptionRaw": "(Optional) project processing options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "{reports: Array<{}>}"
+      ],
+      "spread": false,
+      "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module results.</p>\n",
+      "descriptionRaw": "An object hash with a `reports` entry that is an Array of module results."
+    },
+    "generator": false,
+    "___id": "T000002R000010",
+    "___s": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "parse",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#parse",
+    "access": null,
+    "description": "Provides a convenience method to parse the given source code and return the babylon AST.",
+    "lineNumber": 116,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} - babylon generated AST."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "<p>Javascript source code.</p>\n",
+        "descriptionRaw": "Javascript source code."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "<p>babylon generated AST.</p>\n",
+      "descriptionRaw": "babylon generated AST."
+    },
+    "generator": false,
+    "___id": "T000002R000011",
+    "___s": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "processProjectResults",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#processProjectResults",
+    "access": null,
+    "description": "Processes existing project results and calculates metrics via plugins.",
+    "lineNumber": 129,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "results",
+        "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module results.</p>\n",
+        "descriptionRaw": "An object hash with a `reports` entry that is an Array of module results."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) project processing options.</p>\n",
+        "descriptionRaw": "(Optional) project processing options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "{reports: Array<{}>}"
+      ],
+      "spread": false,
+      "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module results.</p>\n",
+      "descriptionRaw": "An object hash with a `reports` entry that is an Array of module results."
+    },
+    "generator": false,
+    "___id": "T000002R000012",
+    "___s": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeThen",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeThen",
+    "access": null,
+    "description": "Wraps in a Promise parsing of the given source code then processes the generated AST and calculates metrics via\nplugins.",
+    "lineNumber": 146,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object} - A single module report."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "<p>Javascript source code.</p>\n",
+        "descriptionRaw": "Javascript source code."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) module analyze options.</p>\n",
+        "descriptionRaw": "(Optional) module analyze options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "parserOptions",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "<p>A single module report.</p>\n",
+      "descriptionRaw": "A single module report."
+    },
+    "generator": false,
+    "___id": "T000002R000013",
+    "___s": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeASTThen",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeASTThen",
+    "access": null,
+    "description": "Wraps in a Promise processing the given ast and calculates metrics via plugins.",
+    "lineNumber": 163,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<object>} - A single module report."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object",
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "ast",
+        "description": "<p>Javascript AST.</p>\n",
+        "descriptionRaw": "Javascript AST."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) module analyze options.</p>\n",
+        "descriptionRaw": "(Optional) module analyze options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<object>"
+      ],
+      "spread": false,
+      "description": "<p>A single module report.</p>\n",
+      "descriptionRaw": "A single module report."
+    },
+    "generator": false,
+    "___id": "T000002R000014",
+    "___s": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeProjectThen",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeProjectThen",
+    "access": null,
+    "description": "Wraps in a Promise processing the given sources and calculates project metrics via plugins.",
+    "lineNumber": 182,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n                                           results."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "sources",
+        "description": "<p>Array of object hashes containing <code>code</code> and <code>path</code> entries.</p>\n",
+        "descriptionRaw": "Array of object hashes containing `code` and `path` entries."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) project processing options.</p>\n",
+        "descriptionRaw": "(Optional) project processing options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "parserOptions",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<{reports: Array<{}>}>"
+      ],
+      "spread": false,
+      "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module\n                                           results.</p>\n",
+      "descriptionRaw": "An object hash with a `reports` entry that is an Array of module\n                                           results."
+    },
+    "generator": false,
+    "___id": "T000002R000015",
+    "___s": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "analyzeProjectASTThen",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#analyzeProjectASTThen",
+    "access": null,
+    "description": "Wraps in a Promise processing the given modules and calculates project metrics via plugins.",
+    "lineNumber": 200,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n                                           results."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "modules",
+        "description": "<p>Array of object hashes containing <code>ast</code> and <code>path</code> entries.</p>\n",
+        "descriptionRaw": "Array of object hashes containing `ast` and `path` entries."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) project processing options.</p>\n",
+        "descriptionRaw": "(Optional) project processing options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<{reports: Array<{}>}>"
+      ],
+      "spread": false,
+      "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module\n                                           results.</p>\n",
+      "descriptionRaw": "An object hash with a `reports` entry that is an Array of module\n                                           results."
+    },
+    "generator": false,
+    "___id": "T000002R000016",
+    "___s": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "parseThen",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#parseThen",
+    "access": null,
+    "description": "Wraps in a Promise a convenience method to parse the given source code and return the babylon AST.",
+    "lineNumber": 217,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<object>} - babylon generated AST."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "<p>Javascript source code.</p>\n",
+        "descriptionRaw": "Javascript source code."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<object>"
+      ],
+      "spread": false,
+      "description": "<p>babylon generated AST.</p>\n",
+      "descriptionRaw": "babylon generated AST."
+    },
+    "generator": false,
+    "___id": "T000002R000017",
+    "___s": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "processProjectResultsThen",
+    "memberof": "src/ESComplex.js~ESComplex",
+    "longname": "src/ESComplex.js~ESComplex#processProjectResultsThen",
+    "access": null,
+    "description": "Wraps in a Promise processing existing project results and calculates metrics via plugins.",
+    "lineNumber": 235,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n                                           results."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "results",
+        "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module results.</p>\n",
+        "descriptionRaw": "An object hash with a `reports` entry that is an Array of module results."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) project processing options.</p>\n",
+        "descriptionRaw": "(Optional) project processing options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<{reports: Array<{}>}>"
+      ],
+      "spread": false,
+      "description": "<p>An object hash with a <code>reports</code> entry that is an Array of module\n                                           results.</p>\n",
+      "descriptionRaw": "An object hash with a `reports` entry that is an Array of module\n                                           results."
+    },
+    "generator": false,
+    "___id": "T000002R000018",
+    "___s": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Parser.js",
+    "memberof": null,
+    "longname": "src/Parser.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "'use strict';\n\nimport * as babylon from 'babylon';\n\n/**\n * Provides a comprehensive regex test to determine if source code is an ES Module.\n * @type {RegExp}\n */\nconst s_ESM_REGEX = /(^\\s*|[}\\);\\n]\\s*)(import\\s*(['\"]|(\\*\\s+as\\s+)?[^\"'\\(\\)\\n;]+\\s*from\\s*['\"]|\\{)|export\\s+\\*\\s+from\\s+[\"']|export\\s* (\\{|default|function|class|var|const|let|async\\s+function))/;\n\n/**\n * Default bablyon options applying all available plugins.\n * @type {{plugins: string[]}}\n */\nconst s_BABYLON_OPTIONS =\n{\n   plugins: ['asyncFunctions', 'asyncGenerators', 'classConstructorCall', 'classProperties',\n    'decorators', 'doExpressions', 'exportExtensions', 'exponentiationOperator', 'flow', 'functionBind', 'functionSent',\n     'jsx', 'objectRestSpread', 'trailingFunctionCommas']\n};\n\n/**\n * Provides a convenience wrapper around babylon applying an ES Modules regex test to automatically set `sourceType`\n * to `script` or `module`.\n */\nexport default class Parser\n{\n   /**\n    * Parses the given source with babylon.\n    *\n    * @param {string}   source - Javascript source code to parse.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object}\n    */\n   static parse(source, options)\n   {\n      options = typeof options === 'object' ? options : s_BABYLON_OPTIONS;\n      options.sourceType = s_ESM_REGEX.test(source) ? 'module' : 'script';\n      return babylon.parse(source, options);\n   }\n}\n\n",
+    "___id": "T000002R000019",
+    "___s": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_ESM_REGEX",
+    "memberof": "src/Parser.js",
+    "longname": "src/Parser.js~s_ESM_REGEX",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-escomplex/src/Parser.js",
+    "importStyle": null,
+    "description": "Provides a comprehensive regex test to determine if source code is an ES Module.",
+    "lineNumber": 9,
+    "type": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000020",
+    "___s": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_BABYLON_OPTIONS",
+    "memberof": "src/Parser.js",
+    "longname": "src/Parser.js~s_BABYLON_OPTIONS",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-escomplex/src/Parser.js",
+    "importStyle": null,
+    "description": "Default bablyon options applying all available plugins.",
+    "lineNumber": 15,
+    "type": {
+      "nullable": null,
+      "types": [
+        "{plugins: string[]}"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000021",
+    "___s": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Parser",
+    "memberof": "src/Parser.js",
+    "longname": "src/Parser.js~Parser",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-escomplex/src/Parser.js",
+    "importStyle": "Parser",
+    "description": "Provides a convenience wrapper around babylon applying an ES Modules regex test to automatically set `sourceType`\nto `script` or `module`.",
+    "lineNumber": 26,
+    "interface": false,
+    "___id": "T000002R000022",
+    "___s": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "parse",
+    "memberof": "src/Parser.js~Parser",
+    "longname": "src/Parser.js~Parser.parse",
+    "access": null,
+    "description": "Parses the given source with babylon.",
+    "lineNumber": 36,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{object}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "<p>Javascript source code to parse.</p>\n",
+        "descriptionRaw": "Javascript source code to parse."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
+        "descriptionRaw": "(Optional) overrides default babylon parser options."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000023",
+    "___s": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/index.js",
+    "memberof": null,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "'use strict';\n\nimport ESComplex from './ESComplex.js';\n\nexport default new ESComplex();\n",
+    "___id": "T000002R000024",
+    "___s": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000025",
+    "___s": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000026",
+    "___s": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000027",
+    "___s": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000028",
+    "___s": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000029",
+    "___s": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000030",
+    "___s": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000031",
+    "___s": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000032",
+    "___s": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000033",
+    "___s": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000034",
+    "___s": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000035",
+    "___s": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000036",
+    "___s": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000037",
+    "___s": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000038",
+    "___s": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000039",
+    "___s": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000040",
+    "___s": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000041",
+    "___s": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000042",
+    "___s": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000043",
+    "___s": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000044",
+    "___s": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000045",
+    "___s": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000046",
+    "___s": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000047",
+    "___s": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000048",
+    "___s": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000049",
+    "___s": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000050",
+    "___s": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000051",
+    "___s": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000052",
+    "___s": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000053",
+    "___s": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000054",
+    "___s": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000055",
+    "___s": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000056",
+    "___s": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000057",
+    "___s": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000058",
+    "___s": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000059",
+    "___s": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000060",
+    "___s": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000061",
+    "___s": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000062",
+    "___s": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000063",
+    "___s": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000064",
+    "___s": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000065",
+    "___s": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000066",
+    "___s": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000067",
+    "___s": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000068",
+    "___s": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000069",
+    "___s": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000070",
+    "___s": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true,
+    "___id": "T000002R000071",
+    "___s": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000072",
+    "___s": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000073",
+    "___s": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000074",
+    "___s": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000075",
+    "___s": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000076",
+    "___s": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000077",
+    "___s": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000078",
+    "___s": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true,
+    "___id": "T000002R000079",
+    "___s": true
+  }
+]
