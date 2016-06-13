@@ -1,0 +1,31 @@
+{
+  "coverage": "52.63%",
+  "expectCount": 38,
+  "actualCount": 20,
+  "files": {
+    "src/PluginMetricsModule.js": {
+      "expectCount": 38,
+      "actualCount": 20,
+      "undocumentLines": [
+        301,
+        308,
+        322,
+        332,
+        346,
+        352,
+        360,
+        370,
+        375,
+        380,
+        394,
+        399,
+        417,
+        450,
+        477,
+        482,
+        487,
+        492
+      ]
+    }
+  }
+}
