@@ -1,38 +1,74 @@
 window.esdocSearchIndex = [
   [
-    "typhonjs-escomplex-commons/src/plugin/syntax/abstractsyntaxloader.js~abstractsyntaxloader",
-    "class/src/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader.html",
-    "<span>AbstractSyntaxLoader</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/plugin/syntax/AbstractSyntaxLoader.js</span>",
+    "typhonjs-escomplex-commons/src/module/report/abstractreport.js~abstractreport",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html",
+    "<span>AbstractReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/AbstractReport.js</span>",
     "class"
   ],
   [
-    "typhonjs-escomplex-commons/src/traits/actualise.js~actualise",
-    "function/index.html#static-function-actualise",
-    "<span>actualise</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/traits/actualise.js</span>",
+    "typhonjs-escomplex-commons/src/module/plugin/syntax/abstractsyntaxloader.js~abstractsyntaxloader",
+    "class/src/module/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader.html",
+    "<span>AbstractSyntaxLoader</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/plugin/syntax/AbstractSyntaxLoader.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/report/classreport.js~classreport",
+    "class/src/module/report/ClassReport.js~ClassReport.html",
+    "<span>ClassReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/ClassReport.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/report/halsteaddata.js~halsteaddata",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html",
+    "<span>HalsteadData</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/HalsteadData.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/report/methodreport.js~methodreport",
+    "class/src/module/report/MethodReport.js~MethodReport.html",
+    "<span>MethodReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/MethodReport.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/report/modulereport.js~modulereport",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html",
+    "<span>ModuleReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/ModuleReport.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/traits/trait.js~trait",
+    "class/src/module/traits/Trait.js~Trait.html",
+    "<span>Trait</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/Trait.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/traits/traithalstead.js~traithalstead",
+    "class/src/module/traits/TraitHalstead.js~TraitHalstead.html",
+    "<span>TraitHalstead</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/TraitHalstead.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/traits/actualize.js~actualize",
+    "function/index.html#static-function-actualize",
+    "<span>actualize</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/actualize.js</span>",
     "function"
   ],
   [
-    "typhonjs-escomplex-commons/src/traits/actualiseoperands.js~actualiseoperands",
-    "function/index.html#static-function-actualiseOperands",
-    "<span>actualiseOperands</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/traits/actualiseOperands.js</span>",
+    "typhonjs-escomplex-commons/src/module/traits/actualizehalstead.js~actualizehalstead",
+    "function/index.html#static-function-actualizeHalstead",
+    "<span>actualizeHalstead</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/actualizeHalstead.js</span>",
     "function"
   ],
   [
-    "typhonjs-escomplex-commons/src/traits/actualiseoperators.js~actualiseoperators",
-    "function/index.html#static-function-actualiseOperators",
-    "<span>actualiseOperators</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/traits/actualiseOperators.js</span>",
-    "function"
-  ],
-  [
-    "typhonjs-escomplex-commons/src/traits/safearray.js~safearray",
+    "typhonjs-escomplex-commons/src/module/traits/safearray.js~safearray",
     "function/index.html#static-function-safeArray",
-    "<span>safeArray</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/traits/safeArray.js</span>",
+    "<span>safeArray</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/safeArray.js</span>",
     "function"
   ],
   [
-    "typhonjs-escomplex-commons/src/traits/safename.js~safename",
+    "typhonjs-escomplex-commons/src/module/traits/safename.js~safename",
     "function/index.html#static-function-safeName",
-    "<span>safeName</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/traits/safeName.js</span>",
+    "<span>safeName</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/safeName.js</span>",
     "function"
   ],
   [
@@ -366,45 +402,441 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "src/plugin/syntax/abstractsyntaxloader.js",
-    "file/src/plugin/syntax/AbstractSyntaxLoader.js.html",
-    "src/plugin/syntax/AbstractSyntaxLoader.js",
+    "src/module/plugin/syntax/abstractsyntaxloader.js",
+    "file/src/module/plugin/syntax/AbstractSyntaxLoader.js.html",
+    "src/module/plugin/syntax/AbstractSyntaxLoader.js",
     "file"
   ],
   [
-    "src/plugin/syntax/abstractsyntaxloader.js~abstractsyntaxloader#onloadsyntax",
-    "class/src/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader.html#instance-method-onLoadSyntax",
-    "src/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader#onLoadSyntax",
+    "src/module/plugin/syntax/abstractsyntaxloader.js~abstractsyntaxloader#onloadsyntax",
+    "class/src/module/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader.html#instance-method-onLoadSyntax",
+    "src/module/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader#onLoadSyntax",
     "method"
   ],
   [
-    "src/traits/actualise.js",
-    "file/src/traits/actualise.js.html",
-    "src/traits/actualise.js",
+    "src/module/report/abstractreport.js",
+    "file/src/module/report/AbstractReport.js.html",
+    "src/module/report/AbstractReport.js",
     "file"
   ],
   [
-    "src/traits/actualiseoperands.js",
-    "file/src/traits/actualiseOperands.js.html",
-    "src/traits/actualiseOperands.js",
+    "src/module/report/abstractreport.js~abstractreport#constructor",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-constructor-constructor",
+    "src/module/report/AbstractReport.js~AbstractReport#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#finalize",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-method-finalize",
+    "src/module/report/AbstractReport.js~AbstractReport#finalize",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#incrementdistincthalsteaditems",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-method-incrementDistinctHalsteadItems",
+    "src/module/report/AbstractReport.js~AbstractReport#incrementDistinctHalsteadItems",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#incrementhalsteaditems",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-method-incrementHalsteadItems",
+    "src/module/report/AbstractReport.js~AbstractReport#incrementHalsteadItems",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#incrementhalsteadmetric",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-method-incrementHalsteadMetric",
+    "src/module/report/AbstractReport.js~AbstractReport#incrementHalsteadMetric",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#incrementparams",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-method-incrementParams",
+    "src/module/report/AbstractReport.js~AbstractReport#incrementParams",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#ishalsteadmetricdistinct",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-method-isHalsteadMetricDistinct",
+    "src/module/report/AbstractReport.js~AbstractReport#isHalsteadMetricDistinct",
+    "method"
+  ],
+  [
+    "src/module/report/abstractreport.js~abstractreport#methodreport",
+    "class/src/module/report/AbstractReport.js~AbstractReport.html#instance-get-methodReport",
+    "src/module/report/AbstractReport.js~AbstractReport#methodReport",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js",
+    "file/src/module/report/ClassReport.js.html",
+    "src/module/report/ClassReport.js",
     "file"
   ],
   [
-    "src/traits/actualiseoperators.js",
-    "file/src/traits/actualiseOperators.js.html",
-    "src/traits/actualiseOperators.js",
+    "src/module/report/classreport.js~classreport#aggregate",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-aggregate",
+    "src/module/report/ClassReport.js~ClassReport#aggregate",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#constructor",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-constructor-constructor",
+    "src/module/report/ClassReport.js~ClassReport#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#cyclomatic",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-cyclomatic",
+    "src/module/report/ClassReport.js~ClassReport#cyclomatic",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#lineend",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-lineEnd",
+    "src/module/report/ClassReport.js~ClassReport#lineEnd",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#linestart",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-lineStart",
+    "src/module/report/ClassReport.js~ClassReport#lineStart",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#methods",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-methods",
+    "src/module/report/ClassReport.js~ClassReport#methods",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#name",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-name",
+    "src/module/report/ClassReport.js~ClassReport#name",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#sloc",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-sloc",
+    "src/module/report/ClassReport.js~ClassReport#sloc",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js",
+    "file/src/module/report/HalsteadData.js.html",
+    "src/module/report/HalsteadData.js",
     "file"
   ],
   [
-    "src/traits/safearray.js",
-    "file/src/traits/safeArray.js.html",
-    "src/traits/safeArray.js",
+    "src/module/report/halsteaddata.js~halsteaddata#bugs",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-bugs",
+    "src/module/report/HalsteadData.js~HalsteadData#bugs",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#constructor",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-constructor-constructor",
+    "src/module/report/HalsteadData.js~HalsteadData#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#difficulty",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-difficulty",
+    "src/module/report/HalsteadData.js~HalsteadData#difficulty",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#effort",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-effort",
+    "src/module/report/HalsteadData.js~HalsteadData#effort",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#length",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-length",
+    "src/module/report/HalsteadData.js~HalsteadData#length",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#operands",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-operands",
+    "src/module/report/HalsteadData.js~HalsteadData#operands",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#operators",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-operators",
+    "src/module/report/HalsteadData.js~HalsteadData#operators",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#reset",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-method-reset",
+    "src/module/report/HalsteadData.js~HalsteadData#reset",
+    "method"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#time",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-time",
+    "src/module/report/HalsteadData.js~HalsteadData#time",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#vocabulary",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-vocabulary",
+    "src/module/report/HalsteadData.js~HalsteadData#vocabulary",
+    "member"
+  ],
+  [
+    "src/module/report/halsteaddata.js~halsteaddata#volume",
+    "class/src/module/report/HalsteadData.js~HalsteadData.html#instance-member-volume",
+    "src/module/report/HalsteadData.js~HalsteadData#volume",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js",
+    "file/src/module/report/MethodReport.js.html",
+    "src/module/report/MethodReport.js",
     "file"
   ],
   [
-    "src/traits/safename.js",
-    "file/src/traits/safeName.js.html",
-    "src/traits/safeName.js",
+    "src/module/report/methodreport.js~methodreport#constructor",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-constructor-constructor",
+    "src/module/report/MethodReport.js~MethodReport#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#cyclomatic",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-cyclomatic",
+    "src/module/report/MethodReport.js~MethodReport#cyclomatic",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#cyclomaticdensity",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-cyclomaticDensity",
+    "src/module/report/MethodReport.js~MethodReport#cyclomaticDensity",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#halstead",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-halstead",
+    "src/module/report/MethodReport.js~MethodReport#halstead",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#lineend",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-lineEnd",
+    "src/module/report/MethodReport.js~MethodReport#lineEnd",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#linestart",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-lineStart",
+    "src/module/report/MethodReport.js~MethodReport#lineStart",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#name",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-name",
+    "src/module/report/MethodReport.js~MethodReport#name",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#params",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-params",
+    "src/module/report/MethodReport.js~MethodReport#params",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#sloc",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-member-sloc",
+    "src/module/report/MethodReport.js~MethodReport#sloc",
+    "member"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport#summetrics",
+    "class/src/module/report/MethodReport.js~MethodReport.html#instance-method-sumMetrics",
+    "src/module/report/MethodReport.js~MethodReport#sumMetrics",
+    "method"
+  ],
+  [
+    "src/module/report/methodreport.js~methodreport.getmaintainabilitymetrics",
+    "class/src/module/report/MethodReport.js~MethodReport.html#static-method-getMaintainabilityMetrics",
+    "src/module/report/MethodReport.js~MethodReport.getMaintainabilityMetrics",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js",
+    "file/src/module/report/ModuleReport.js.html",
+    "src/module/report/ModuleReport.js",
+    "file"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#adddependencies",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-addDependencies",
+    "src/module/report/ModuleReport.js~ModuleReport#addDependencies",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#aggregate",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-aggregate",
+    "src/module/report/ModuleReport.js~ModuleReport#aggregate",
+    "member"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#classes",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-classes",
+    "src/module/report/ModuleReport.js~ModuleReport#classes",
+    "member"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#constructor",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-constructor-constructor",
+    "src/module/report/ModuleReport.js~ModuleReport#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#createscope",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-createScope",
+    "src/module/report/ModuleReport.js~ModuleReport#createScope",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#dependencies",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-dependencies",
+    "src/module/report/ModuleReport.js~ModuleReport#dependencies",
+    "member"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#finalize",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-finalize",
+    "src/module/report/ModuleReport.js~ModuleReport#finalize",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#getcurrentclassreport",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-getCurrentClassReport",
+    "src/module/report/ModuleReport.js~ModuleReport#getCurrentClassReport",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#getcurrentmethodreport",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-getCurrentMethodReport",
+    "src/module/report/ModuleReport.js~ModuleReport#getCurrentMethodReport",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#halsteaditemencountered",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-halsteadItemEncountered",
+    "src/module/report/ModuleReport.js~ModuleReport#halsteadItemEncountered",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#incrementcyclomatic",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-incrementCyclomatic",
+    "src/module/report/ModuleReport.js~ModuleReport#incrementCyclomatic",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#incrementlogicalsloc",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-incrementLogicalSloc",
+    "src/module/report/ModuleReport.js~ModuleReport#incrementLogicalSloc",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#maintainability",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-maintainability",
+    "src/module/report/ModuleReport.js~ModuleReport#maintainability",
+    "member"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#methods",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-methods",
+    "src/module/report/ModuleReport.js~ModuleReport#methods",
+    "member"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#popscope",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-popScope",
+    "src/module/report/ModuleReport.js~ModuleReport#popScope",
+    "method"
+  ],
+  [
+    "src/module/traits/trait.js",
+    "file/src/module/traits/Trait.js.html",
+    "src/module/traits/Trait.js",
+    "file"
+  ],
+  [
+    "src/module/traits/trait.js~trait#constructor",
+    "class/src/module/traits/Trait.js~Trait.html#instance-constructor-constructor",
+    "src/module/traits/Trait.js~Trait#constructor",
+    "method"
+  ],
+  [
+    "src/module/traits/trait.js~trait#type",
+    "class/src/module/traits/Trait.js~Trait.html#instance-get-type",
+    "src/module/traits/Trait.js~Trait#type",
+    "member"
+  ],
+  [
+    "src/module/traits/trait.js~trait#valueof",
+    "class/src/module/traits/Trait.js~Trait.html#instance-method-valueOf",
+    "src/module/traits/Trait.js~Trait#valueOf",
+    "method"
+  ],
+  [
+    "src/module/traits/traithalstead.js",
+    "file/src/module/traits/TraitHalstead.js.html",
+    "src/module/traits/TraitHalstead.js",
+    "file"
+  ],
+  [
+    "src/module/traits/traithalstead.js~traithalstead#constructor",
+    "class/src/module/traits/TraitHalstead.js~TraitHalstead.html#instance-constructor-constructor",
+    "src/module/traits/TraitHalstead.js~TraitHalstead#constructor",
+    "method"
+  ],
+  [
+    "src/module/traits/traithalstead.js~traithalstead#filter",
+    "class/src/module/traits/TraitHalstead.js~TraitHalstead.html#instance-method-filter",
+    "src/module/traits/TraitHalstead.js~TraitHalstead#filter",
+    "method"
+  ],
+  [
+    "src/module/traits/traithalstead.js~traithalstead#type",
+    "class/src/module/traits/TraitHalstead.js~TraitHalstead.html#instance-get-type",
+    "src/module/traits/TraitHalstead.js~TraitHalstead#type",
+    "member"
+  ],
+  [
+    "src/module/traits/traithalstead.js~traithalstead#valueof",
+    "class/src/module/traits/TraitHalstead.js~TraitHalstead.html#instance-method-valueOf",
+    "src/module/traits/TraitHalstead.js~TraitHalstead#valueOf",
+    "method"
+  ],
+  [
+    "src/module/traits/actualize.js",
+    "file/src/module/traits/actualize.js.html",
+    "src/module/traits/actualize.js",
+    "file"
+  ],
+  [
+    "src/module/traits/actualizehalstead.js",
+    "file/src/module/traits/actualizeHalstead.js.html",
+    "src/module/traits/actualizeHalstead.js",
+    "file"
+  ],
+  [
+    "src/module/traits/safearray.js",
+    "file/src/module/traits/safeArray.js.html",
+    "src/module/traits/safeArray.js",
+    "file"
+  ],
+  [
+    "src/module/traits/safename.js",
+    "file/src/module/traits/safeName.js.html",
+    "src/module/traits/safeName.js",
     "file"
   ]
 ]
