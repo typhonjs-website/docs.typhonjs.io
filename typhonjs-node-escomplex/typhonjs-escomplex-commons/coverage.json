@@ -1,7 +1,7 @@
 {
   "coverage": "100%",
-  "expectCount": 73,
-  "actualCount": 73,
+  "expectCount": 74,
+  "actualCount": 74,
   "files": {
     "src/module/report/AbstractReport.js": {
       "expectCount": 9,
@@ -14,8 +14,8 @@
       "undocumentLines": []
     },
     "src/module/report/ClassReport.js": {
-      "expectCount": 9,
-      "actualCount": 9,
+      "expectCount": 10,
+      "actualCount": 10,
       "undocumentLines": []
     },
     "src/module/report/HalsteadData.js": {

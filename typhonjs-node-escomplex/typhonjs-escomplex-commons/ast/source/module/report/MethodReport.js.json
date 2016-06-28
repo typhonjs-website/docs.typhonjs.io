@@ -1297,7 +1297,7 @@
                       "trailingComments": [
                         {
                           "type": "CommentBlock",
-                          "value": "*\n       * Stores the end line for the method.\n       * @type {Object}\n       ",
+                          "value": "*\n       * Stores the end line for the method.\n       * @type {number}\n       ",
                           "start": 1306,
                           "end": 1388,
                           "loc": {
@@ -1412,7 +1412,7 @@
                       "leadingComments": [
                         {
                           "type": "CommentBlock",
-                          "value": "*\n       * Stores the end line for the method.\n       * @type {Object}\n       ",
+                          "value": "*\n       * Stores the end line for the method.\n       * @type {number}\n       ",
                           "start": 1306,
                           "end": 1388,
                           "loc": {
@@ -1430,7 +1430,7 @@
                       "trailingComments": [
                         {
                           "type": "CommentBlock",
-                          "value": "*\n       * Stores the start line for the method.\n       * @type {Object}\n       ",
+                          "value": "*\n       * Stores the start line for the method.\n       * @type {number}\n       ",
                           "start": 1426,
                           "end": 1510,
                           "loc": {
@@ -1545,7 +1545,7 @@
                       "leadingComments": [
                         {
                           "type": "CommentBlock",
-                          "value": "*\n       * Stores the start line for the method.\n       * @type {Object}\n       ",
+                          "value": "*\n       * Stores the start line for the method.\n       * @type {number}\n       ",
                           "start": 1426,
                           "end": 1510,
                           "loc": {
@@ -3871,7 +3871,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n       * Stores the end line for the method.\n       * @type {Object}\n       ",
+      "value": "*\n       * Stores the end line for the method.\n       * @type {number}\n       ",
       "start": 1306,
       "end": 1388,
       "loc": {
@@ -3887,7 +3887,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n       * Stores the start line for the method.\n       * @type {Object}\n       ",
+      "value": "*\n       * Stores the start line for the method.\n       * @type {number}\n       ",
       "start": 1426,
       "end": 1510,
       "loc": {
@@ -6399,7 +6399,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n       * Stores the end line for the method.\n       * @type {Object}\n       ",
+      "value": "*\n       * Stores the end line for the method.\n       * @type {number}\n       ",
       "start": 1306,
       "end": 1388,
       "loc": {
@@ -6574,7 +6574,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n       * Stores the start line for the method.\n       * @type {Object}\n       ",
+      "value": "*\n       * Stores the start line for the method.\n       * @type {number}\n       ",
       "start": 1426,
       "end": 1510,
       "loc": {

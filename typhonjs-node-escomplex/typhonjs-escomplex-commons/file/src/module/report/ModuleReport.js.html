@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1467092529993" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1467138267658" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -171,8 +171,7 @@ export default class ModuleReport extends AbstractReport
 
       /**
        * Stores all ClassReport data for the module.
-       * @type {Array}
-       * @link {ClassReport}
+       * @type {Array&lt;ClassReport&gt;}
        */
       this.classes = [];
 
@@ -190,22 +189,19 @@ export default class ModuleReport extends AbstractReport
 
       /**
        * Stores all module MethodReport data found outside of any ES6 classes.
-       * @type {Array}
-       * @link {MethodReport}
+       * @type {Array&lt;MethodReport&gt;}
        */
       this.methods = [];
 
       /**
        * Stores the current class report scope stack.
-       * @type {Array}
-       * @link {ClassReport}
+       * @type {Array&lt;ClassReport&gt;}
        */
       this._scopeStackClass = [];
 
       /**
        * Stores the current method report scope stack.
-       * @type {Array}
-       * @link {MethodReport}
+       * @type {Array&lt;MethodReport&gt;}
        */
       this._scopeStackMethod = [];
    }

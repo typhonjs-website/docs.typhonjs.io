@@ -492,6 +492,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/module/report/classreport.js~classreport#cyclomaticdensity",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-cyclomaticDensity",
+    "src/module/report/ClassReport.js~ClassReport#cyclomaticDensity",
+    "member"
+  ],
+  [
     "src/module/report/classreport.js~classreport#lineend",
     "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-lineEnd",
     "src/module/report/ClassReport.js~ClassReport#lineEnd",

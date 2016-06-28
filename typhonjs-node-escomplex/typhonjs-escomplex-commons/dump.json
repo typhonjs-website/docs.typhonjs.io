@@ -472,7 +472,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides a class report.\n */\nexport default class ClassReport extends AbstractReport\n{\n   /**\n    * Initializes function report.\n    *\n    * @param {string}   name - Name of the function.\n    * @param {number}   lineStart - Start line of function.\n    * @param {number}   lineEnd - End line of function.\n    */\n   constructor(name = '', lineStart = 0, lineEnd = 0)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate method data.\n       * @type {{}}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * The name of the function.\n       * @type {string}\n       */\n      this.name = name;\n\n      /**\n       * Stores the start line for the function.\n       * @type {Object}\n       */\n      this.lineStart = lineStart;\n\n      /**\n       * Stores the end line for the function.\n       * @type {Object}\n       */\n      this.lineEnd = lineEnd;\n\n      /**\n       * Stores all method data.\n       * @type {Array}\n       */\n      this.methods = [];\n\n      /**\n       * The source lines of code for the function.\n       * @type {{logical: number, physical: number}}\n       */\n      this.sloc = { logical: 0, physical: lineEnd - lineStart + 1 };\n\n      /**\n       * The cyclomatic complexity of the class.\n       * @type {number}\n       */\n      this.cyclomatic = 1;\n   }\n}\n",
+    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides a class report.\n */\nexport default class ClassReport extends AbstractReport\n{\n   /**\n    * Initializes class report.\n    *\n    * @param {string}   name - Name of the function.\n    * @param {number}   lineStart - Start line of function.\n    * @param {number}   lineEnd - End line of function.\n    */\n   constructor(name = '', lineStart = 0, lineEnd = 0)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate method data.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * The cyclomatic complexity of the class.\n       * @type {number}\n       */\n      this.cyclomatic = 1;\n\n      /**\n       * The cyclomatic density of the class.\n       * @type {number}\n       */\n      this.cyclomaticDensity = 0;\n\n      /**\n       * Stores the end line for the class.\n       * @type {number}\n       */\n      this.lineEnd = lineEnd;\n\n      /**\n       * Stores the start line for the class.\n       * @type {number}\n       */\n      this.lineStart = lineStart;\n\n      /**\n       * Stores all method data.\n       * @type {Array<MethodReport>}\n       */\n      this.methods = [];\n\n      /**\n       * The name of the function.\n       * @type {string}\n       */\n      this.name = name;\n\n      /**\n       * The source lines of code for the function.\n       * @type {{logical: number, physical: number}}\n       */\n      this.sloc = { logical: 0, physical: lineEnd - lineStart + 1 };\n   }\n}\n",
     "___id": "T000002R000017",
     "___s": true
   },
@@ -509,7 +509,7 @@
     "memberof": "src/module/report/ClassReport.js~ClassReport",
     "longname": "src/module/report/ClassReport.js~ClassReport#constructor",
     "access": null,
-    "description": "Initializes function report.",
+    "description": "Initializes class report.",
     "lineNumber": 18,
     "params": [
       {
@@ -564,7 +564,7 @@
     "type": {
       "nullable": null,
       "types": [
-        "{}"
+        "MethodReport"
       ],
       "spread": false,
       "description": null
@@ -577,16 +577,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "name",
+    "name": "cyclomatic",
     "memberof": "src/module/report/ClassReport.js~ClassReport",
-    "longname": "src/module/report/ClassReport.js~ClassReport#name",
+    "longname": "src/module/report/ClassReport.js~ClassReport#cyclomatic",
     "access": null,
-    "description": "The name of the function.",
+    "description": "The cyclomatic complexity of the class.",
     "lineNumber": 32,
     "type": {
       "nullable": null,
       "types": [
-        "string"
+        "number"
       ],
       "spread": false,
       "description": null
@@ -599,16 +599,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "lineStart",
+    "name": "cyclomaticDensity",
     "memberof": "src/module/report/ClassReport.js~ClassReport",
-    "longname": "src/module/report/ClassReport.js~ClassReport#lineStart",
+    "longname": "src/module/report/ClassReport.js~ClassReport#cyclomaticDensity",
     "access": null,
-    "description": "Stores the start line for the function.",
+    "description": "The cyclomatic density of the class.",
     "lineNumber": 38,
     "type": {
       "nullable": null,
       "types": [
-        "Object"
+        "number"
       ],
       "spread": false,
       "description": null
@@ -625,12 +625,12 @@
     "memberof": "src/module/report/ClassReport.js~ClassReport",
     "longname": "src/module/report/ClassReport.js~ClassReport#lineEnd",
     "access": null,
-    "description": "Stores the end line for the function.",
+    "description": "Stores the end line for the class.",
     "lineNumber": 44,
     "type": {
       "nullable": null,
       "types": [
-        "Object"
+        "number"
       ],
       "spread": false,
       "description": null
@@ -643,16 +643,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "methods",
+    "name": "lineStart",
     "memberof": "src/module/report/ClassReport.js~ClassReport",
-    "longname": "src/module/report/ClassReport.js~ClassReport#methods",
+    "longname": "src/module/report/ClassReport.js~ClassReport#lineStart",
     "access": null,
-    "description": "Stores all method data.",
+    "description": "Stores the start line for the class.",
     "lineNumber": 50,
     "type": {
       "nullable": null,
       "types": [
-        "Array"
+        "number"
       ],
       "spread": false,
       "description": null
@@ -665,16 +665,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "sloc",
+    "name": "methods",
     "memberof": "src/module/report/ClassReport.js~ClassReport",
-    "longname": "src/module/report/ClassReport.js~ClassReport#sloc",
+    "longname": "src/module/report/ClassReport.js~ClassReport#methods",
     "access": null,
-    "description": "The source lines of code for the function.",
+    "description": "Stores all method data.",
     "lineNumber": 56,
     "type": {
       "nullable": null,
       "types": [
-        "{logical: number, physical: number}"
+        "Array<MethodReport>"
       ],
       "spread": false,
       "description": null
@@ -687,16 +687,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "cyclomatic",
+    "name": "name",
     "memberof": "src/module/report/ClassReport.js~ClassReport",
-    "longname": "src/module/report/ClassReport.js~ClassReport#cyclomatic",
+    "longname": "src/module/report/ClassReport.js~ClassReport#name",
     "access": null,
-    "description": "The cyclomatic complexity of the class.",
+    "description": "The name of the function.",
     "lineNumber": 62,
     "type": {
       "nullable": null,
       "types": [
-        "number"
+        "string"
       ],
       "spread": false,
       "description": null
@@ -706,6 +706,28 @@
   },
   {
     "__docId__": 25,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "sloc",
+    "memberof": "src/module/report/ClassReport.js~ClassReport",
+    "longname": "src/module/report/ClassReport.js~ClassReport#sloc",
+    "access": null,
+    "description": "The source lines of code for the function.",
+    "lineNumber": 68,
+    "type": {
+      "nullable": null,
+      "types": [
+        "{logical: number, physical: number}"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000027",
+    "___s": true
+  },
+  {
+    "__docId__": 26,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -715,12 +737,12 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\n/**\n * Provides all Halstead metric data / parameters.\n * @see https://en.wikipedia.org/wiki/Halstead_complexity_measures\n */\nexport default class HalsteadData\n{\n   /**\n    * Initializes the default Halstead data.\n    */\n   constructor()\n   {\n      /**\n       * Measures an estimate for the number of potential errors.\n       * @type {number}\n       */\n      this.bugs = 0;\n\n      /**\n       * Measures the difficulty of the program to write or understand.\n       * @type {number}\n       */\n      this.difficulty = 0;\n\n      /**\n       * Measures the maintenance effort of the program.\n       * @type {number}\n       */\n      this.effort = 0;\n\n      /**\n       * Defines the number of operands and operators.\n       * @type {number}\n       */\n      this.length = 0;\n\n      /**\n       * Measures potential coding time.\n       * @type {number}\n       */\n      this.time = 0;\n\n      /**\n       * Defines the unique number of operands and operators.\n       * @type {number}\n       */\n      this.vocabulary = 0;\n\n      /**\n       * Measures how much information a reader of the code potential has to absorb to understand its meaning.\n       * @type {number}\n       */\n      this.volume = 0;\n\n      /**\n       * In general an operand participates in actions associated with operators. A distinct and total count is provided\n       * with all identifiers.\n       * @type {{distinct: number, total: number, identifiers: Array}}\n       */\n      this.operands = { distinct: 0, total: 0, identifiers: [] };\n\n      /**\n       * In general an operator carries out an action. A distinct and total count is provided with all identifiers.\n       * @type {{distinct: number, total: number, identifiers: Array}}\n       */\n      this.operators = { distinct: 0, total: 0, identifiers: [] };\n   }\n\n   /**\n    * Resets the state of all Halstead data metrics without removing any operand or operator data.\n    */\n   reset()\n   {\n      this.bugs = this.difficulty = this.effort = this.length = this.time = this.vocabulary = this.volume = 0;\n   }\n}\n",
-    "___id": "T000002R000027",
+    "content": "'use strict';\n\n/**\n * Provides all Halstead metric data / parameters.\n * @see https://en.wikipedia.org/wiki/Halstead_complexity_measures\n */\nexport default class HalsteadData\n{\n   /**\n    * Initializes the default Halstead data.\n    */\n   constructor()\n   {\n      /**\n       * Measures an estimate for the number of potential errors.\n       * @type {number}\n       */\n      this.bugs = 0;\n\n      /**\n       * Measures the difficulty of the program to write or understand.\n       * @type {number}\n       */\n      this.difficulty = 0;\n\n      /**\n       * Measures the maintenance effort of the program.\n       * @type {number}\n       */\n      this.effort = 0;\n\n      /**\n       * Defines the number of operands and operators.\n       * @type {number}\n       */\n      this.length = 0;\n\n      /**\n       * Measures potential coding time.\n       * @type {number}\n       */\n      this.time = 0;\n\n      /**\n       * Defines the unique number of operands and operators.\n       * @type {number}\n       */\n      this.vocabulary = 0;\n\n      /**\n       * Measures how much information a reader of the code potential has to absorb to understand its meaning.\n       * @type {number}\n       */\n      this.volume = 0;\n\n      /**\n       * In general an operand participates in actions associated with operators. A distinct and total count is provided\n       * with all identifiers.\n       * @type {{distinct: number, total: number, identifiers: Array<string>}}\n       */\n      this.operands = { distinct: 0, total: 0, identifiers: [] };\n\n      /**\n       * In general an operator carries out an action. A distinct and total count is provided with all identifiers.\n       * @type {{distinct: number, total: number, identifiers: Array<string>}}\n       */\n      this.operators = { distinct: 0, total: 0, identifiers: [] };\n   }\n\n   /**\n    * Resets the state of all Halstead data metrics without removing any operand or operator data.\n    */\n   reset()\n   {\n      this.bugs = this.difficulty = this.effort = this.length = this.time = this.vocabulary = this.volume = 0;\n   }\n}\n",
+    "___id": "T000002R000028",
     "___s": true
   },
   {
-    "__docId__": 26,
+    "__docId__": 27,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -737,11 +759,11 @@
     ],
     "lineNumber": 7,
     "interface": false,
-    "___id": "T000002R000028",
+    "___id": "T000002R000029",
     "___s": true
   },
   {
-    "__docId__": 27,
+    "__docId__": 28,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -753,11 +775,11 @@
     "lineNumber": 12,
     "params": [],
     "generator": false,
-    "___id": "T000002R000029",
+    "___id": "T000002R000030",
     "___s": true
   },
   {
-    "__docId__": 28,
+    "__docId__": 29,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -775,11 +797,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000030",
+    "___id": "T000002R000031",
     "___s": true
   },
   {
-    "__docId__": 29,
+    "__docId__": 30,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -797,11 +819,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000031",
+    "___id": "T000002R000032",
     "___s": true
   },
   {
-    "__docId__": 30,
+    "__docId__": 31,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -819,11 +841,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000032",
+    "___id": "T000002R000033",
     "___s": true
   },
   {
-    "__docId__": 31,
+    "__docId__": 32,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -841,11 +863,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000033",
+    "___id": "T000002R000034",
     "___s": true
   },
   {
-    "__docId__": 32,
+    "__docId__": 33,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -863,11 +885,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000034",
+    "___id": "T000002R000035",
     "___s": true
   },
   {
-    "__docId__": 33,
+    "__docId__": 34,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -885,11 +907,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000035",
+    "___id": "T000002R000036",
     "___s": true
   },
   {
-    "__docId__": 34,
+    "__docId__": 35,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -907,11 +929,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000036",
+    "___id": "T000002R000037",
     "___s": true
   },
   {
-    "__docId__": 35,
+    "__docId__": 36,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -924,16 +946,16 @@
     "type": {
       "nullable": null,
       "types": [
-        "{distinct: number, total: number, identifiers: Array}"
+        "{distinct: number, total: number, identifiers: Array<string>}"
       ],
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000037",
+    "___id": "T000002R000038",
     "___s": true
   },
   {
-    "__docId__": 36,
+    "__docId__": 37,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -946,16 +968,16 @@
     "type": {
       "nullable": null,
       "types": [
-        "{distinct: number, total: number, identifiers: Array}"
+        "{distinct: number, total: number, identifiers: Array<string>}"
       ],
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000038",
+    "___id": "T000002R000039",
     "___s": true
   },
   {
-    "__docId__": 37,
+    "__docId__": 38,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -967,11 +989,11 @@
     "lineNumber": 73,
     "params": [],
     "generator": false,
-    "___id": "T000002R000039",
+    "___id": "T000002R000040",
     "___s": true
   },
   {
-    "__docId__": 38,
+    "__docId__": 39,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -987,11 +1009,11 @@
         "*"
       ]
     },
-    "___id": "T000002R000040",
+    "___id": "T000002R000041",
     "___s": true
   },
   {
-    "__docId__": 39,
+    "__docId__": 40,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1001,12 +1023,12 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport HalsteadData     from './HalsteadData.js';\n\n/**\n * Provides a method report.\n */\nexport default class MethodReport extends AbstractReport\n{\n   /**\n    * Provides a default array and indices for summing maintainability metrics.\n    *\n    * @returns {{sums: number[], indices: {cyclomatic: number, effort: number, loc: number, params: number}}}\n    */\n   static getMaintainabilityMetrics()\n   {\n      return { sums: [0, 0, 0, 0], indices: s_INDICES_MAINTAINABILITY };\n   }\n\n   /**\n    * Initializes method report.\n    *\n    * @param {string}   name - Name of the method.\n    * @param {number}   lineStart - Start line of method.\n    * @param {number}   lineEnd - End line of method.\n    * @param {number}   params - Number of parameters for method.\n    */\n   constructor(name = '', lineStart = 0, lineEnd = 0, params = 0)\n   {\n      super();\n\n      /**\n       * The cyclomatic complexity of the method.\n       * @type {number}\n       */\n      this.cyclomatic = 1;\n\n      /**\n       * The cyclomatic density of the method.\n       * @type {number}\n       */\n      this.cyclomaticDensity = 0;\n\n      /**\n       * Stores the Halstead data instance.\n       * @type {HalsteadData}\n       */\n      this.halstead = new HalsteadData();\n\n      /**\n       * Stores the end line for the method.\n       * @type {Object}\n       */\n      this.lineEnd = lineEnd;\n\n      /**\n       * Stores the start line for the method.\n       * @type {Object}\n       */\n      this.lineStart = lineStart;\n\n      /**\n       * The name of the method.\n       * @type {string}\n       */\n      this.name = name;\n\n      /**\n       * The number of parameters for the method.\n       * @type {number}\n       */\n      this.params = params;\n\n      /**\n       * The source lines of code for the method.\n       * @type {{logical: number, physical: number}}\n       */\n      this.sloc = { logical: 0, physical: lineEnd - lineStart + 1 };\n   }\n\n   /**\n    * Provides a convenience method to increment metric sums given an object hash of indices.\n    *\n    * @param {Array}    sums - Running sums for metric calculation.\n    * @param {object}   indices - Indices into the sums array for specific metrics.\n    */\n   sumMetrics(sums = [], indices)\n   {\n      for (const key in indices)\n      {\n         switch (key)\n         {\n            case 'cyclomatic':\n               sums[indices[key]] += this.cyclomatic;\n               break;\n\n            case 'effort':\n               sums[indices[key]] += this.halstead.effort;\n               break;\n\n            case 'loc':\n               sums[indices[key]] += this.sloc.logical;\n               break;\n\n            case 'params':\n               sums[indices[key]] += this.params;\n               break;\n         }\n      }\n   }\n}\n\n/**\n * Defines the default maintainability metrics supported by `sumMetrics`.\n * @type {{cyclomatic: number, effort: number, loc: number, params: number}}\n */\nconst s_INDICES_MAINTAINABILITY =\n{\n   cyclomatic: 0,\n   effort: 1,\n   loc: 2,\n   params: 3\n};\n",
-    "___id": "T000002R000041",
+    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport HalsteadData     from './HalsteadData.js';\n\n/**\n * Provides a method report.\n */\nexport default class MethodReport extends AbstractReport\n{\n   /**\n    * Provides a default array and indices for summing maintainability metrics.\n    *\n    * @returns {{sums: number[], indices: {cyclomatic: number, effort: number, loc: number, params: number}}}\n    */\n   static getMaintainabilityMetrics()\n   {\n      return { sums: [0, 0, 0, 0], indices: s_INDICES_MAINTAINABILITY };\n   }\n\n   /**\n    * Initializes method report.\n    *\n    * @param {string}   name - Name of the method.\n    * @param {number}   lineStart - Start line of method.\n    * @param {number}   lineEnd - End line of method.\n    * @param {number}   params - Number of parameters for method.\n    */\n   constructor(name = '', lineStart = 0, lineEnd = 0, params = 0)\n   {\n      super();\n\n      /**\n       * The cyclomatic complexity of the method.\n       * @type {number}\n       */\n      this.cyclomatic = 1;\n\n      /**\n       * The cyclomatic density of the method.\n       * @type {number}\n       */\n      this.cyclomaticDensity = 0;\n\n      /**\n       * Stores the Halstead data instance.\n       * @type {HalsteadData}\n       */\n      this.halstead = new HalsteadData();\n\n      /**\n       * Stores the end line for the method.\n       * @type {number}\n       */\n      this.lineEnd = lineEnd;\n\n      /**\n       * Stores the start line for the method.\n       * @type {number}\n       */\n      this.lineStart = lineStart;\n\n      /**\n       * The name of the method.\n       * @type {string}\n       */\n      this.name = name;\n\n      /**\n       * The number of parameters for the method.\n       * @type {number}\n       */\n      this.params = params;\n\n      /**\n       * The source lines of code for the method.\n       * @type {{logical: number, physical: number}}\n       */\n      this.sloc = { logical: 0, physical: lineEnd - lineStart + 1 };\n   }\n\n   /**\n    * Provides a convenience method to increment metric sums given an object hash of indices.\n    *\n    * @param {Array}    sums - Running sums for metric calculation.\n    * @param {object}   indices - Indices into the sums array for specific metrics.\n    */\n   sumMetrics(sums = [], indices)\n   {\n      for (const key in indices)\n      {\n         switch (key)\n         {\n            case 'cyclomatic':\n               sums[indices[key]] += this.cyclomatic;\n               break;\n\n            case 'effort':\n               sums[indices[key]] += this.halstead.effort;\n               break;\n\n            case 'loc':\n               sums[indices[key]] += this.sloc.logical;\n               break;\n\n            case 'params':\n               sums[indices[key]] += this.params;\n               break;\n         }\n      }\n   }\n}\n\n/**\n * Defines the default maintainability metrics supported by `sumMetrics`.\n * @type {{cyclomatic: number, effort: number, loc: number, params: number}}\n */\nconst s_INDICES_MAINTAINABILITY =\n{\n   cyclomatic: 0,\n   effort: 1,\n   loc: 2,\n   params: 3\n};\n",
+    "___id": "T000002R000042",
     "___s": true
   },
   {
-    "__docId__": 40,
+    "__docId__": 41,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -1023,14 +1045,14 @@
     "extends": [
       "src/module/report/AbstractReport.js~AbstractReport"
     ],
-    "___id": "T000002R000042",
+    "___id": "T000002R000043",
     "___s": true,
     "_custom_extends_chains": [
       "src/module/report/AbstractReport.js~AbstractReport"
     ]
   },
   {
-    "__docId__": 41,
+    "__docId__": 42,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -1057,11 +1079,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000043",
+    "___id": "T000002R000044",
     "___s": true
   },
   {
-    "__docId__": 42,
+    "__docId__": 43,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -1118,11 +1140,11 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000044",
+    "___id": "T000002R000045",
     "___s": true
   },
   {
-    "__docId__": 43,
+    "__docId__": 44,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1140,11 +1162,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000045",
+    "___id": "T000002R000046",
     "___s": true
   },
   {
-    "__docId__": 44,
+    "__docId__": 45,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1162,11 +1184,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000046",
+    "___id": "T000002R000047",
     "___s": true
   },
   {
-    "__docId__": 45,
+    "__docId__": 46,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1184,11 +1206,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000047",
+    "___id": "T000002R000048",
     "___s": true
   },
   {
-    "__docId__": 46,
+    "__docId__": 47,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1201,16 +1223,16 @@
     "type": {
       "nullable": null,
       "types": [
-        "Object"
+        "number"
       ],
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000048",
+    "___id": "T000002R000049",
     "___s": true
   },
   {
-    "__docId__": 47,
+    "__docId__": 48,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1223,16 +1245,16 @@
     "type": {
       "nullable": null,
       "types": [
-        "Object"
+        "number"
       ],
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000049",
+    "___id": "T000002R000050",
     "___s": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 49,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1250,11 +1272,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000050",
+    "___id": "T000002R000051",
     "___s": true
   },
   {
-    "__docId__": 49,
+    "__docId__": 50,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1272,11 +1294,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000051",
+    "___id": "T000002R000052",
     "___s": true
   },
   {
-    "__docId__": 50,
+    "__docId__": 51,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1294,11 +1316,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000052",
+    "___id": "T000002R000053",
     "___s": true
   },
   {
-    "__docId__": 51,
+    "__docId__": 52,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1333,11 +1355,11 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000053",
+    "___id": "T000002R000054",
     "___s": true
   },
   {
-    "__docId__": 52,
+    "__docId__": 53,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1358,11 +1380,11 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000054",
+    "___id": "T000002R000055",
     "___s": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 54,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1372,12 +1394,12 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport ClassReport      from './ClassReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides the default report object which stores data pertaining to a single file / module being processed.\n */\nexport default class ModuleReport extends AbstractReport\n{\n   /**\n    * Initializes the report.\n    *\n    * @param {number}   lineStart - Start line of file / module.\n    * @param {number}   lineEnd - End line of file / module.\n    */\n   constructor(lineStart, lineEnd)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate MethodReport for the module.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * Stores all ClassReport data for the module.\n       * @type {Array}\n       * @link {ClassReport}\n       */\n      this.classes = [];\n\n      /**\n       * Stores all parsed dependencies.\n       * @type {Array}\n       */\n      this.dependencies = [];\n\n      /**\n       * Stores the maintainability index for a report.\n       * @type {number}\n       */\n      this.maintainability = 171;\n\n      /**\n       * Stores all module MethodReport data found outside of any ES6 classes.\n       * @type {Array}\n       * @link {MethodReport}\n       */\n      this.methods = [];\n\n      /**\n       * Stores the current class report scope stack.\n       * @type {Array}\n       * @link {ClassReport}\n       */\n      this._scopeStackClass = [];\n\n      /**\n       * Stores the current method report scope stack.\n       * @type {Array}\n       * @link {MethodReport}\n       */\n      this._scopeStackMethod = [];\n   }\n\n   /**\n    * Potentially adds given dependencies for tracking.\n    *\n    * @param {object|Array}   dependencies - Dependencies to add.\n    */\n   addDependencies(dependencies)\n   {\n      if (typeof dependencies === 'object' || Array.isArray(dependencies))\n      {\n         this.dependencies = this.dependencies.concat(dependencies);\n      }\n   }\n\n   /**\n    * Creates a report scope when a class or method is entered.\n    *\n    * @param {string}   type - Type of report to create.\n    * @param {string}   name - Name of the function.\n    * @param {number}   lineStart - Start line of function.\n    * @param {number}   lineEnd - End line of function.\n    * @param {number}   params - Number of parameters for function.\n    *\n    * @return {object}\n    */\n   createScope(type, name = '', lineStart = 0, lineEnd = 0, params = 0)\n   {\n      let report;\n\n      switch (type)\n      {\n         case 'class':\n            report = new ClassReport(name, lineStart, lineEnd);\n            this.classes.push(report);\n            this._scopeStackClass.push(report);\n            break;\n\n         case 'method':\n         {\n            report = new MethodReport(name, lineStart, lineEnd, params);\n\n            // If an existing class report / scope exists also push the function to the class report.\n            const classReport = this.getCurrentClassReport();\n\n            if (classReport)\n            {\n               classReport.methods.push(report);\n            }\n            else\n            {\n               this.methods.push(report);\n            }\n\n            this._scopeStackMethod.push(report);\n\n            break;\n         }\n\n         default:\n            throw new Error('createScope error: Unknown scope type.');\n      }\n\n      return report;\n   }\n\n   /**\n    * Cleans up any house keeping member variables.\n    *\n    * @returns {ModuleReport}\n    */\n   finalize()\n   {\n      super.finalize();\n\n      delete this._scopeStackClass;\n      delete this._scopeStackMethod;\n\n      return this;\n   }\n\n   /**\n    * Returns the current class report.\n    *\n    * @returns {ClassReport}\n    */\n   getCurrentClassReport()\n   {\n      return this._scopeStackClass.length > 0 ? this._scopeStackClass[this._scopeStackClass.length - 1] : void 0;\n   }\n\n   /**\n    * Returns the current method report.\n    *\n    * @returns {MethodReport}\n    */\n   getCurrentMethodReport()\n   {\n      return this._scopeStackMethod.length > 0 ? this._scopeStackMethod[this._scopeStackMethod.length - 1] : void 0;\n   }\n\n   /**\n    * Increments the Halstead `metric` for the given `identifier` for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {string}   metric - A Halstead metric name.\n    * @param {string}   identifier - A Halstead identifier name.\n    */\n   halsteadItemEncountered(metric, identifier)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.incrementHalsteadItems(metric, identifier);\n\n      if (currentClassReport) { currentClassReport.incrementHalsteadItems(metric, identifier); }\n\n      if (currentMethodReport) { currentMethodReport.incrementHalsteadItems(metric, identifier); }\n   }\n\n   /**\n    * Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementCyclomatic(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.cyclomatic += amount;\n\n      if (currentClassReport) { currentClassReport.cyclomatic += amount; }\n      if (currentMethodReport) { currentMethodReport.cyclomatic += amount; }\n   }\n\n   /**\n    * Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementLogicalSloc(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.sloc.logical += amount;\n\n      if (currentClassReport) { currentClassReport.aggregate.sloc.logical += amount; }\n      if (currentMethodReport) { currentMethodReport.sloc.logical += amount; }\n   }\n\n   /**\n    * Pops a report scope.\n    *\n    * @param {string} type - The report scope `class` or `method` to pop off the given stack.\n    * @returns {*}\n    */\n   popScope(type)\n   {\n      switch (type)\n      {\n         case 'class':\n            this._scopeStackClass.pop();\n            return this.getCurrentClassReport();\n\n         case 'method':\n            this._scopeStackMethod.pop();\n            return this.getCurrentMethodReport();\n      }\n   }\n}\n",
-    "___id": "T000002R000055",
+    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport ClassReport      from './ClassReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides the default report object which stores data pertaining to a single file / module being processed.\n */\nexport default class ModuleReport extends AbstractReport\n{\n   /**\n    * Initializes the report.\n    *\n    * @param {number}   lineStart - Start line of file / module.\n    * @param {number}   lineEnd - End line of file / module.\n    */\n   constructor(lineStart, lineEnd)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate MethodReport for the module.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * Stores all ClassReport data for the module.\n       * @type {Array<ClassReport>}\n       */\n      this.classes = [];\n\n      /**\n       * Stores all parsed dependencies.\n       * @type {Array}\n       */\n      this.dependencies = [];\n\n      /**\n       * Stores the maintainability index for a report.\n       * @type {number}\n       */\n      this.maintainability = 171;\n\n      /**\n       * Stores all module MethodReport data found outside of any ES6 classes.\n       * @type {Array<MethodReport>}\n       */\n      this.methods = [];\n\n      /**\n       * Stores the current class report scope stack.\n       * @type {Array<ClassReport>}\n       */\n      this._scopeStackClass = [];\n\n      /**\n       * Stores the current method report scope stack.\n       * @type {Array<MethodReport>}\n       */\n      this._scopeStackMethod = [];\n   }\n\n   /**\n    * Potentially adds given dependencies for tracking.\n    *\n    * @param {object|Array}   dependencies - Dependencies to add.\n    */\n   addDependencies(dependencies)\n   {\n      if (typeof dependencies === 'object' || Array.isArray(dependencies))\n      {\n         this.dependencies = this.dependencies.concat(dependencies);\n      }\n   }\n\n   /**\n    * Creates a report scope when a class or method is entered.\n    *\n    * @param {string}   type - Type of report to create.\n    * @param {string}   name - Name of the function.\n    * @param {number}   lineStart - Start line of function.\n    * @param {number}   lineEnd - End line of function.\n    * @param {number}   params - Number of parameters for function.\n    *\n    * @return {object}\n    */\n   createScope(type, name = '', lineStart = 0, lineEnd = 0, params = 0)\n   {\n      let report;\n\n      switch (type)\n      {\n         case 'class':\n            report = new ClassReport(name, lineStart, lineEnd);\n            this.classes.push(report);\n            this._scopeStackClass.push(report);\n            break;\n\n         case 'method':\n         {\n            report = new MethodReport(name, lineStart, lineEnd, params);\n\n            // If an existing class report / scope exists also push the function to the class report.\n            const classReport = this.getCurrentClassReport();\n\n            if (classReport)\n            {\n               classReport.methods.push(report);\n            }\n            else\n            {\n               this.methods.push(report);\n            }\n\n            this._scopeStackMethod.push(report);\n\n            break;\n         }\n\n         default:\n            throw new Error('createScope error: Unknown scope type.');\n      }\n\n      return report;\n   }\n\n   /**\n    * Cleans up any house keeping member variables.\n    *\n    * @returns {ModuleReport}\n    */\n   finalize()\n   {\n      super.finalize();\n\n      delete this._scopeStackClass;\n      delete this._scopeStackMethod;\n\n      return this;\n   }\n\n   /**\n    * Returns the current class report.\n    *\n    * @returns {ClassReport}\n    */\n   getCurrentClassReport()\n   {\n      return this._scopeStackClass.length > 0 ? this._scopeStackClass[this._scopeStackClass.length - 1] : void 0;\n   }\n\n   /**\n    * Returns the current method report.\n    *\n    * @returns {MethodReport}\n    */\n   getCurrentMethodReport()\n   {\n      return this._scopeStackMethod.length > 0 ? this._scopeStackMethod[this._scopeStackMethod.length - 1] : void 0;\n   }\n\n   /**\n    * Increments the Halstead `metric` for the given `identifier` for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {string}   metric - A Halstead metric name.\n    * @param {string}   identifier - A Halstead identifier name.\n    */\n   halsteadItemEncountered(metric, identifier)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.incrementHalsteadItems(metric, identifier);\n\n      if (currentClassReport) { currentClassReport.incrementHalsteadItems(metric, identifier); }\n\n      if (currentMethodReport) { currentMethodReport.incrementHalsteadItems(metric, identifier); }\n   }\n\n   /**\n    * Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementCyclomatic(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.cyclomatic += amount;\n\n      if (currentClassReport) { currentClassReport.cyclomatic += amount; }\n      if (currentMethodReport) { currentMethodReport.cyclomatic += amount; }\n   }\n\n   /**\n    * Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementLogicalSloc(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.sloc.logical += amount;\n\n      if (currentClassReport) { currentClassReport.aggregate.sloc.logical += amount; }\n      if (currentMethodReport) { currentMethodReport.sloc.logical += amount; }\n   }\n\n   /**\n    * Pops a report scope.\n    *\n    * @param {string} type - The report scope `class` or `method` to pop off the given stack.\n    * @returns {*}\n    */\n   popScope(type)\n   {\n      switch (type)\n      {\n         case 'class':\n            this._scopeStackClass.pop();\n            return this.getCurrentClassReport();\n\n         case 'method':\n            this._scopeStackMethod.pop();\n            return this.getCurrentMethodReport();\n      }\n   }\n}\n",
+    "___id": "T000002R000056",
     "___s": true
   },
   {
-    "__docId__": 54,
+    "__docId__": 55,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -1394,14 +1416,14 @@
     "extends": [
       "src/module/report/AbstractReport.js~AbstractReport"
     ],
-    "___id": "T000002R000056",
+    "___id": "T000002R000057",
     "___s": true,
     "_custom_extends_chains": [
       "src/module/report/AbstractReport.js~AbstractReport"
     ]
   },
   {
-    "__docId__": 55,
+    "__docId__": 56,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -1436,11 +1458,11 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000057",
+    "___id": "T000002R000058",
     "___s": true
   },
   {
-    "__docId__": 56,
+    "__docId__": 57,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1458,34 +1480,6 @@
       "spread": false,
       "description": null
     },
-    "___id": "T000002R000058",
-    "___s": true
-  },
-  {
-    "__docId__": 57,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "classes",
-    "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#classes",
-    "access": null,
-    "description": "Stores all ClassReport data for the module.",
-    "lineNumber": 33,
-    "unknown": [
-      {
-        "tagName": "@link",
-        "tagValue": "{ClassReport}"
-      }
-    ],
-    "type": {
-      "nullable": null,
-      "types": [
-        "Array"
-      ],
-      "spread": false,
-      "description": null
-    },
     "___id": "T000002R000059",
     "___s": true
   },
@@ -1494,16 +1488,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "dependencies",
+    "name": "classes",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#dependencies",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#classes",
     "access": null,
-    "description": "Stores all parsed dependencies.",
-    "lineNumber": 39,
+    "description": "Stores all ClassReport data for the module.",
+    "lineNumber": 32,
     "type": {
       "nullable": null,
       "types": [
-        "Array"
+        "Array<ClassReport>"
       ],
       "spread": false,
       "description": null
@@ -1516,16 +1510,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "maintainability",
+    "name": "dependencies",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#maintainability",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#dependencies",
     "access": null,
-    "description": "Stores the maintainability index for a report.",
-    "lineNumber": 45,
+    "description": "Stores all parsed dependencies.",
+    "lineNumber": 38,
     "type": {
       "nullable": null,
       "types": [
-        "number"
+        "Array"
       ],
       "spread": false,
       "description": null
@@ -1538,22 +1532,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "methods",
+    "name": "maintainability",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#methods",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#maintainability",
     "access": null,
-    "description": "Stores all module MethodReport data found outside of any ES6 classes.",
-    "lineNumber": 52,
-    "unknown": [
-      {
-        "tagName": "@link",
-        "tagValue": "{MethodReport}"
-      }
-    ],
+    "description": "Stores the maintainability index for a report.",
+    "lineNumber": 44,
     "type": {
       "nullable": null,
       "types": [
-        "Array"
+        "number"
       ],
       "spread": false,
       "description": null
@@ -1566,22 +1554,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "_scopeStackClass",
+    "name": "methods",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#_scopeStackClass",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#methods",
     "access": null,
-    "description": "Stores the current class report scope stack.",
-    "lineNumber": 59,
-    "unknown": [
-      {
-        "tagName": "@link",
-        "tagValue": "{ClassReport}"
-      }
-    ],
+    "description": "Stores all module MethodReport data found outside of any ES6 classes.",
+    "lineNumber": 50,
     "type": {
       "nullable": null,
       "types": [
-        "Array"
+        "Array<MethodReport>"
       ],
       "spread": false,
       "description": null
@@ -1594,22 +1576,16 @@
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "_scopeStackMethod",
+    "name": "_scopeStackClass",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#_scopeStackMethod",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#_scopeStackClass",
     "access": null,
-    "description": "Stores the current method report scope stack.",
-    "lineNumber": 66,
-    "unknown": [
-      {
-        "tagName": "@link",
-        "tagValue": "{MethodReport}"
-      }
-    ],
+    "description": "Stores the current class report scope stack.",
+    "lineNumber": 56,
     "type": {
       "nullable": null,
       "types": [
-        "Array"
+        "Array<ClassReport>"
       ],
       "spread": false,
       "description": null
@@ -1619,6 +1595,28 @@
   },
   {
     "__docId__": 63,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_scopeStackMethod",
+    "memberof": "src/module/report/ModuleReport.js~ModuleReport",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#_scopeStackMethod",
+    "access": null,
+    "description": "Stores the current method report scope stack.",
+    "lineNumber": 62,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Array<MethodReport>"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000065",
+    "___s": true
+  },
+  {
+    "__docId__": 64,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1627,7 +1625,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#addDependencies",
     "access": null,
     "description": "Potentially adds given dependencies for tracking.",
-    "lineNumber": 74,
+    "lineNumber": 70,
     "params": [
       {
         "nullable": null,
@@ -1643,11 +1641,11 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000065",
+    "___id": "T000002R000066",
     "___s": true
   },
   {
-    "__docId__": 64,
+    "__docId__": 65,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1656,18 +1654,18 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#dependencies",
     "access": null,
     "description": null,
-    "lineNumber": 78,
+    "lineNumber": 74,
     "undocument": true,
     "type": {
       "types": [
         "*"
       ]
     },
-    "___id": "T000002R000066",
+    "___id": "T000002R000067",
     "___s": true
   },
   {
-    "__docId__": 65,
+    "__docId__": 66,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1676,7 +1674,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#createScope",
     "access": null,
     "description": "Creates a report scope when a class or method is entered.",
-    "lineNumber": 93,
+    "lineNumber": 89,
     "params": [
       {
         "nullable": null,
@@ -1744,11 +1742,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000067",
+    "___id": "T000002R000068",
     "___s": true
   },
   {
-    "__docId__": 66,
+    "__docId__": 67,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1757,7 +1755,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#finalize",
     "access": null,
     "description": "Cleans up any house keeping member variables.",
-    "lineNumber": 138,
+    "lineNumber": 134,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1775,11 +1773,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000068",
+    "___id": "T000002R000069",
     "___s": true
   },
   {
-    "__docId__": 67,
+    "__docId__": 68,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1788,7 +1786,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#getCurrentClassReport",
     "access": null,
     "description": "Returns the current class report.",
-    "lineNumber": 153,
+    "lineNumber": 149,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1806,11 +1804,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000069",
+    "___id": "T000002R000070",
     "___s": true
   },
   {
-    "__docId__": 68,
+    "__docId__": 69,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1819,7 +1817,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#getCurrentMethodReport",
     "access": null,
     "description": "Returns the current method report.",
-    "lineNumber": 163,
+    "lineNumber": 159,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1837,11 +1835,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000070",
+    "___id": "T000002R000071",
     "___s": true
   },
   {
-    "__docId__": 69,
+    "__docId__": 70,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1850,7 +1848,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#halsteadItemEncountered",
     "access": null,
     "description": "Increments the Halstead `metric` for the given `identifier` for the ModuleReport and any current class or method\nreport being tracked.",
-    "lineNumber": 175,
+    "lineNumber": 171,
     "params": [
       {
         "nullable": null,
@@ -1876,34 +1874,6 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000071",
-    "___s": true
-  },
-  {
-    "__docId__": 70,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "incrementCyclomatic",
-    "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#incrementCyclomatic",
-    "access": null,
-    "description": "Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.",
-    "lineNumber": 192,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "number"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "amount",
-        "description": "<p>Amount to increment.</p>\n",
-        "descriptionRaw": "Amount to increment."
-      }
-    ],
-    "generator": false,
     "___id": "T000002R000072",
     "___s": true
   },
@@ -1912,12 +1882,12 @@
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "incrementLogicalSloc",
+    "name": "incrementCyclomatic",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
-    "longname": "src/module/report/ModuleReport.js~ModuleReport#incrementLogicalSloc",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#incrementCyclomatic",
     "access": null,
-    "description": "Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\nreport being tracked.",
-    "lineNumber": 209,
+    "description": "Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.",
+    "lineNumber": 188,
     "params": [
       {
         "nullable": null,
@@ -1940,12 +1910,40 @@
     "kind": "method",
     "static": false,
     "variation": null,
+    "name": "incrementLogicalSloc",
+    "memberof": "src/module/report/ModuleReport.js~ModuleReport",
+    "longname": "src/module/report/ModuleReport.js~ModuleReport#incrementLogicalSloc",
+    "access": null,
+    "description": "Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\nreport being tracked.",
+    "lineNumber": 205,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "amount",
+        "description": "<p>Amount to increment.</p>\n",
+        "descriptionRaw": "Amount to increment."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000074",
+    "___s": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "method",
+    "static": false,
+    "variation": null,
     "name": "popScope",
     "memberof": "src/module/report/ModuleReport.js~ModuleReport",
     "longname": "src/module/report/ModuleReport.js~ModuleReport#popScope",
     "access": null,
     "description": "Pops a report scope.",
-    "lineNumber": 226,
+    "lineNumber": 222,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1975,11 +1973,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000074",
+    "___id": "T000002R000075",
     "___s": true
   },
   {
-    "__docId__": 73,
+    "__docId__": 74,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1990,11 +1988,11 @@
     "description": null,
     "lineNumber": 1,
     "content": "'use strict';\n\n/**\n * Provides a wrapper around a data field which may be a function or other primitive value.\n */\nexport default class Trait\n{\n   /**\n    * Initializes trait data.\n    *\n    * @param {*}  data - Data to wrap.\n    */\n   constructor(data)\n   {\n      this._data = data;\n   }\n\n   /**\n    * Returns the typeof data being wrapper.\n    *\n    * @returns {string}\n    */\n   get type() { return typeof this._data; }\n\n   /**\n    * Returns the value of the given data. If the wrapped data is a function it is invoked with the given `params`\n    * otherwise the data is returned directly.\n    *\n    * @param {*}  params - Provides parameters which are forwarded onto any data stored as a function.\n    *\n    * @returns {*}\n    */\n   valueOf(...params)\n   {\n      if (Array.isArray(this._data))\n      {\n         return this._data.map((entry) => { return typeof entry === 'function' ? entry(...params) : entry; });\n      }\n\n      return typeof this._data === 'function' ? this._data(...params) : this._data;\n   }\n}\n",
-    "___id": "T000002R000075",
+    "___id": "T000002R000076",
     "___s": true
   },
   {
-    "__docId__": 74,
+    "__docId__": 75,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -2008,11 +2006,11 @@
     "description": "Provides a wrapper around a data field which may be a function or other primitive value.",
     "lineNumber": 6,
     "interface": false,
-    "___id": "T000002R000076",
+    "___id": "T000002R000077",
     "___s": true
   },
   {
-    "__docId__": 75,
+    "__docId__": 76,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -2036,11 +2034,11 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000077",
+    "___id": "T000002R000078",
     "___s": true
   },
   {
-    "__docId__": 76,
+    "__docId__": 77,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -2056,11 +2054,11 @@
         "*"
       ]
     },
-    "___id": "T000002R000078",
+    "___id": "T000002R000079",
     "___s": true
   },
   {
-    "__docId__": 77,
+    "__docId__": 78,
     "kind": "get",
     "static": false,
     "variation": null,
@@ -2091,11 +2089,11 @@
       ]
     },
     "generator": false,
-    "___id": "T000002R000079",
+    "___id": "T000002R000080",
     "___s": true
   },
   {
-    "__docId__": 78,
+    "__docId__": 79,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -2134,11 +2132,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000080",
+    "___id": "T000002R000081",
     "___s": true
   },
   {
-    "__docId__": 79,
+    "__docId__": 80,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2149,11 +2147,11 @@
     "description": null,
     "lineNumber": 1,
     "content": "'use strict';\n\n/**\n * Provides a wrapper around a data object hash which should contain an `identifier` field and potentially a `filter`\n * field.\n */\nexport default class TraitHalstead\n{\n   /**\n    * Initializes the Halstead trait.\n    *\n    * @param {object}   data - The data field to be wrapped.\n    */\n   constructor(data)\n   {\n      this._data = data;\n   }\n\n   /**\n    * Returns the value of the `filter` field of the wrapped data. If the wrapped `filter` field is a function it\n    * is invoked with the given `params` otherwise the data is returned directly. If `filter` is not defined then\n    * `true` is returned.\n    *\n    * @param {*}  params - Provides parameters which are forwarded onto any data stored as a function.\n    *\n    * @returns {boolean}\n    */\n   filter(...params)\n   {\n      return typeof this._data === 'object' && this._data.filter ?\n       typeof this._data.filter === 'function' ? this._data.filter(...params) : this._data.filter : true;\n   }\n\n   /**\n    * Returns the typeof data being wrapper.\n    *\n    * @returns {string}\n    */\n   get type() { return typeof this._data; }\n\n   /**\n    * Returns the value of the `identifier` field of the wrapped data. If the wrapped `identifier` field is a function\n    * it is invoked with the given `params` otherwise the data is returned directly.\n    *\n    * @param {*}  params - Provides parameters which are forwarded onto any data stored as a function.\n    *\n    * @returns {*}\n    */\n   valueOf(...params)\n   {\n      return typeof this._data === 'object' && this._data.identifier ?\n       typeof this._data.identifier === 'function' ? this._data.identifier(...params) : this._data.identifier : void 0;\n   }\n}\n",
-    "___id": "T000002R000081",
+    "___id": "T000002R000082",
     "___s": true
   },
   {
-    "__docId__": 80,
+    "__docId__": 81,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -2167,11 +2165,11 @@
     "description": "Provides a wrapper around a data object hash which should contain an `identifier` field and potentially a `filter`\nfield.",
     "lineNumber": 7,
     "interface": false,
-    "___id": "T000002R000082",
+    "___id": "T000002R000083",
     "___s": true
   },
   {
-    "__docId__": 81,
+    "__docId__": 82,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -2195,11 +2193,11 @@
       }
     ],
     "generator": false,
-    "___id": "T000002R000083",
+    "___id": "T000002R000084",
     "___s": true
   },
   {
-    "__docId__": 82,
+    "__docId__": 83,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -2215,11 +2213,11 @@
         "*"
       ]
     },
-    "___id": "T000002R000084",
+    "___id": "T000002R000085",
     "___s": true
   },
   {
-    "__docId__": 83,
+    "__docId__": 84,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -2258,11 +2256,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000085",
+    "___id": "T000002R000086",
     "___s": true
   },
   {
-    "__docId__": 84,
+    "__docId__": 85,
     "kind": "get",
     "static": false,
     "variation": null,
@@ -2293,11 +2291,11 @@
       ]
     },
     "generator": false,
-    "___id": "T000002R000086",
+    "___id": "T000002R000087",
     "___s": true
   },
   {
-    "__docId__": 85,
+    "__docId__": 86,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -2336,11 +2334,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000087",
+    "___id": "T000002R000088",
     "___s": true
   },
   {
-    "__docId__": 86,
+    "__docId__": 87,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2351,11 +2349,11 @@
     "description": null,
     "lineNumber": 1,
     "content": "'use strict';\n\nimport actualizeHalstead   from './actualizeHalstead.js';\nimport safeArray           from './safeArray.js';\n\nimport Trait               from './Trait.js';\n\n/**\n * Provides a helper method to format core traits for escomplex processing.\n *\n * @param {function|number}         lloc - Logical lines of code\n * @param {function|number}         cyclomatic - The number of linearly independent paths through source code.\n * @param {function|string|Array}   operators - An operator carries out an action.\n * @param {function|string|Array}   operands - An operand participates in such an action (operator).\n * @param {function|string|Array}   ignoreKeys - Provides a list of AST node children keys to skip traversal.\n * @param {function|string}         newScope - Creates a new `class` or `method` scope for report generation.\n * @param {function|object}         dependencies - An import / require dependency.\n *\n * @returns {{lloc: Trait, cyclomatic: Trait, operators: Array, operands: Array, ignoreKeys: Trait, newScope: Trait, dependencies: Trait}}\n */\nexport default function(lloc = 0, cyclomatic = 0, operators = undefined, operands = undefined,\n ignoreKeys = undefined, newScope = undefined, dependencies = undefined)\n{\n   return {\n      lloc: new Trait(lloc),\n      cyclomatic: new Trait(cyclomatic),\n      operators: actualizeHalstead(safeArray(operators)),\n      operands: actualizeHalstead(safeArray(operands)),\n      ignoreKeys: new Trait(safeArray(ignoreKeys)),\n      newScope: new Trait(newScope),\n      dependencies: new Trait(dependencies)\n   };\n}\n",
-    "___id": "T000002R000088",
+    "___id": "T000002R000089",
     "___s": true
   },
   {
-    "__docId__": 87,
+    "__docId__": 88,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2473,11 +2471,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000089",
+    "___id": "T000002R000090",
     "___s": true
   },
   {
-    "__docId__": 88,
+    "__docId__": 89,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2488,11 +2486,11 @@
     "description": null,
     "lineNumber": 1,
     "content": "'use strict';\n\nimport TraitHalstead from './TraitHalstead.js';\n\n/**\n * Properly formats Halstead properties: `operands` & `operators`.\n *\n * @param {Array} properties - Halstead properties to actualize.\n *\n * @returns {Array}\n */\nexport default function(properties)\n{\n   return properties.map((property) =>\n   {\n      return property && typeof property.identifier !== 'undefined' ? new TraitHalstead(property) :\n         new TraitHalstead({ identifier: property });\n   });\n}\n",
-    "___id": "T000002R000090",
+    "___id": "T000002R000091",
     "___s": true
   },
   {
-    "__docId__": 89,
+    "__docId__": 90,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2534,11 +2532,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000091",
+    "___id": "T000002R000092",
     "___s": true
   },
   {
-    "__docId__": 90,
+    "__docId__": 91,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2549,11 +2547,11 @@
     "description": null,
     "lineNumber": 1,
     "content": "'use strict';\n\n/**\n * Provides safe array creation from a given input.\n *\n * @param {*}  value - A value to potentially convert into a safe array.\n *\n * @returns {Array}\n */\nexport default function(value)\n{\n   return typeof value === 'undefined' || value === null ? [] : Array.isArray(value) ? value : [value];\n}\n",
-    "___id": "T000002R000092",
+    "___id": "T000002R000093",
     "___s": true
   },
   {
-    "__docId__": 91,
+    "__docId__": 92,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2595,11 +2593,11 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000093",
+    "___id": "T000002R000094",
     "___s": true
   },
   {
-    "__docId__": 92,
+    "__docId__": 93,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2610,11 +2608,11 @@
     "description": null,
     "lineNumber": 1,
     "content": "'use strict';\n\n/**\n * Provides a utility method that defers to `object.name` if it exists or fallback to `defaultName` or `anonymous`.\n *\n * @param {object}   object - The target object to provide safe name coverage.\n * @param {string}   defaultName - A default name to fallback to if `object.name` is missing.\n *\n * @returns {string}\n */\nexport default function(object, defaultName = '')\n{\n   if (object !== null && typeof object === 'object' && typeof object.name === 'string' && object.name !== '')\n   {\n      return object.name;\n   }\n\n   if (typeof defaultName === 'string' && defaultName !== '') { return defaultName; }\n\n   return '<anonymous>';\n}",
-    "___id": "T000002R000094",
+    "___id": "T000002R000095",
     "___s": true
   },
   {
-    "__docId__": 93,
+    "__docId__": 94,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2667,21 +2665,6 @@
       "descriptionRaw": ""
     },
     "generator": false,
-    "___id": "T000002R000095",
-    "___s": true
-  },
-  {
-    "__docId__": 95,
-    "kind": "external",
-    "static": true,
-    "variation": null,
-    "name": "Infinity",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
-    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
-    "access": null,
-    "description": "",
-    "builtinExternal": true,
     "___id": "T000002R000096",
     "___s": true
   },
@@ -2690,10 +2673,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "NaN",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2705,10 +2688,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "undefined",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2720,10 +2703,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "null",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2735,10 +2718,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Object",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2750,10 +2733,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "object",
+    "name": "Object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2765,10 +2748,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Function",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2780,10 +2763,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "function",
+    "name": "Function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2795,10 +2778,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Boolean",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2810,10 +2793,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "boolean",
+    "name": "Boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2825,10 +2808,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Symbol",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2840,10 +2823,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Error",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2855,10 +2838,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "EvalError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2870,10 +2853,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "InternalError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2885,10 +2868,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "RangeError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2900,10 +2883,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "ReferenceError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2915,10 +2898,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "SyntaxError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2930,10 +2913,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "TypeError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2945,10 +2928,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "URIError",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2960,10 +2943,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Number",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2975,10 +2958,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "number",
+    "name": "Number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -2990,10 +2973,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Date",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3005,10 +2988,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "String",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3020,10 +3003,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "string",
+    "name": "String",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3035,10 +3018,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "RegExp",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3050,10 +3033,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3065,10 +3048,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Int8Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3080,10 +3063,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Uint8Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3095,10 +3078,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Uint8ClampedArray",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3110,10 +3093,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Int16Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3125,10 +3108,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Uint16Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3140,10 +3123,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Int32Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3155,10 +3138,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Uint32Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3170,10 +3153,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Float32Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3185,10 +3168,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Float64Array",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3200,10 +3183,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Map",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3215,10 +3198,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Set",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3230,10 +3213,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "WeakMap",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3245,10 +3228,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "WeakSet",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3260,10 +3243,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "ArrayBuffer",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3275,10 +3258,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "DataView",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3290,10 +3273,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "JSON",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3305,10 +3288,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Promise",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3320,10 +3303,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Generator",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3335,10 +3318,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "GeneratorFunction",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3350,10 +3333,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Reflect",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
-    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3365,6 +3348,21 @@
     "kind": "external",
     "static": true,
     "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000142",
+    "___s": true
+  },
+  {
+    "__docId__": 142,
+    "kind": "external",
+    "static": true,
+    "variation": null,
     "name": "Proxy",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
     "memberof": "BuiltinExternal/ECMAScriptExternal.js",
@@ -3372,21 +3370,6 @@
     "access": null,
     "description": "",
     "lineNumber": 193,
-    "builtinExternal": true,
-    "___id": "T000002R000142",
-    "___s": true
-  },
-  {
-    "__docId__": 143,
-    "kind": "external",
-    "static": true,
-    "variation": null,
-    "name": "CanvasRenderingContext2D",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
-    "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
-    "access": null,
-    "description": "",
     "builtinExternal": true,
     "___id": "T000002R000143",
     "___s": true
@@ -3396,10 +3379,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "DocumentFragment",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3411,10 +3394,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Element",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3426,10 +3409,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Event",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3441,10 +3424,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "Node",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3456,10 +3439,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "NodeList",
-    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3471,10 +3454,10 @@
     "kind": "external",
     "static": true,
     "variation": null,
-    "name": "XMLHttpRequest",
-    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
-    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
     "access": null,
     "description": "",
     "builtinExternal": true,
@@ -3486,6 +3469,21 @@
     "kind": "external",
     "static": true,
     "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000150",
+    "___s": true
+  },
+  {
+    "__docId__": 151,
+    "kind": "external",
+    "static": true,
+    "variation": null,
     "name": "AudioContext",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
     "memberof": "BuiltinExternal/WebAPIExternal.js",
@@ -3494,7 +3492,7 @@
     "description": "",
     "lineNumber": 34,
     "builtinExternal": true,
-    "___id": "T000002R000150",
+    "___id": "T000002R000151",
     "___s": true
   }
 ]
