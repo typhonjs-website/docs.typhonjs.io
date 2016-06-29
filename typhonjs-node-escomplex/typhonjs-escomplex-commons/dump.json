@@ -472,7 +472,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides a class report.\n */\nexport default class ClassReport extends AbstractReport\n{\n   /**\n    * Initializes class report.\n    *\n    * @param {string}   name - Name of the function.\n    * @param {number}   lineStart - Start line of function.\n    * @param {number}   lineEnd - End line of function.\n    */\n   constructor(name = '', lineStart = 0, lineEnd = 0)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate method data.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * The cyclomatic complexity of the class.\n       * @type {number}\n       */\n      this.cyclomatic = 1;\n\n      /**\n       * The cyclomatic density of the class.\n       * @type {number}\n       */\n      this.cyclomaticDensity = 0;\n\n      /**\n       * Stores the end line for the class.\n       * @type {number}\n       */\n      this.lineEnd = lineEnd;\n\n      /**\n       * Stores the start line for the class.\n       * @type {number}\n       */\n      this.lineStart = lineStart;\n\n      /**\n       * Stores all method data.\n       * @type {Array<MethodReport>}\n       */\n      this.methods = [];\n\n      /**\n       * The name of the function.\n       * @type {string}\n       */\n      this.name = name;\n\n      /**\n       * The source lines of code for the function.\n       * @type {{logical: number, physical: number}}\n       */\n      this.sloc = { logical: 0, physical: lineEnd - lineStart + 1 };\n   }\n}\n",
+    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides a class report.\n */\nexport default class ClassReport extends AbstractReport\n{\n   /**\n    * Initializes class report.\n    *\n    * @param {string}   name - Name of the class.\n    * @param {number}   lineStart - Start line of class.\n    * @param {number}   lineEnd - End line of class.\n    */\n   constructor(name = '', lineStart = 0, lineEnd = 0)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate method data.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * The cyclomatic complexity of the class.\n       * @type {number}\n       */\n      this.cyclomatic = 1;\n\n      /**\n       * The cyclomatic density of the class.\n       * @type {number}\n       */\n      this.cyclomaticDensity = 0;\n\n      /**\n       * Stores the end line for the class.\n       * @type {number}\n       */\n      this.lineEnd = lineEnd;\n\n      /**\n       * Stores the start line for the class.\n       * @type {number}\n       */\n      this.lineStart = lineStart;\n\n      /**\n       * Stores all method data.\n       * @type {Array<MethodReport>}\n       */\n      this.methods = [];\n\n      /**\n       * The name of the class.\n       * @type {string}\n       */\n      this.name = name;\n\n      /**\n       * The source lines of code for the class.\n       * @type {{logical: number, physical: number}}\n       */\n      this.sloc = { logical: 0, physical: lineEnd - lineStart + 1 };\n   }\n}\n",
     "___id": "T000002R000017",
     "___s": true
   },
@@ -520,8 +520,8 @@
         "spread": false,
         "optional": false,
         "name": "name",
-        "description": "<p>Name of the function.</p>\n",
-        "descriptionRaw": "Name of the function."
+        "description": "<p>Name of the class.</p>\n",
+        "descriptionRaw": "Name of the class."
       },
       {
         "nullable": null,
@@ -531,8 +531,8 @@
         "spread": false,
         "optional": false,
         "name": "lineStart",
-        "description": "<p>Start line of function.</p>\n",
-        "descriptionRaw": "Start line of function."
+        "description": "<p>Start line of class.</p>\n",
+        "descriptionRaw": "Start line of class."
       },
       {
         "nullable": null,
@@ -542,8 +542,8 @@
         "spread": false,
         "optional": false,
         "name": "lineEnd",
-        "description": "<p>End line of function.</p>\n",
-        "descriptionRaw": "End line of function."
+        "description": "<p>End line of class.</p>\n",
+        "descriptionRaw": "End line of class."
       }
     ],
     "generator": false,
@@ -691,7 +691,7 @@
     "memberof": "src/module/report/ClassReport.js~ClassReport",
     "longname": "src/module/report/ClassReport.js~ClassReport#name",
     "access": null,
-    "description": "The name of the function.",
+    "description": "The name of the class.",
     "lineNumber": 62,
     "type": {
       "nullable": null,
@@ -713,7 +713,7 @@
     "memberof": "src/module/report/ClassReport.js~ClassReport",
     "longname": "src/module/report/ClassReport.js~ClassReport#sloc",
     "access": null,
-    "description": "The source lines of code for the function.",
+    "description": "The source lines of code for the class.",
     "lineNumber": 68,
     "type": {
       "nullable": null,
@@ -1394,7 +1394,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport ClassReport      from './ClassReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides the default report object which stores data pertaining to a single file / module being processed.\n */\nexport default class ModuleReport extends AbstractReport\n{\n   /**\n    * Initializes the report.\n    *\n    * @param {number}   lineStart - Start line of file / module.\n    * @param {number}   lineEnd - End line of file / module.\n    */\n   constructor(lineStart, lineEnd)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate MethodReport for the module.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * Stores all ClassReport data for the module.\n       * @type {Array<ClassReport>}\n       */\n      this.classes = [];\n\n      /**\n       * Stores all parsed dependencies.\n       * @type {Array}\n       */\n      this.dependencies = [];\n\n      /**\n       * Stores the maintainability index for a report.\n       * @type {number}\n       */\n      this.maintainability = 171;\n\n      /**\n       * Stores all module MethodReport data found outside of any ES6 classes.\n       * @type {Array<MethodReport>}\n       */\n      this.methods = [];\n\n      /**\n       * Stores the current class report scope stack.\n       * @type {Array<ClassReport>}\n       */\n      this._scopeStackClass = [];\n\n      /**\n       * Stores the current method report scope stack.\n       * @type {Array<MethodReport>}\n       */\n      this._scopeStackMethod = [];\n   }\n\n   /**\n    * Potentially adds given dependencies for tracking.\n    *\n    * @param {object|Array}   dependencies - Dependencies to add.\n    */\n   addDependencies(dependencies)\n   {\n      if (typeof dependencies === 'object' || Array.isArray(dependencies))\n      {\n         this.dependencies = this.dependencies.concat(dependencies);\n      }\n   }\n\n   /**\n    * Creates a report scope when a class or method is entered.\n    *\n    * @param {string}   type - Type of report to create.\n    * @param {string}   name - Name of the function.\n    * @param {number}   lineStart - Start line of function.\n    * @param {number}   lineEnd - End line of function.\n    * @param {number}   params - Number of parameters for function.\n    *\n    * @return {object}\n    */\n   createScope(type, name = '', lineStart = 0, lineEnd = 0, params = 0)\n   {\n      let report;\n\n      switch (type)\n      {\n         case 'class':\n            report = new ClassReport(name, lineStart, lineEnd);\n            this.classes.push(report);\n            this._scopeStackClass.push(report);\n            break;\n\n         case 'method':\n         {\n            report = new MethodReport(name, lineStart, lineEnd, params);\n\n            // If an existing class report / scope exists also push the function to the class report.\n            const classReport = this.getCurrentClassReport();\n\n            if (classReport)\n            {\n               classReport.methods.push(report);\n            }\n            else\n            {\n               this.methods.push(report);\n            }\n\n            this._scopeStackMethod.push(report);\n\n            break;\n         }\n\n         default:\n            throw new Error('createScope error: Unknown scope type.');\n      }\n\n      return report;\n   }\n\n   /**\n    * Cleans up any house keeping member variables.\n    *\n    * @returns {ModuleReport}\n    */\n   finalize()\n   {\n      super.finalize();\n\n      delete this._scopeStackClass;\n      delete this._scopeStackMethod;\n\n      return this;\n   }\n\n   /**\n    * Returns the current class report.\n    *\n    * @returns {ClassReport}\n    */\n   getCurrentClassReport()\n   {\n      return this._scopeStackClass.length > 0 ? this._scopeStackClass[this._scopeStackClass.length - 1] : void 0;\n   }\n\n   /**\n    * Returns the current method report.\n    *\n    * @returns {MethodReport}\n    */\n   getCurrentMethodReport()\n   {\n      return this._scopeStackMethod.length > 0 ? this._scopeStackMethod[this._scopeStackMethod.length - 1] : void 0;\n   }\n\n   /**\n    * Increments the Halstead `metric` for the given `identifier` for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {string}   metric - A Halstead metric name.\n    * @param {string}   identifier - A Halstead identifier name.\n    */\n   halsteadItemEncountered(metric, identifier)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.incrementHalsteadItems(metric, identifier);\n\n      if (currentClassReport) { currentClassReport.incrementHalsteadItems(metric, identifier); }\n\n      if (currentMethodReport) { currentMethodReport.incrementHalsteadItems(metric, identifier); }\n   }\n\n   /**\n    * Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementCyclomatic(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.cyclomatic += amount;\n\n      if (currentClassReport) { currentClassReport.cyclomatic += amount; }\n      if (currentMethodReport) { currentMethodReport.cyclomatic += amount; }\n   }\n\n   /**\n    * Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementLogicalSloc(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.sloc.logical += amount;\n\n      if (currentClassReport) { currentClassReport.aggregate.sloc.logical += amount; }\n      if (currentMethodReport) { currentMethodReport.sloc.logical += amount; }\n   }\n\n   /**\n    * Pops a report scope.\n    *\n    * @param {string} type - The report scope `class` or `method` to pop off the given stack.\n    * @returns {*}\n    */\n   popScope(type)\n   {\n      switch (type)\n      {\n         case 'class':\n            this._scopeStackClass.pop();\n            return this.getCurrentClassReport();\n\n         case 'method':\n            this._scopeStackMethod.pop();\n            return this.getCurrentMethodReport();\n      }\n   }\n}\n",
+    "content": "'use strict';\n\nimport AbstractReport   from './AbstractReport.js';\nimport ClassReport      from './ClassReport.js';\nimport MethodReport     from './MethodReport.js';\n\n/**\n * Provides the default report object which stores data pertaining to a single file / module being processed.\n */\nexport default class ModuleReport extends AbstractReport\n{\n   /**\n    * Initializes the report.\n    *\n    * @param {number}   lineStart - Start line of file / module.\n    * @param {number}   lineEnd - End line of file / module.\n    */\n   constructor(lineStart, lineEnd)\n   {\n      super(new MethodReport('', lineStart, lineEnd, 0));\n\n      /**\n       * Stores the aggregate MethodReport for the module.\n       * @type {MethodReport}\n       */\n      this.aggregate = this._methodReport;\n\n      /**\n       * Stores all ClassReport data for the module.\n       * @type {Array<ClassReport>}\n       */\n      this.classes = [];\n\n      /**\n       * Stores all parsed dependencies.\n       * @type {Array}\n       */\n      this.dependencies = [];\n\n      /**\n       * Stores the maintainability index for a report.\n       * @type {number}\n       */\n      this.maintainability = 171;\n\n      /**\n       * Stores all module MethodReport data found outside of any ES6 classes.\n       * @type {Array<MethodReport>}\n       */\n      this.methods = [];\n\n      /**\n       * Stores the current class report scope stack.\n       * @type {Array<ClassReport>}\n       */\n      this._scopeStackClass = [];\n\n      /**\n       * Stores the current method report scope stack.\n       * @type {Array<MethodReport>}\n       */\n      this._scopeStackMethod = [];\n   }\n\n   /**\n    * Potentially adds given dependencies for tracking.\n    *\n    * @param {object|Array}   dependencies - Dependencies to add.\n    */\n   addDependencies(dependencies)\n   {\n      if (typeof dependencies === 'object' || Array.isArray(dependencies))\n      {\n         this.dependencies = this.dependencies.concat(dependencies);\n      }\n   }\n\n   /**\n    * Creates a report scope when a class or method is entered.\n    *\n    * @param {string}   type - Type of report to create.\n    * @param {string}   name - Name of the class or method.\n    * @param {number}   lineStart - Start line of method.\n    * @param {number}   lineEnd - End line of method.\n    * @param {number}   params - Number of parameters for method.\n    *\n    * @return {object}\n    */\n   createScope(type, name = '', lineStart = 0, lineEnd = 0, params = 0)\n   {\n      let report;\n\n      switch (type)\n      {\n         case 'class':\n            report = new ClassReport(name, lineStart, lineEnd);\n            this.classes.push(report);\n            this._scopeStackClass.push(report);\n            break;\n\n         case 'method':\n         {\n            report = new MethodReport(name, lineStart, lineEnd, params);\n\n            // Increment aggregate method report params.\n            this.incrementParams(params);\n\n            // If an existing class report / scope exists also push the method to the class report.\n            const classReport = this.getCurrentClassReport();\n\n            if (classReport)\n            {\n               classReport.incrementParams(params);\n               classReport.methods.push(report);\n            }\n            else\n            {\n               // Add this report to the module methods as there is no current class report.\n               this.methods.push(report);\n            }\n\n            this._scopeStackMethod.push(report);\n\n            break;\n         }\n\n         default:\n            throw new Error('createScope error: Unknown scope type.');\n      }\n\n      return report;\n   }\n\n   /**\n    * Cleans up any house keeping member variables.\n    *\n    * @returns {ModuleReport}\n    */\n   finalize()\n   {\n      super.finalize();\n\n      delete this._scopeStackClass;\n      delete this._scopeStackMethod;\n\n      return this;\n   }\n\n   /**\n    * Returns the current class report.\n    *\n    * @returns {ClassReport}\n    */\n   getCurrentClassReport()\n   {\n      return this._scopeStackClass.length > 0 ? this._scopeStackClass[this._scopeStackClass.length - 1] : void 0;\n   }\n\n   /**\n    * Returns the current method report.\n    *\n    * @returns {MethodReport}\n    */\n   getCurrentMethodReport()\n   {\n      return this._scopeStackMethod.length > 0 ? this._scopeStackMethod[this._scopeStackMethod.length - 1] : void 0;\n   }\n\n   /**\n    * Increments the Halstead `metric` for the given `identifier` for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {string}   metric - A Halstead metric name.\n    * @param {string}   identifier - A Halstead identifier name.\n    */\n   halsteadItemEncountered(metric, identifier)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.incrementHalsteadItems(metric, identifier);\n\n      if (currentClassReport) { currentClassReport.incrementHalsteadItems(metric, identifier); }\n\n      if (currentMethodReport) { currentMethodReport.incrementHalsteadItems(metric, identifier); }\n   }\n\n   /**\n    * Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementCyclomatic(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.cyclomatic += amount;\n\n      if (currentClassReport) { currentClassReport.cyclomatic += amount; }\n      if (currentMethodReport) { currentMethodReport.cyclomatic += amount; }\n   }\n\n   /**\n    * Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\n    * report being tracked.\n    *\n    * @param {number}   amount - Amount to increment.\n    */\n   incrementLogicalSloc(amount)\n   {\n      const currentClassReport = this.getCurrentClassReport();\n      const currentMethodReport = this.getCurrentMethodReport();\n\n      this.aggregate.sloc.logical += amount;\n\n      if (currentClassReport) { currentClassReport.aggregate.sloc.logical += amount; }\n      if (currentMethodReport) { currentMethodReport.sloc.logical += amount; }\n   }\n\n   /**\n    * Pops a report scope.\n    *\n    * @param {string} type - The report scope `class` or `method` to pop off the given stack.\n    * @returns {*}\n    */\n   popScope(type)\n   {\n      switch (type)\n      {\n         case 'class':\n            this._scopeStackClass.pop();\n            return this.getCurrentClassReport();\n\n         case 'method':\n            this._scopeStackMethod.pop();\n            return this.getCurrentMethodReport();\n      }\n   }\n}\n",
     "___id": "T000002R000056",
     "___s": true
   },
@@ -1695,8 +1695,8 @@
         "spread": false,
         "optional": false,
         "name": "name",
-        "description": "<p>Name of the function.</p>\n",
-        "descriptionRaw": "Name of the function."
+        "description": "<p>Name of the class or method.</p>\n",
+        "descriptionRaw": "Name of the class or method."
       },
       {
         "nullable": null,
@@ -1706,8 +1706,8 @@
         "spread": false,
         "optional": false,
         "name": "lineStart",
-        "description": "<p>Start line of function.</p>\n",
-        "descriptionRaw": "Start line of function."
+        "description": "<p>Start line of method.</p>\n",
+        "descriptionRaw": "Start line of method."
       },
       {
         "nullable": null,
@@ -1717,8 +1717,8 @@
         "spread": false,
         "optional": false,
         "name": "lineEnd",
-        "description": "<p>End line of function.</p>\n",
-        "descriptionRaw": "End line of function."
+        "description": "<p>End line of method.</p>\n",
+        "descriptionRaw": "End line of method."
       },
       {
         "nullable": null,
@@ -1728,8 +1728,8 @@
         "spread": false,
         "optional": false,
         "name": "params",
-        "description": "<p>Number of parameters for function.</p>\n",
-        "descriptionRaw": "Number of parameters for function."
+        "description": "<p>Number of parameters for method.</p>\n",
+        "descriptionRaw": "Number of parameters for method."
       }
     ],
     "return": {
@@ -1755,7 +1755,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#finalize",
     "access": null,
     "description": "Cleans up any house keeping member variables.",
-    "lineNumber": 134,
+    "lineNumber": 139,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1786,7 +1786,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#getCurrentClassReport",
     "access": null,
     "description": "Returns the current class report.",
-    "lineNumber": 149,
+    "lineNumber": 154,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1817,7 +1817,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#getCurrentMethodReport",
     "access": null,
     "description": "Returns the current method report.",
-    "lineNumber": 159,
+    "lineNumber": 164,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1848,7 +1848,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#halsteadItemEncountered",
     "access": null,
     "description": "Increments the Halstead `metric` for the given `identifier` for the ModuleReport and any current class or method\nreport being tracked.",
-    "lineNumber": 171,
+    "lineNumber": 176,
     "params": [
       {
         "nullable": null,
@@ -1887,7 +1887,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#incrementCyclomatic",
     "access": null,
     "description": "Increments the cyclomatic metric for the ModuleReport and any current class or method report being tracked.",
-    "lineNumber": 188,
+    "lineNumber": 193,
     "params": [
       {
         "nullable": null,
@@ -1915,7 +1915,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#incrementLogicalSloc",
     "access": null,
     "description": "Increments the logical SLOC (source lines of code) metric for the ModuleReport and any current class or method\nreport being tracked.",
-    "lineNumber": 205,
+    "lineNumber": 210,
     "params": [
       {
         "nullable": null,
@@ -1943,7 +1943,7 @@
     "longname": "src/module/report/ModuleReport.js~ModuleReport#popScope",
     "access": null,
     "description": "Pops a report scope.",
-    "lineNumber": 222,
+    "lineNumber": 227,
     "unknown": [
       {
         "tagName": "@returns",
