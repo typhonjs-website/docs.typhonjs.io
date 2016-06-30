@@ -10,7 +10,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport ESComplexModule  from 'typhonjs-escomplex-module/src/ESComplexModule.js';\nimport ESComplexProject from 'typhonjs-escomplex-project/src/ESComplexProject.js';\n\nimport Parser           from './Parser.js';\n\n/**\n * Next generation code complexity reporting for Javascript abstract syntax trees (AST).\n */\nexport default class ESComplex\n{\n   /**\n    * Initializes ESComplex.\n    *\n    * @param {object}   options - module and project options including user plugins to load including:\n    * ```\n    * (object)             module - Provides an object hash of the following options for the module runtime:\n    *    (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n    *    (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.\n    *\n    * (object)             project - Provides an object hash of the following options for the project runtime:\n    *    (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n    *    (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.\n    * ```\n    */\n   constructor(options = {})\n   {\n      if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }\n\n      this._escomplexModule = new ESComplexModule(options.module);\n      this._escomplexProject = new ESComplexProject(options);\n   }\n\n   /**\n    * Parses the given source code then processes the generated AST and calculates metrics via plugins.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) module analyze options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyze(source, options, parserOptions)\n   {\n      if (typeof source !== 'string') { throw new TypeError('analyze error: `source` is not a `string`.'); }\n\n      return this._escomplexModule.analyze(Parser.parse(source, parserOptions), options);\n   }\n\n   /**\n    * Processes the given ast and calculates metrics via plugins.\n    *\n    * @param {object|Array}   ast - Javascript AST.\n    * @param {object}         options - (Optional) module analyze options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyzeAST(ast, options)\n   {\n      return this._escomplexModule.analyze(ast, options);\n   }\n\n   /**\n    * Processes the given sources and calculates project metrics via plugins.\n    *\n    * @param {Array}    sources - Array of object hashes containing `code` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   analyzeProject(sources, options, parserOptions)\n   {\n      // Parse sources and map entries to include `ast` entry from `code`.\n      const modules = sources.map((source) =>\n      {\n         try\n         {\n            return { ast: Parser.parse(source.code, parserOptions), path: source.path };\n         }\n         catch (error)\n         {\n            if (options.ignoreErrors) { return null; }\n\n            error.message = `${source.path}: ${error.message}`;\n            throw error;\n         }\n      })\n      .filter((source) => !!source);\n\n      return this._escomplexProject.analyze(modules, options);\n   }\n\n   /**\n    * Processes the given modules and calculates project metrics via plugins.\n    *\n    * @param {Array}    modules - Array of object hashes containing `ast` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   analyzeProjectAST(modules, options)\n   {\n      return this._escomplexProject.analyze(modules, options);\n   }\n\n   /**\n    * Provides a convenience method to parse the given source code and return the babylon AST.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - babylon generated AST.\n    */\n   parse(source, options)\n   {\n      return Parser.parse(source, options);\n   }\n\n   /**\n    * Processes existing project results and calculates metrics via plugins.\n    *\n    * @param {object}   results - An object hash with a `reports` entry that is an Array of module results.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   processProjectResults(results, options)\n   {\n      return this._escomplexProject.processResults(results, options);\n   }\n\n   // Asynchronous Promise based methods ----------------------------------------------------------------------------\n\n   /**\n    * Wraps in a Promise parsing of the given source code then processes the generated AST and calculates metrics via\n    * plugins.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) module analyze options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyzeThen(source, options, parserOptions)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyze(source, options, parserOptions)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given ast and calculates metrics via plugins.\n    *\n    * @param {object|Array}   ast - Javascript AST.\n    * @param {object}         options - (Optional) module analyze options.\n    *\n    * @returns {Promise<object>} - A single module report.\n    */\n   analyzeASTThen(ast, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeAST(ast, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given sources and calculates project metrics via plugins.\n    *\n    * @param {Array}    sources - Array of object hashes containing `code` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   analyzeProjectThen(sources, options, parserOptions)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeProject(sources, options, parserOptions)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given modules and calculates project metrics via plugins.\n    *\n    * @param {Array}    modules - Array of object hashes containing `ast` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   analyzeProjectASTThen(modules, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeProjectAST(modules, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise a convenience method to parse the given source code and return the babylon AST.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {Promise<object>} - babylon generated AST.\n    */\n   parseThen(source, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.parse(source, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing existing project results and calculates metrics via plugins.\n    *\n    * @param {object}   results - An object hash with a `reports` entry that is an Array of module results.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   processProjectResultsThen(results, options)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.processProjectResults(results, options)); }\n         catch (err) { reject(err); }\n      });\n   }\n}\n",
+    "content": "'use strict';\n\nimport ESComplexModule  from 'typhonjs-escomplex-module/src/ESComplexModule';\nimport ESComplexProject from 'typhonjs-escomplex-project/src/ESComplexProject';\n\nimport Parser           from './Parser';\n\n/**\n * Next generation code complexity reporting for Javascript abstract syntax trees (AST).\n */\nexport default class ESComplex\n{\n   /**\n    * Initializes ESComplex.\n    *\n    * @param {object}   options - module and project options including user plugins to load including:\n    * ```\n    * (object)             module - Provides an object hash of the following options for the module runtime:\n    *    (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n    *    (Array<Object>)   plugins - A list of ESComplexModule plugins that have already been instantiated.\n    *\n    * (object)             project - Provides an object hash of the following options for the project runtime:\n    *    (boolean)         loadDefaultPlugins - When false ESComplexProject will not load any default plugins.\n    *    (Array<Object>)   plugins - A list of ESComplexProject plugins that have already been instantiated.\n    * ```\n    */\n   constructor(options = {})\n   {\n      /* istanbul ignore if */\n      if (typeof options !== 'object') { throw new TypeError('ctor error: `options` is not an `object`.'); }\n\n      /**\n       * An instance of ESComplexModule.\n       * @type {ESComplexModule}\n       * @private\n       */\n      this._escomplexModule = new ESComplexModule(options.module);\n\n      /**\n       * An instance of ESComplexProject.\n       * @type {ESComplexProject}\n       * @private\n       */\n      this._escomplexProject = new ESComplexProject(options);\n   }\n\n   /**\n    * Parses the given source code then processes the generated AST and calculates metrics via plugins.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) module analyze options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyze(source, options = {}, parserOptions = undefined)\n   {\n      /* istanbul ignore if */\n      if (typeof source !== 'string') { throw new TypeError('analyze error: `source` is not a `string`.'); }\n\n      return this._escomplexModule.analyze(Parser.parse(source, parserOptions), options);\n   }\n\n   /**\n    * Processes the given ast and calculates metrics via plugins.\n    *\n    * @param {object|Array}   ast - Javascript AST.\n    * @param {object}         options - (Optional) module analyze options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyzeAST(ast, options = {})\n   {\n      return this._escomplexModule.analyze(ast, options);\n   }\n\n   /**\n    * Processes the given sources and calculates project metrics via plugins.\n    *\n    * @param {Array}    sources - Array of object hashes containing `code` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   analyzeProject(sources, options = {}, parserOptions = undefined)\n   {\n      // Parse sources and map entries to include `ast` entry from `code`.\n      const modules = sources.map((source) =>\n      {\n         try\n         {\n            return { ast: Parser.parse(source.code, parserOptions), path: source.path };\n         }\n         catch (error)\n         {\n            /* istanbul ignore if */\n            if (options.ignoreErrors) { return null; }\n\n            error.message = `${source.path}: ${error.message}`;\n            throw error;\n         }\n      })\n      .filter((source) => !!source);\n\n      return this._escomplexProject.analyze(modules, options);\n   }\n\n   /**\n    * Processes the given modules and calculates project metrics via plugins.\n    *\n    * @param {Array}    modules - Array of object hashes containing `ast` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   analyzeProjectAST(modules, options = {})\n   {\n      return this._escomplexProject.analyze(modules, options);\n   }\n\n   /**\n    * Provides a convenience method to parse the given source code and return the babylon AST.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - babylon generated AST.\n    */\n   parse(source, parserOptions = undefined)\n   {\n      return Parser.parse(source, parserOptions);\n   }\n\n   /**\n    * Processes existing project results and calculates metrics via plugins.\n    *\n    * @param {object}   results - An object hash with a `reports` entry that is an Array of module results.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {{reports: Array<{}>}} - An object hash with a `reports` entry that is an Array of module results.\n    */\n   processProjectResults(results, options = {})\n   {\n      return this._escomplexProject.processResults(results, options);\n   }\n\n   // Asynchronous Promise based methods ----------------------------------------------------------------------------\n\n   /**\n    * Wraps in a Promise parsing of the given source code then processes the generated AST and calculates metrics via\n    * plugins.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   options - (Optional) module analyze options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object} - A single module report.\n    */\n   analyzeThen(source, options = {}, parserOptions = undefined)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyze(source, options, parserOptions)); }\n         catch (err) { /* istanbul ignore next */ reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given ast and calculates metrics via plugins.\n    *\n    * @param {object|Array}   ast - Javascript AST.\n    * @param {object}         options - (Optional) module analyze options.\n    *\n    * @returns {Promise<object>} - A single module report.\n    */\n   analyzeASTThen(ast, options = {})\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeAST(ast, options)); }\n         catch (err) { /* istanbul ignore next */ reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given sources and calculates project metrics via plugins.\n    *\n    * @param {Array}    sources - Array of object hashes containing `code` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   analyzeProjectThen(sources, options = {}, parserOptions = undefined)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeProject(sources, options, parserOptions)); }\n         catch (err) { /* istanbul ignore next */ reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing the given modules and calculates project metrics via plugins.\n    *\n    * @param {Array}    modules - Array of object hashes containing `ast` and `path` entries.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   analyzeProjectASTThen(modules, options = {})\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.analyzeProjectAST(modules, options)); }\n         catch (err) { /* istanbul ignore next */ reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise a convenience method to parse the given source code and return the babylon AST.\n    *\n    * @param {string}   source - Javascript source code.\n    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.\n    *\n    * @returns {Promise<object>} - babylon generated AST.\n    */\n   parseThen(source, parserOptions = undefined)\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.parse(source, parserOptions)); }\n         catch (err) { /* istanbul ignore next */ reject(err); }\n      });\n   }\n\n   /**\n    * Wraps in a Promise processing existing project results and calculates metrics via plugins.\n    *\n    * @param {object}   results - An object hash with a `reports` entry that is an Array of module results.\n    * @param {object}   options - (Optional) project processing options.\n    *\n    * @returns {Promise<{reports: Array<{}>}>} - An object hash with a `reports` entry that is an Array of module\n    *                                            results.\n    */\n   processProjectResultsThen(results, options = {})\n   {\n      return new Promise((resolve, reject) =>\n      {\n         try { resolve(this.processProjectResults(results, options)); }\n         catch (err) { /* istanbul ignore next */ reject(err); }\n      });\n   }\n}\n",
     "___id": "T000002R000002",
     "___s": true
   },
@@ -68,17 +68,20 @@
     "name": "_escomplexModule",
     "memberof": "src/ESComplex.js~ESComplex",
     "longname": "src/ESComplex.js~ESComplex#_escomplexModule",
-    "access": null,
-    "description": null,
-    "lineNumber": 31,
-    "undocument": true,
+    "access": "private",
+    "description": "<p>An instance of ESComplexModule.</p>\n",
+    "lineNumber": 37,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "ESComplexModule"
+      ],
+      "spread": false,
+      "description": null
     },
     "___id": "T000002R000005",
-    "___s": true
+    "___s": true,
+    "descriptionRaw": "An instance of ESComplexModule."
   },
   {
     "__docId__": 4,
@@ -88,17 +91,20 @@
     "name": "_escomplexProject",
     "memberof": "src/ESComplex.js~ESComplex",
     "longname": "src/ESComplex.js~ESComplex#_escomplexProject",
-    "access": null,
-    "description": null,
-    "lineNumber": 32,
-    "undocument": true,
+    "access": "private",
+    "description": "<p>An instance of ESComplexProject.</p>\n",
+    "lineNumber": 44,
     "type": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "ESComplexProject"
+      ],
+      "spread": false,
+      "description": null
     },
     "___id": "T000002R000006",
-    "___s": true
+    "___s": true,
+    "descriptionRaw": "An instance of ESComplexProject."
   },
   {
     "__docId__": 5,
@@ -110,7 +116,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyze",
     "access": null,
     "description": "Parses the given source code then processes the generated AST and calculates metrics via plugins.",
-    "lineNumber": 44,
+    "lineNumber": 56,
     "unknown": [
       {
         "tagName": "@returns",
@@ -175,7 +181,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeAST",
     "access": null,
     "description": "Processes the given ast and calculates metrics via plugins.",
-    "lineNumber": 59,
+    "lineNumber": 72,
     "unknown": [
       {
         "tagName": "@returns",
@@ -230,7 +236,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeProject",
     "access": null,
     "description": "Processes the given sources and calculates project metrics via plugins.",
-    "lineNumber": 73,
+    "lineNumber": 86,
     "unknown": [
       {
         "tagName": "@returns",
@@ -295,7 +301,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeProjectAST",
     "access": null,
     "description": "Processes the given modules and calculates project metrics via plugins.",
-    "lineNumber": 103,
+    "lineNumber": 117,
     "unknown": [
       {
         "tagName": "@returns",
@@ -349,7 +355,7 @@
     "longname": "src/ESComplex.js~ESComplex#parse",
     "access": null,
     "description": "Provides a convenience method to parse the given source code and return the babylon AST.",
-    "lineNumber": 116,
+    "lineNumber": 130,
     "unknown": [
       {
         "tagName": "@returns",
@@ -375,7 +381,7 @@
         ],
         "spread": false,
         "optional": false,
-        "name": "options",
+        "name": "parserOptions",
         "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
         "descriptionRaw": "(Optional) overrides default babylon parser options."
       }
@@ -403,7 +409,7 @@
     "longname": "src/ESComplex.js~ESComplex#processProjectResults",
     "access": null,
     "description": "Processes existing project results and calculates metrics via plugins.",
-    "lineNumber": 129,
+    "lineNumber": 143,
     "unknown": [
       {
         "tagName": "@returns",
@@ -457,7 +463,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeThen",
     "access": null,
     "description": "Wraps in a Promise parsing of the given source code then processes the generated AST and calculates metrics via\nplugins.",
-    "lineNumber": 146,
+    "lineNumber": 160,
     "unknown": [
       {
         "tagName": "@returns",
@@ -522,7 +528,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeASTThen",
     "access": null,
     "description": "Wraps in a Promise processing the given ast and calculates metrics via plugins.",
-    "lineNumber": 163,
+    "lineNumber": 177,
     "unknown": [
       {
         "tagName": "@returns",
@@ -577,7 +583,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeProjectThen",
     "access": null,
     "description": "Wraps in a Promise processing the given sources and calculates project metrics via plugins.",
-    "lineNumber": 182,
+    "lineNumber": 196,
     "unknown": [
       {
         "tagName": "@returns",
@@ -642,7 +648,7 @@
     "longname": "src/ESComplex.js~ESComplex#analyzeProjectASTThen",
     "access": null,
     "description": "Wraps in a Promise processing the given modules and calculates project metrics via plugins.",
-    "lineNumber": 200,
+    "lineNumber": 214,
     "unknown": [
       {
         "tagName": "@returns",
@@ -696,7 +702,7 @@
     "longname": "src/ESComplex.js~ESComplex#parseThen",
     "access": null,
     "description": "Wraps in a Promise a convenience method to parse the given source code and return the babylon AST.",
-    "lineNumber": 217,
+    "lineNumber": 231,
     "unknown": [
       {
         "tagName": "@returns",
@@ -722,7 +728,7 @@
         ],
         "spread": false,
         "optional": false,
-        "name": "options",
+        "name": "parserOptions",
         "description": "<p>(Optional) overrides default babylon parser options.</p>\n",
         "descriptionRaw": "(Optional) overrides default babylon parser options."
       }
@@ -750,7 +756,7 @@
     "longname": "src/ESComplex.js~ESComplex#processProjectResultsThen",
     "access": null,
     "description": "Wraps in a Promise processing existing project results and calculates metrics via plugins.",
-    "lineNumber": 235,
+    "lineNumber": 249,
     "unknown": [
       {
         "tagName": "@returns",
@@ -805,7 +811,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport * as babylon from 'babylon';\n\n/**\n * Provides a comprehensive regex test to determine if source code is an ES Module.\n * @type {RegExp}\n */\nconst s_ESM_REGEX = /(^\\s*|[}\\);\\n]\\s*)(import\\s*(['\"]|(\\*\\s+as\\s+)?[^\"'\\(\\)\\n;]+\\s*from\\s*['\"]|\\{)|export\\s+\\*\\s+from\\s+[\"']|export\\s* (\\{|default|function|class|var|const|let|async\\s+function))/;\n\n/**\n * Default bablyon options applying all available plugins.\n * @type {{plugins: string[]}}\n */\nconst s_BABYLON_OPTIONS =\n{\n   plugins: ['asyncFunctions', 'asyncGenerators', 'classConstructorCall', 'classProperties',\n    'decorators', 'doExpressions', 'exportExtensions', 'exponentiationOperator', 'flow', 'functionBind', 'functionSent',\n     'jsx', 'objectRestSpread', 'trailingFunctionCommas']\n};\n\n/**\n * Provides a convenience wrapper around babylon applying an ES Modules regex test to automatically set `sourceType`\n * to `script` or `module`.\n */\nexport default class Parser\n{\n   /**\n    * Parses the given source with babylon.\n    *\n    * @param {string}   source - Javascript source code to parse.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object}\n    */\n   static parse(source, options)\n   {\n      options = typeof options === 'object' ? options : s_BABYLON_OPTIONS;\n      options.sourceType = s_ESM_REGEX.test(source) ? 'module' : 'script';\n      return babylon.parse(source, options);\n   }\n}\n\n",
+    "content": "'use strict';\n\nimport * as babylon from 'babylon';\n\n/**\n * Provides a comprehensive regex test to determine if source code is an ES Module.\n * @type {RegExp}\n * @ignore\n */\nconst s_ESM_REGEX = /(^\\s*|[}\\);\\n]\\s*)(import\\s*(['\"]|(\\*\\s+as\\s+)?[^\"'\\(\\)\\n;]+\\s*from\\s*['\"]|\\{)|export\\s+\\*\\s+from\\s+[\"']|export\\s* (\\{|default|function|class|var|const|let|async\\s+function))/;\n\n/**\n * Default babylon options applying all available plugins.\n * @type {{plugins: string[]}}\n * @ignore\n */\nconst s_BABYLON_OPTIONS =\n{\n   plugins: ['asyncFunctions', 'asyncGenerators', 'classConstructorCall', 'classProperties',\n    'decorators', 'doExpressions', 'exportExtensions', 'exponentiationOperator', 'flow', 'functionBind', 'functionSent',\n     'jsx', 'objectRestSpread', 'trailingFunctionCommas']\n};\n\n/**\n * Provides a convenience wrapper around babylon applying an ES Modules regex test to automatically set `sourceType`\n * to `script` or `module`.\n */\nexport default class Parser\n{\n   /**\n    * Parses the given source with babylon.\n    *\n    * @param {string}   source - Javascript source code to parse.\n    * @param {object}   options - (Optional) overrides default babylon parser options.\n    *\n    * @returns {object}\n    */\n   static parse(source, options = undefined)\n   {\n      options = typeof options === 'object' ? options : s_BABYLON_OPTIONS;\n      options.sourceType = s_ESM_REGEX.test(source) ? 'module' : 'script';\n      return babylon.parse(source, options);\n   }\n}\n\n",
     "___id": "T000002R000019",
     "___s": true
   },
@@ -822,7 +828,8 @@
     "importPath": "typhonjs-escomplex/src/Parser.js",
     "importStyle": null,
     "description": "Provides a comprehensive regex test to determine if source code is an ES Module.",
-    "lineNumber": 9,
+    "lineNumber": 10,
+    "ignore": true,
     "type": {
       "nullable": null,
       "types": [
@@ -846,8 +853,9 @@
     "export": false,
     "importPath": "typhonjs-escomplex/src/Parser.js",
     "importStyle": null,
-    "description": "Default bablyon options applying all available plugins.",
-    "lineNumber": 15,
+    "description": "Default babylon options applying all available plugins.",
+    "lineNumber": 17,
+    "ignore": true,
     "type": {
       "nullable": null,
       "types": [
@@ -872,7 +880,7 @@
     "importPath": "typhonjs-escomplex/src/Parser.js",
     "importStyle": "Parser",
     "description": "Provides a convenience wrapper around babylon applying an ES Modules regex test to automatically set `sourceType`\nto `script` or `module`.",
-    "lineNumber": 26,
+    "lineNumber": 28,
     "interface": false,
     "___id": "T000002R000022",
     "___s": true
@@ -887,7 +895,7 @@
     "longname": "src/Parser.js~Parser.parse",
     "access": null,
     "description": "Parses the given source with babylon.",
-    "lineNumber": 36,
+    "lineNumber": 38,
     "unknown": [
       {
         "tagName": "@returns",
@@ -942,7 +950,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport ESComplex from './ESComplex.js';\n\nexport default new ESComplex();\n",
+    "content": "'use strict';\n\nimport ESComplex from './ESComplex';\n\nexport default new ESComplex();\n",
     "___id": "T000002R000024",
     "___s": true
   },

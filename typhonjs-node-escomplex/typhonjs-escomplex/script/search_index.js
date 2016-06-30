@@ -348,6 +348,18 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/escomplex.js~escomplex#_escomplexmodule",
+    "class/src/ESComplex.js~ESComplex.html#instance-member-_escomplexModule",
+    "src/ESComplex.js~ESComplex#_escomplexModule",
+    "member"
+  ],
+  [
+    "src/escomplex.js~escomplex#_escomplexproject",
+    "class/src/ESComplex.js~ESComplex.html#instance-member-_escomplexProject",
+    "src/ESComplex.js~ESComplex#_escomplexProject",
+    "member"
+  ],
+  [
     "src/escomplex.js~escomplex#analyze",
     "class/src/ESComplex.js~ESComplex.html#instance-method-analyze",
     "src/ESComplex.js~ESComplex#analyze",

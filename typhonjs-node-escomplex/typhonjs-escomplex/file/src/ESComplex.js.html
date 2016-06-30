@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1465812192755" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1467303837605" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -62,7 +62,7 @@
 <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-1" id="file-1" checked><label for="file-1" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/Parser.js" data-scm-type="github">Parser.js</label>
                <ul>
                   
-               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Parser.js~Parser.html" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/Parser.js#L26" data-scm-type="github">Parser</a></span></li>
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Parser.js~Parser.html" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex/tree/master/src/Parser.js#L28" data-scm-type="github">Parser</a></span></li>
 </ul>
             </li>
 </ul>
@@ -74,10 +74,10 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/ESComplex.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
 
-import ESComplexModule  from &apos;typhonjs-escomplex-module/src/ESComplexModule.js&apos;;
-import ESComplexProject from &apos;typhonjs-escomplex-project/src/ESComplexProject.js&apos;;
+import ESComplexModule  from &apos;typhonjs-escomplex-module/src/ESComplexModule&apos;;
+import ESComplexProject from &apos;typhonjs-escomplex-project/src/ESComplexProject&apos;;
 
-import Parser           from &apos;./Parser.js&apos;;
+import Parser           from &apos;./Parser&apos;;
 
 /**
  * Next generation code complexity reporting for Javascript abstract syntax trees (AST).
@@ -100,9 +100,21 @@ export default class ESComplex
     */
    constructor(options = {})
    {
+      /* istanbul ignore if */
       if (typeof options !== &apos;object&apos;) { throw new TypeError(&apos;ctor error: `options` is not an `object`.&apos;); }
 
+      /**
+       * An instance of ESComplexModule.
+       * @type {ESComplexModule}
+       * @private
+       */
       this._escomplexModule = new ESComplexModule(options.module);
+
+      /**
+       * An instance of ESComplexProject.
+       * @type {ESComplexProject}
+       * @private
+       */
       this._escomplexProject = new ESComplexProject(options);
    }
 
@@ -115,8 +127,9 @@ export default class ESComplex
     *
     * @returns {object} - A single module report.
     */
-   analyze(source, options, parserOptions)
+   analyze(source, options = {}, parserOptions = undefined)
    {
+      /* istanbul ignore if */
       if (typeof source !== &apos;string&apos;) { throw new TypeError(&apos;analyze error: `source` is not a `string`.&apos;); }
 
       return this._escomplexModule.analyze(Parser.parse(source, parserOptions), options);
@@ -130,7 +143,7 @@ export default class ESComplex
     *
     * @returns {object} - A single module report.
     */
-   analyzeAST(ast, options)
+   analyzeAST(ast, options = {})
    {
       return this._escomplexModule.analyze(ast, options);
    }
@@ -144,7 +157,7 @@ export default class ESComplex
     *
     * @returns {{reports: Array&lt;{}&gt;}} - An object hash with a `reports` entry that is an Array of module results.
     */
-   analyzeProject(sources, options, parserOptions)
+   analyzeProject(sources, options = {}, parserOptions = undefined)
    {
       // Parse sources and map entries to include `ast` entry from `code`.
       const modules = sources.map((source) =&gt;
@@ -155,6 +168,7 @@ export default class ESComplex
          }
          catch (error)
          {
+            /* istanbul ignore if */
             if (options.ignoreErrors) { return null; }
 
             error.message = `${source.path}: ${error.message}`;
@@ -174,7 +188,7 @@ export default class ESComplex
     *
     * @returns {{reports: Array&lt;{}&gt;}} - An object hash with a `reports` entry that is an Array of module results.
     */
-   analyzeProjectAST(modules, options)
+   analyzeProjectAST(modules, options = {})
    {
       return this._escomplexProject.analyze(modules, options);
    }
@@ -183,13 +197,13 @@ export default class ESComplex
     * Provides a convenience method to parse the given source code and return the babylon AST.
     *
     * @param {string}   source - Javascript source code.
-    * @param {object}   options - (Optional) overrides default babylon parser options.
+    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.
     *
     * @returns {object} - babylon generated AST.
     */
-   parse(source, options)
+   parse(source, parserOptions = undefined)
    {
-      return Parser.parse(source, options);
+      return Parser.parse(source, parserOptions);
    }
 
    /**
@@ -200,7 +214,7 @@ export default class ESComplex
     *
     * @returns {{reports: Array&lt;{}&gt;}} - An object hash with a `reports` entry that is an Array of module results.
     */
-   processProjectResults(results, options)
+   processProjectResults(results, options = {})
    {
       return this._escomplexProject.processResults(results, options);
    }
@@ -217,12 +231,12 @@ export default class ESComplex
     *
     * @returns {object} - A single module report.
     */
-   analyzeThen(source, options, parserOptions)
+   analyzeThen(source, options = {}, parserOptions = undefined)
    {
       return new Promise((resolve, reject) =&gt;
       {
          try { resolve(this.analyze(source, options, parserOptions)); }
-         catch (err) { reject(err); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 
@@ -234,12 +248,12 @@ export default class ESComplex
     *
     * @returns {Promise&lt;object&gt;} - A single module report.
     */
-   analyzeASTThen(ast, options)
+   analyzeASTThen(ast, options = {})
    {
       return new Promise((resolve, reject) =&gt;
       {
          try { resolve(this.analyzeAST(ast, options)); }
-         catch (err) { reject(err); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 
@@ -253,12 +267,12 @@ export default class ESComplex
     * @returns {Promise&lt;{reports: Array&lt;{}&gt;}&gt;} - An object hash with a `reports` entry that is an Array of module
     *                                            results.
     */
-   analyzeProjectThen(sources, options, parserOptions)
+   analyzeProjectThen(sources, options = {}, parserOptions = undefined)
    {
       return new Promise((resolve, reject) =&gt;
       {
          try { resolve(this.analyzeProject(sources, options, parserOptions)); }
-         catch (err) { reject(err); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 
@@ -271,12 +285,12 @@ export default class ESComplex
     * @returns {Promise&lt;{reports: Array&lt;{}&gt;}&gt;} - An object hash with a `reports` entry that is an Array of module
     *                                            results.
     */
-   analyzeProjectASTThen(modules, options)
+   analyzeProjectASTThen(modules, options = {})
    {
       return new Promise((resolve, reject) =&gt;
       {
          try { resolve(this.analyzeProjectAST(modules, options)); }
-         catch (err) { reject(err); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 
@@ -284,16 +298,16 @@ export default class ESComplex
     * Wraps in a Promise a convenience method to parse the given source code and return the babylon AST.
     *
     * @param {string}   source - Javascript source code.
-    * @param {object}   options - (Optional) overrides default babylon parser options.
+    * @param {object}   parserOptions - (Optional) overrides default babylon parser options.
     *
     * @returns {Promise&lt;object&gt;} - babylon generated AST.
     */
-   parseThen(source, options)
+   parseThen(source, parserOptions = undefined)
    {
       return new Promise((resolve, reject) =&gt;
       {
-         try { resolve(this.parse(source, options)); }
-         catch (err) { reject(err); }
+         try { resolve(this.parse(source, parserOptions)); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 
@@ -306,12 +320,12 @@ export default class ESComplex
     * @returns {Promise&lt;{reports: Array&lt;{}&gt;}&gt;} - An object hash with a `reports` entry that is an Array of module
     *                                            results.
     */
-   processProjectResultsThen(results, options)
+   processProjectResultsThen(results, options = {})
    {
       return new Promise((resolve, reject) =&gt;
       {
          try { resolve(this.processProjectResults(results, options)); }
-         catch (err) { reject(err); }
+         catch (err) { /* istanbul ignore next */ reject(err); }
       });
    }
 }
