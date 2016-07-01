@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1465794121597" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1467342703168" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -71,9 +71,9 @@
 import { assert }          from &apos;chai&apos;;
 import fs                  from &apos;fs&apos;;
 import sortObj             from &apos;sort-object&apos;;
-import walker              from &apos;typhonjs-ast-walker&apos;;
+import ASTWalker           from &apos;typhonjs-ast-walker/src/ASTWalker&apos;;
 
-import PluginSyntaxBabylon from &apos;../../src/PluginSyntaxBabylon.js&apos;;
+import PluginSyntaxBabylon from &apos;../../src/PluginSyntaxBabylon&apos;;
 
 const pluginData =
 [
@@ -153,7 +153,7 @@ pluginData.forEach((plugin) =&gt;
             const event = { data: { settings: {}, syntaxes: {} } };
             instance.onLoadSyntax(event);
 
-            walker.traverse(JSON.parse(fs.readFileSync(&apos;./test/fixture/espree-estree.json&apos;, &apos;utf8&apos;)),
+            new ASTWalker().traverse(JSON.parse(fs.readFileSync(&apos;./test/fixture/espree-estree.json&apos;, &apos;utf8&apos;)),
             {
                enterNode: (node, parent) =&gt;
                {
@@ -167,8 +167,7 @@ pluginData.forEach((plugin) =&gt;
                      {
                         if (typeof results[node.type][metric] === &apos;undefined&apos;) { results[node.type][metric] = {}; }
 
-                        const value = typeof syntax[metric] === &apos;function&apos; ? syntax[metric](node, parent) :
-                         syntax[metric];
+                        const value = syntax[metric].valueOf(node, parent);
 
                         const valueKey = JSON.stringify(value);
 

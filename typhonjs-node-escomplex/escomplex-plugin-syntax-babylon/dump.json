@@ -10,7 +10,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport actualise              from 'typhonjs-escomplex-commons/src/traits/actualise.js';\nimport safeName               from 'typhonjs-escomplex-commons/src/traits/safeName.js';\n\nimport PluginSyntaxESTree     from 'escomplex-plugin-syntax-estree/src/PluginSyntaxESTree.js';\n\n/**\n * Provides an typhonjs-escomplex-module / ESComplexModule plugin which loads syntax definitions for trait resolution\n * for unique Babylon AST not found in ESTree.\n *\n * @see https://www.npmjs.com/package/typhonjs-escomplex-module\n */\nexport default class PluginSyntaxBabylon extends PluginSyntaxESTree\n{\n   // Unique Babylon AST nodes --------------------------------------------------------------------------------------\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#bindexpression\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   BindExpression() { return actualise(0, 0); }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#booleanliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   BooleanLiteral() { return actualise(0, 0, undefined, (node) => { return node.value; }); }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#classmethod\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   ClassMethod()\n   {\n      return actualise(0, 0, (node) =>\n         {\n            const operators = ['function'];\n            if (node.kind && (node.kind === 'get' || node.kind === 'set')) { operators.push(node.kind); }\n            if (typeof node.static === 'boolean' && node.static) { operators.push('static'); }\n            return operators;\n         },\n         (node) => { return safeName(node.key); },\n         'key',   // Note: must skip key as the assigned name is forwarded on to FunctionExpression.\n         true\n      );\n   }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#decorator\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   Decorator() { return actualise(0, 0); }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#directive\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   Directive() { return actualise(1, 0); }\n\n   /**\n    * Avoid conflicts between string literals and identifiers.\n    *\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#directiveliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   DirectiveLiteral()\n   {\n      return actualise(0, 0, undefined, (node) =>\n         {\n            return typeof node.value === 'string' ? `\"${node.value}\"` : node.value;\n         }\n      );\n   }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#nullliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   NullLiteral() { return actualise(0, 0, undefined, 'null'); }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#numericliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   NumericLiteral() { return actualise(0, 0, undefined, (node) => { return node.value; }); }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#objectmethod\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   ObjectMethod()\n   {\n      return actualise(0, 0, (node) =>\n         {\n            return typeof node.kind === 'string' && (node.kind === 'get' || node.kind === 'set') ?\n             node.kind : undefined;\n         },\n         undefined,\n         'key'  // Note: must skip key as the assigned name is forwarded on to FunctionExpression.\n      );\n   }\n\n   /**\n    * Note: that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.\n    *\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#objectproperty\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   ObjectProperty()\n   {\n      return actualise(1, 0, (node) =>\n         {\n            return typeof node.shorthand === 'undefined' ? ':' :\n             typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;\n         }\n      );\n   }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#restproperty\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   RestProperty() { return actualise(0, 0); }\n\n   /**\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#spreadproperty\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   SpreadProperty() { return actualise(0, 0); }\n\n   /**\n    * Avoid conflicts between string literals and identifiers.\n    *\n    * @see https://github.com/babel/babel/blob/master/doc/ast/spec.md#stringliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   StringLiteral() { return actualise(0, 0, undefined, (node) => { return `\"${node.value}\"`; }); }\n}",
+    "content": "'use strict';\n\nimport PluginSyntaxESTree     from 'escomplex-plugin-syntax-estree/src/PluginSyntaxESTree';\n\nimport actualize              from 'typhonjs-escomplex-commons/src/module/traits/actualize';\nimport safeName               from 'typhonjs-escomplex-commons/src/module/traits/safeName';\n\n/**\n * Provides an typhonjs-escomplex-module / ESComplexModule plugin which loads syntax definitions for trait resolution\n * for unique Babylon AST not found in ESTree.\n *\n * @see https://www.npmjs.com/package/typhonjs-escomplex-module\n */\nexport default class PluginSyntaxBabylon extends PluginSyntaxESTree\n{\n   // Unique Babylon AST nodes --------------------------------------------------------------------------------------\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#bindexpression\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   BindExpression() { return actualize(0, 0); }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#booleanliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   BooleanLiteral() { return actualize(0, 0, undefined, (node) => { return node.value; }); }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#classmethod\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   ClassMethod()\n   {\n      return actualize(0, 0, (node) =>\n       {\n          const operators = ['function'];\n          if (node.kind && (node.kind === 'get' || node.kind === 'set')) { operators.push(node.kind); }\n          if (typeof node.static === 'boolean' && node.static) { operators.push('static'); }\n          return operators;\n       },\n       (node) => { return safeName(node.key); },\n       'key',   // Note: must skip key as the assigned name is forwarded on to FunctionExpression.\n       'method'\n      );\n   }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#decorator\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   Decorator() { return actualize(0, 0); }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#directive\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   Directive() { return actualize(1, 0); }\n\n   /**\n    * Avoid conflicts between string literals and identifiers.\n    *\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#directiveliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   DirectiveLiteral()\n   {\n      return actualize(0, 0, undefined, (node) =>\n       {\n          return typeof node.value === 'string' ? `\"${node.value}\"` : node.value;\n       }\n      );\n   }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#nullliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   NullLiteral() { return actualize(0, 0, undefined, 'null'); }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#numericliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   NumericLiteral() { return actualize(0, 0, undefined, (node) => { return node.value; }); }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#objectmethod\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   ObjectMethod()\n   {\n      return actualize(0, 0, (node) =>\n       {\n          return typeof node.kind === 'string' && (node.kind === 'get' || node.kind === 'set') ?\n           node.kind : undefined;\n       },\n       undefined,\n       'key'  // Note: must skip key as the assigned name is forwarded on to FunctionExpression.\n      );\n   }\n\n   /**\n    * Note: that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.\n    *\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#objectproperty\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   ObjectProperty()\n   {\n      return actualize(1, 0, (node) =>\n       {\n          return typeof node.shorthand === 'undefined' ? ':' :\n           typeof node.shorthand === 'boolean' && !node.shorthand ? ':' : undefined;\n       }\n      );\n   }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#restproperty\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   RestProperty() { return actualize(0, 0); }\n\n   /**\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#spreadproperty\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   SpreadProperty() { return actualize(0, 0); }\n\n   /**\n    * Avoid conflicts between string literals and identifiers.\n    *\n    * @see https://github.com/babel/babylon/blob/master/ast/spec.md#stringliteral\n    * @returns {{lloc: *, cyclomatic: *, operators: *, operands: *, ignoreKeys: *, newScope: *, dependencies: *}}\n    */\n   StringLiteral() { return actualize(0, 0, undefined, (node) => { return `\"${node.value}\"`; }); }\n}\n",
     "___id": "T000002R000002",
     "___s": true
   },
@@ -33,12 +33,12 @@
     "lineNumber": 14,
     "interface": false,
     "extends": [
-      "escomplex-plugin-syntax-estree/src/PluginSyntaxESTree.js~PluginSyntaxESTree"
+      "escomplex-plugin-syntax-estree/src/PluginSyntaxESTree~PluginSyntaxESTree"
     ],
     "___id": "T000002R000003",
     "___s": true,
     "_custom_extends_chains": [
-      "escomplex-plugin-syntax-estree/src/PluginSyntaxESTree.js~PluginSyntaxESTree"
+      "escomplex-plugin-syntax-estree/src/PluginSyntaxESTree~PluginSyntaxESTree"
     ]
   },
   {
@@ -52,7 +52,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#bindexpression\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#bindexpression</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#bindexpression\">https://github.com/babel/babylon/blob/master/ast/spec.md#bindexpression</a>"
     ],
     "lineNumber": 22,
     "unknown": [
@@ -86,7 +86,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#booleanliteral\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#booleanliteral</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#booleanliteral\">https://github.com/babel/babylon/blob/master/ast/spec.md#booleanliteral</a>"
     ],
     "lineNumber": 28,
     "unknown": [
@@ -120,7 +120,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#classmethod\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#classmethod</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#classmethod\">https://github.com/babel/babylon/blob/master/ast/spec.md#classmethod</a>"
     ],
     "lineNumber": 34,
     "unknown": [
@@ -154,7 +154,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#decorator\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#decorator</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#decorator\">https://github.com/babel/babylon/blob/master/ast/spec.md#decorator</a>"
     ],
     "lineNumber": 53,
     "unknown": [
@@ -188,7 +188,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#directive\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#directive</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#directive\">https://github.com/babel/babylon/blob/master/ast/spec.md#directive</a>"
     ],
     "lineNumber": 59,
     "unknown": [
@@ -222,7 +222,7 @@
     "access": null,
     "description": "Avoid conflicts between string literals and identifiers.",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#directiveliteral\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#directiveliteral</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#directiveliteral\">https://github.com/babel/babylon/blob/master/ast/spec.md#directiveliteral</a>"
     ],
     "lineNumber": 67,
     "unknown": [
@@ -256,7 +256,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#nullliteral\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#nullliteral</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#nullliteral\">https://github.com/babel/babylon/blob/master/ast/spec.md#nullliteral</a>"
     ],
     "lineNumber": 80,
     "unknown": [
@@ -290,7 +290,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#numericliteral\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#numericliteral</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#numericliteral\">https://github.com/babel/babylon/blob/master/ast/spec.md#numericliteral</a>"
     ],
     "lineNumber": 86,
     "unknown": [
@@ -324,7 +324,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#objectmethod\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#objectmethod</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#objectmethod\">https://github.com/babel/babylon/blob/master/ast/spec.md#objectmethod</a>"
     ],
     "lineNumber": 92,
     "unknown": [
@@ -358,7 +358,7 @@
     "access": null,
     "description": "Note: that w/ ES6+ `:` may be omitted and the Property node defines `shorthand` to indicate this case.",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#objectproperty\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#objectproperty</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#objectproperty\">https://github.com/babel/babylon/blob/master/ast/spec.md#objectproperty</a>"
     ],
     "lineNumber": 110,
     "unknown": [
@@ -392,7 +392,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#restproperty\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#restproperty</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#restproperty\">https://github.com/babel/babylon/blob/master/ast/spec.md#restproperty</a>"
     ],
     "lineNumber": 124,
     "unknown": [
@@ -426,7 +426,7 @@
     "access": null,
     "description": "",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#spreadproperty\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#spreadproperty</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#spreadproperty\">https://github.com/babel/babylon/blob/master/ast/spec.md#spreadproperty</a>"
     ],
     "lineNumber": 130,
     "unknown": [
@@ -460,7 +460,7 @@
     "access": null,
     "description": "Avoid conflicts between string literals and identifiers.",
     "see": [
-      "<a href=\"https://github.com/babel/babel/blob/master/doc/ast/spec.md#stringliteral\">https://github.com/babel/babel/blob/master/doc/ast/spec.md#stringliteral</a>"
+      "<a href=\"https://github.com/babel/babylon/blob/master/ast/spec.md#stringliteral\">https://github.com/babel/babylon/blob/master/ast/spec.md#stringliteral</a>"
     ],
     "lineNumber": 138,
     "unknown": [
@@ -1321,7 +1321,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "'use strict';\n\nimport { assert }          from 'chai';\nimport fs                  from 'fs';\nimport sortObj             from 'sort-object';\nimport walker              from 'typhonjs-ast-walker';\n\nimport PluginSyntaxBabylon from '../../src/PluginSyntaxBabylon.js';\n\nconst pluginData =\n[\n   { name: 'ESM', PluginClass: PluginSyntaxBabylon }\n];\n\npluginData.forEach((plugin) =>\n{\n   suite(`(${plugin.name}) plugin:`, () =>\n   {\n      suite('initialize:', () =>\n      {\n         const instance = new plugin.PluginClass();\n\n         test('plugin was object', () =>\n         {\n            assert.isObject(instance);\n         });\n\n         test('plugin function is exported', () =>\n         {\n            assert.isFunction(instance.onLoadSyntax);\n         });\n      });\n\n      suite('method invocation:', () =>\n      {\n         const instance = new plugin.PluginClass();\n\n         test('plugin throws on empty event data', () =>\n         {\n            assert.throws(() => { instance.onLoadSyntax(); });\n         });\n\n         test('plugin does not throw on proper event data', () =>\n         {\n            assert.doesNotThrow(() => { instance.onLoadSyntax({ data: { settings: {}, syntaxes: {} } }); });\n         });\n\n         test('plugin passes back syntax data', () =>\n         {\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n            assert.isObject(event.data.syntaxes);\n         });\n\n         test('plugin has correct syntax data length', () =>\n         {\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n\n            // Note: that 60+ definitions are from `escomplex-plugin-syntax-estree`.\n            assert.strictEqual(Object.keys(event.data.syntaxes).length, 76);\n         });\n\n         test('plugin has correct syntax properties', () =>\n         {\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n\n            for (const type in event.data.syntaxes)\n            {\n               assert.strictEqual(JSON.stringify(Object.keys(event.data.syntaxes[type])),\n                '[\"lloc\",\"cyclomatic\",\"operators\",\"operands\",\"ignoreKeys\",\"newScope\",\"dependencies\"]');\n            }\n         });\n      });\n\n      suite('AST Walker:', () =>\n      {\n         const instance = new plugin.PluginClass();\n         const verifyResult = JSON.stringify(JSON.parse(fs.readFileSync('./test/fixture/estree-results.json', 'utf8')));\n\n         test('verify espree results', () =>\n         {\n            const results = {};\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n\n            walker.traverse(JSON.parse(fs.readFileSync('./test/fixture/espree-estree.json', 'utf8')),\n            {\n               enterNode: (node, parent) =>\n               {\n                  const syntax = event.data.syntaxes[node.type];\n\n                  if (syntax !== null && typeof syntax === 'object')\n                  {\n                     if (typeof results[node.type] === 'undefined') { results[node.type] = {}; }\n\n                     for (const metric in syntax)\n                     {\n                        if (typeof results[node.type][metric] === 'undefined') { results[node.type][metric] = {}; }\n\n                        const value = typeof syntax[metric] === 'function' ? syntax[metric](node, parent) :\n                         syntax[metric];\n\n                        const valueKey = JSON.stringify(value);\n\n                        if (typeof results[node.type][metric][valueKey] === 'undefined')\n                        {\n                           results[node.type][metric][valueKey] = 1;\n                        }\n                        else\n                        {\n                           results[node.type][metric][valueKey]++;\n                        }\n                     }\n\n                     return syntax.ignoreKeys;\n                  }\n               }\n            });\n\n            assert.strictEqual(verifyResult, JSON.stringify(sortObj(results)));\n         });\n      });\n   });\n});",
+    "content": "'use strict';\n\nimport { assert }          from 'chai';\nimport fs                  from 'fs';\nimport sortObj             from 'sort-object';\nimport ASTWalker           from 'typhonjs-ast-walker/src/ASTWalker';\n\nimport PluginSyntaxBabylon from '../../src/PluginSyntaxBabylon';\n\nconst pluginData =\n[\n   { name: 'ESM', PluginClass: PluginSyntaxBabylon }\n];\n\npluginData.forEach((plugin) =>\n{\n   suite(`(${plugin.name}) plugin:`, () =>\n   {\n      suite('initialize:', () =>\n      {\n         const instance = new plugin.PluginClass();\n\n         test('plugin was object', () =>\n         {\n            assert.isObject(instance);\n         });\n\n         test('plugin function is exported', () =>\n         {\n            assert.isFunction(instance.onLoadSyntax);\n         });\n      });\n\n      suite('method invocation:', () =>\n      {\n         const instance = new plugin.PluginClass();\n\n         test('plugin throws on empty event data', () =>\n         {\n            assert.throws(() => { instance.onLoadSyntax(); });\n         });\n\n         test('plugin does not throw on proper event data', () =>\n         {\n            assert.doesNotThrow(() => { instance.onLoadSyntax({ data: { settings: {}, syntaxes: {} } }); });\n         });\n\n         test('plugin passes back syntax data', () =>\n         {\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n            assert.isObject(event.data.syntaxes);\n         });\n\n         test('plugin has correct syntax data length', () =>\n         {\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n\n            // Note: that 60+ definitions are from `escomplex-plugin-syntax-estree`.\n            assert.strictEqual(Object.keys(event.data.syntaxes).length, 76);\n         });\n\n         test('plugin has correct syntax properties', () =>\n         {\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n\n            for (const type in event.data.syntaxes)\n            {\n               assert.strictEqual(JSON.stringify(Object.keys(event.data.syntaxes[type])),\n                '[\"lloc\",\"cyclomatic\",\"operators\",\"operands\",\"ignoreKeys\",\"newScope\",\"dependencies\"]');\n            }\n         });\n      });\n\n      suite('AST Walker:', () =>\n      {\n         const instance = new plugin.PluginClass();\n         const verifyResult = JSON.stringify(JSON.parse(fs.readFileSync('./test/fixture/estree-results.json', 'utf8')));\n\n         test('verify espree results', () =>\n         {\n            const results = {};\n            const event = { data: { settings: {}, syntaxes: {} } };\n            instance.onLoadSyntax(event);\n\n            new ASTWalker().traverse(JSON.parse(fs.readFileSync('./test/fixture/espree-estree.json', 'utf8')),\n            {\n               enterNode: (node, parent) =>\n               {\n                  const syntax = event.data.syntaxes[node.type];\n\n                  if (syntax !== null && typeof syntax === 'object')\n                  {\n                     if (typeof results[node.type] === 'undefined') { results[node.type] = {}; }\n\n                     for (const metric in syntax)\n                     {\n                        if (typeof results[node.type][metric] === 'undefined') { results[node.type][metric] = {}; }\n\n                        const value = syntax[metric].valueOf(node, parent);\n\n                        const valueKey = JSON.stringify(value);\n\n                        if (typeof results[node.type][metric][valueKey] === 'undefined')\n                        {\n                           results[node.type][metric][valueKey] = 1;\n                        }\n                        else\n                        {\n                           results[node.type][metric][valueKey]++;\n                        }\n                     }\n\n                     return syntax.ignoreKeys;\n                  }\n               }\n            });\n\n            assert.strictEqual(verifyResult, JSON.stringify(sortObj(results)));\n         });\n      });\n   });\n});",
     "___id": "T000002R000072",
     "___s": true
   },
