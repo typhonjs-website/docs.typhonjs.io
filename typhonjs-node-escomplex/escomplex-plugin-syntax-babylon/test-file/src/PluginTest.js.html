@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/PluginTest.js | escomplex-plugin-syntax-babylon API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-babylon.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1467803119094" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-babylon/tree/master/src" data-scm-type="github">src</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-babylon/tree/master/src/PluginSyntaxBabylon.js" data-scm-type="github">PluginSyntaxBabylon.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/PluginSyntaxBabylon.js~PluginSyntaxBabylon.html" data-scm-link="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-babylon/tree/master/src/PluginSyntaxBabylon.js#L12" data-scm-type="github">PluginSyntaxBabylon</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/PluginTest.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import { assert }          from &apos;chai&apos;;
+import fs                  from &apos;fs&apos;;
+import sortObj             from &apos;sort-object&apos;;
+import ASTWalker           from &apos;typhonjs-ast-walker/src/ASTWalker&apos;;
+
+import PluginSyntaxBabylon from &apos;../../src/PluginSyntaxBabylon&apos;;
+
+const pluginData =
+[
+   { name: &apos;ESM&apos;, PluginClass: PluginSyntaxBabylon }
+];
+
+pluginData.forEach((plugin) =&gt;
+{
+   suite(`(${plugin.name}) plugin:`, () =&gt;
+   {
+      suite(&apos;initialize:&apos;, () =&gt;
+      {
+         const instance = new plugin.PluginClass();
+
+         test(&apos;plugin was object&apos;, () =&gt;
+         {
+            assert.isObject(instance);
+         });
+
+         test(&apos;plugin function is exported&apos;, () =&gt;
+         {
+            assert.isFunction(instance.onLoadSyntax);
+         });
+      });
+
+      suite(&apos;method invocation:&apos;, () =&gt;
+      {
+         const instance = new plugin.PluginClass();
+
+         test(&apos;plugin throws on empty event data&apos;, () =&gt;
+         {
+            assert.throws(() =&gt; { instance.onLoadSyntax(); });
+         });
+
+         test(&apos;plugin does not throw on proper event data&apos;, () =&gt;
+         {
+            assert.doesNotThrow(() =&gt; { instance.onLoadSyntax({ data: { settings: {}, syntaxes: {} } }); });
+         });
+
+         test(&apos;plugin passes back syntax data&apos;, () =&gt;
+         {
+            const event = { data: { settings: {}, syntaxes: {} } };
+            instance.onLoadSyntax(event);
+            assert.isObject(event.data.syntaxes);
+         });
+
+         test(&apos;plugin has correct syntax data length&apos;, () =&gt;
+         {
+            const event = { data: { settings: {}, syntaxes: {} } };
+            instance.onLoadSyntax(event);
+
+            // Note: that 60+ definitions are from `escomplex-plugin-syntax-estree`.
+            assert.strictEqual(Object.keys(event.data.syntaxes).length, 76);
+         });
+
+         test(&apos;plugin has correct syntax properties&apos;, () =&gt;
+         {
+            const event = { data: { settings: {}, syntaxes: {} } };
+            instance.onLoadSyntax(event);
+
+            for (const type in event.data.syntaxes)
+            {
+               assert.strictEqual(JSON.stringify(Object.keys(event.data.syntaxes[type])),
+                &apos;[&quot;lloc&quot;,&quot;cyclomatic&quot;,&quot;operators&quot;,&quot;operands&quot;,&quot;ignoreKeys&quot;,&quot;newScope&quot;,&quot;dependencies&quot;]&apos;);
+            }
+         });
+      });
+
+      suite(&apos;AST Walker:&apos;, () =&gt;
+      {
+         const instance = new plugin.PluginClass();
+         const verifyResult = JSON.stringify(JSON.parse(fs.readFileSync(&apos;./test/fixture/estree-results.json&apos;, &apos;utf8&apos;)));
+
+         test(&apos;verify espree results&apos;, () =&gt;
+         {
+            const results = {};
+            const event = { data: { settings: {}, syntaxes: {} } };
+            instance.onLoadSyntax(event);
+
+            new ASTWalker().traverse(JSON.parse(fs.readFileSync(&apos;./test/fixture/espree-estree.json&apos;, &apos;utf8&apos;)),
+            {
+               enterNode: (node, parent) =&gt;
+               {
+                  const syntax = event.data.syntaxes[node.type];
+
+                  if (syntax !== null &amp;&amp; typeof syntax === &apos;object&apos;)
+                  {
+                     if (typeof results[node.type] === &apos;undefined&apos;) { results[node.type] = {}; }
+
+                     for (const metric in syntax)
+                     {
+                        if (typeof results[node.type][metric] === &apos;undefined&apos;) { results[node.type][metric] = {}; }
+
+                        const value = syntax[metric].valueOf(node, parent);
+
+                        const valueKey = JSON.stringify(value);
+
+                        if (typeof results[node.type][metric][valueKey] === &apos;undefined&apos;)
+                        {
+                           results[node.type][metric][valueKey] = 1;
+                        }
+                        else
+                        {
+                           results[node.type][metric][valueKey]++;
+                        }
+                     }
+
+                     return syntax.ignoreKeys;
+                  }
+               }
+            });
+
+            assert.strictEqual(verifyResult, JSON.stringify(sortObj(results)));
+         });
+      });
+   });
+});</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
