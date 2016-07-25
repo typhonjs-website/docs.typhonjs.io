@@ -1,5 +1,11 @@
 window.esdocSearchIndex = [
   [
+    "typhonjs-escomplex-commons/src/transform/formats/text/abstractformattext.js~abstractformattext",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html",
+    "<span>AbstractFormatText</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/AbstractFormatText.js</span>",
+    "class"
+  ],
+  [
     "typhonjs-escomplex-commons/src/module/report/abstractreport.js~abstractreport",
     "class/src/module/report/AbstractReport.js~AbstractReport.html",
     "<span>AbstractReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/AbstractReport.js</span>",
@@ -12,15 +18,111 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "typhonjs-escomplex-commons/src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html",
+    "<span>AbstractTextMatrix</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/AbstractTextMatrix.js</span>",
+    "class"
+  ],
+  [
     "typhonjs-escomplex-commons/src/module/report/classreport.js~classreport",
     "class/src/module/report/ClassReport.js~ClassReport.html",
     "<span>ClassReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/ClassReport.js</span>",
     "class"
   ],
   [
+    "typhonjs-escomplex-commons/src/transform/formats/json/formatjson.js~formatjson",
+    "class/src/transform/formats/json/FormatJSON.js~FormatJSON.html",
+    "<span>FormatJSON</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/json/FormatJSON.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html",
+    "<span>FormatJSONCheckstyle</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/json/FormatJSONCheckstyle.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/json/formatjsonminimal.js~formatjsonminimal",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html",
+    "<span>FormatJSONMinimal</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/json/FormatJSONMinimal.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/json/formatjsonmodules.js~formatjsonmodules",
+    "class/src/transform/formats/json/FormatJSONModules.js~FormatJSONModules.html",
+    "<span>FormatJSONModules</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/json/FormatJSONModules.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/markdown/formatmarkdown.js~formatmarkdown",
+    "class/src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown.html",
+    "<span>FormatMarkdown</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/markdown/FormatMarkdown.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/markdown/formatmarkdownadjacency.js~formatmarkdownadjacency",
+    "class/src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency.html",
+    "<span>FormatMarkdownAdjacency</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/markdown/FormatMarkdownAdjacency.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/markdown/formatmarkdownminimal.js~formatmarkdownminimal",
+    "class/src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal.html",
+    "<span>FormatMarkdownMinimal</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/markdown/FormatMarkdownMinimal.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/markdown/formatmarkdownmodules.js~formatmarkdownmodules",
+    "class/src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules.html",
+    "<span>FormatMarkdownModules</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/markdown/FormatMarkdownModules.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/markdown/formatmarkdownvisibility.js~formatmarkdownvisibility",
+    "class/src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility.html",
+    "<span>FormatMarkdownVisibility</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/markdown/FormatMarkdownVisibility.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/text/formattext.js~formattext",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html",
+    "<span>FormatText</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/FormatText.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/text/formattextadjacency.js~formattextadjacency",
+    "class/src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency.html",
+    "<span>FormatTextAdjacency</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/FormatTextAdjacency.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/text/formattextminimal.js~formattextminimal",
+    "class/src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal.html",
+    "<span>FormatTextMinimal</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/FormatTextMinimal.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/text/formattextmodules.js~formattextmodules",
+    "class/src/transform/formats/text/FormatTextModules.js~FormatTextModules.html",
+    "<span>FormatTextModules</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/FormatTextModules.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/formats/text/formattextvisibility.js~formattextvisibility",
+    "class/src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility.html",
+    "<span>FormatTextVisibility</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/formats/text/FormatTextVisibility.js</span>",
+    "class"
+  ],
+  [
     "typhonjs-escomplex-commons/src/module/traits/halsteadarray.js~halsteadarray",
     "class/src/module/traits/HalsteadArray.js~HalsteadArray.html",
     "<span>HalsteadArray</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/HalsteadArray.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/module/report/averages/halsteadaverage.js~halsteadaverage",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html",
+    "<span>HalsteadAverage</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/averages/HalsteadAverage.js</span>",
     "class"
   ],
   [
@@ -36,15 +138,33 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "typhonjs-escomplex-commons/src/module/report/averages/methodaverage.js~methodaverage",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html",
+    "<span>MethodAverage</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/averages/MethodAverage.js</span>",
+    "class"
+  ],
+  [
     "typhonjs-escomplex-commons/src/module/report/methodreport.js~methodreport",
     "class/src/module/report/MethodReport.js~MethodReport.html",
     "<span>MethodReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/MethodReport.js</span>",
     "class"
   ],
   [
+    "typhonjs-escomplex-commons/src/module/report/averages/moduleaverage.js~moduleaverage",
+    "class/src/module/report/averages/ModuleAverage.js~ModuleAverage.html",
+    "<span>ModuleAverage</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/averages/ModuleAverage.js</span>",
+    "class"
+  ],
+  [
     "typhonjs-escomplex-commons/src/module/report/modulereport.js~modulereport",
     "class/src/module/report/ModuleReport.js~ModuleReport.html",
     "<span>ModuleReport</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/report/ModuleReport.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/utils/objectutil.js~objectutil",
+    "class/src/utils/ObjectUtil.js~ObjectUtil.html",
+    "<span>ObjectUtil</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/utils/ObjectUtil.js</span>",
     "class"
   ],
   [
@@ -69,6 +189,12 @@ window.esdocSearchIndex = [
     "typhonjs-escomplex-commons/src/module/traits/traithalstead.js~traithalstead",
     "class/src/module/traits/TraitHalstead.js~TraitHalstead.html",
     "<span>TraitHalstead</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/module/traits/TraitHalstead.js</span>",
+    "class"
+  ],
+  [
+    "typhonjs-escomplex-commons/src/transform/transformformat.js~transformformat",
+    "class/src/transform/TransformFormat.js~TransformFormat.html",
+    "<span>TransformFormat</span> <span class=\"search-result-import-path\">typhonjs-escomplex-commons/src/transform/TransformFormat.js</span>",
     "class"
   ],
   [
@@ -420,6 +546,216 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "",
+    "test-file/src/module/plugin.js.html#lineNumber22",
+    "plugin:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/plugin.js.html#lineNumber27",
+    "plugin: Verifies that AbstractSyntaxLoader can find all child / parent inheritance methods",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/plugin.js.html#lineNumber31",
+    "plugin: Verifies that AbstractSyntaxLoader can find all child / parent inheritance methods verify child / parent syntax loading",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber11",
+    "report:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber179",
+    "report: AbstractReport:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber186",
+    "report: AbstractReport: report aggregate has correct params count",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber193",
+    "report: HalsteadData:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber200",
+    "report: HalsteadData: report aggregate halstead data is reset",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber13",
+    "report: ModuleReport:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber29",
+    "report: ModuleReport: addDependencies:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber36",
+    "report: ModuleReport: addDependencies: report has correct dependencies",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber44",
+    "report: ModuleReport: createScope / popScope:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber104",
+    "report: ModuleReport: createScope / popScope: error thrown for unknown scope type",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber110",
+    "report: ModuleReport: createScope / popScope: finalize removes `_methodReport`",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber51",
+    "report: ModuleReport: createScope / popScope: report has correct class scope",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber93",
+    "report: ModuleReport: createScope / popScope: report has correct class w/ method scope",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber72",
+    "report: ModuleReport: createScope / popScope: report has correct method scope",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber118",
+    "report: ModuleReport: halsteadItemEncountered:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber125",
+    "report: ModuleReport: halsteadItemEncountered: report has correct class w/ method halstead metrics",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber138",
+    "report: ModuleReport: incrementCyclomatic:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber145",
+    "report: ModuleReport: incrementCyclomatic: report has correct class w/ method cyclomatic metrics",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber158",
+    "report: ModuleReport: incrementLogicalSloc:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber165",
+    "report: ModuleReport: incrementLogicalSloc: report has correct class w/ method sloc metrics",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber15",
+    "report: ModuleReport: instantiation:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/report.js.html#lineNumber22",
+    "report: ModuleReport: instantiation: report has correct line start / end",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber10",
+    "result:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber12",
+    "result: ProjectResult:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber14",
+    "result: ProjectResult: instantiation:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber56",
+    "result: ProjectResult: instantiation: finalize removes private data",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber71",
+    "result: ProjectResult: instantiation: finalize w/ serializeReports === false is correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber44",
+    "result: ProjectResult: instantiation: result has correct number of reports",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber49",
+    "result: ProjectResult: instantiation: result has correct report `srcPath` order",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber98",
+    "result: ProjectResult: large project parsing performance",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/project/result.js.html#lineNumber102",
+    "result: ProjectResult: large project parsing performance deserialize JSON object should be sufficiently fast",
+    "test"
+  ],
+  [
+    "src/module/plugin.js",
+    "test-file/src/module/plugin.js.html",
+    "src/module/plugin.js",
+    "testFile"
+  ],
+  [
     "src/module/plugin/syntax/abstractsyntaxloader.js",
     "file/src/module/plugin/syntax/AbstractSyntaxLoader.js.html",
     "src/module/plugin/syntax/AbstractSyntaxLoader.js",
@@ -430,6 +766,12 @@ window.esdocSearchIndex = [
     "class/src/module/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader.html#instance-method-onLoadSyntax",
     "src/module/plugin/syntax/AbstractSyntaxLoader.js~AbstractSyntaxLoader#onLoadSyntax",
     "method"
+  ],
+  [
+    "src/module/report.js",
+    "test-file/src/module/report.js.html",
+    "src/module/report.js",
+    "testFile"
   ],
   [
     "src/module/report/abstractreport.js",
@@ -525,6 +867,12 @@ window.esdocSearchIndex = [
     "src/module/report/classreport.js~classreport#linestart",
     "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-lineStart",
     "src/module/report/ClassReport.js~ClassReport#lineStart",
+    "member"
+  ],
+  [
+    "src/module/report/classreport.js~classreport#methodaverage",
+    "class/src/module/report/ClassReport.js~ClassReport.html#instance-member-methodAverage",
+    "src/module/report/ClassReport.js~ClassReport#methodAverage",
     "member"
   ],
   [
@@ -684,18 +1032,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/module/report/methodreport.js~methodreport#summetrics",
-    "class/src/module/report/MethodReport.js~MethodReport.html#instance-method-sumMetrics",
-    "src/module/report/MethodReport.js~MethodReport#sumMetrics",
-    "method"
-  ],
-  [
-    "src/module/report/methodreport.js~methodreport.getmaintainabilitymetrics",
-    "class/src/module/report/MethodReport.js~MethodReport.html#static-method-getMaintainabilityMetrics",
-    "src/module/report/MethodReport.js~MethodReport.getMaintainabilityMetrics",
-    "method"
-  ],
-  [
     "src/module/report/methodreport.js~methodreport.parse",
     "class/src/module/report/MethodReport.js~MethodReport.html#static-method-parse",
     "src/module/report/MethodReport.js~MethodReport.parse",
@@ -750,21 +1086,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/module/report/modulereport.js~modulereport#cyclomatic",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-cyclomatic",
-    "src/module/report/ModuleReport.js~ModuleReport#cyclomatic",
-    "member"
-  ],
-  [
     "src/module/report/modulereport.js~modulereport#dependencies",
     "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-dependencies",
     "src/module/report/ModuleReport.js~ModuleReport#dependencies",
-    "member"
-  ],
-  [
-    "src/module/report/modulereport.js~modulereport#effort",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-effort",
-    "src/module/report/ModuleReport.js~ModuleReport#effort",
     "member"
   ],
   [
@@ -789,6 +1113,12 @@ window.esdocSearchIndex = [
     "src/module/report/modulereport.js~modulereport#getcurrentmethodreport",
     "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-getCurrentMethodReport",
     "src/module/report/ModuleReport.js~ModuleReport#getCurrentMethodReport",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#getsetting",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-getSetting",
+    "src/module/report/ModuleReport.js~ModuleReport#getSetting",
     "method"
   ],
   [
@@ -822,27 +1152,21 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/module/report/modulereport.js~modulereport#loc",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-loc",
-    "src/module/report/ModuleReport.js~ModuleReport#loc",
-    "member"
-  ],
-  [
     "src/module/report/modulereport.js~modulereport#maintainability",
     "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-maintainability",
     "src/module/report/ModuleReport.js~ModuleReport#maintainability",
     "member"
   ],
   [
-    "src/module/report/modulereport.js~modulereport#methods",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-methods",
-    "src/module/report/ModuleReport.js~ModuleReport#methods",
+    "src/module/report/modulereport.js~modulereport#methodaverage",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-methodAverage",
+    "src/module/report/ModuleReport.js~ModuleReport#methodAverage",
     "member"
   ],
   [
-    "src/module/report/modulereport.js~modulereport#params",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-params",
-    "src/module/report/ModuleReport.js~ModuleReport#params",
+    "src/module/report/modulereport.js~modulereport#methods",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-member-methods",
+    "src/module/report/ModuleReport.js~ModuleReport#methods",
     "member"
   ],
   [
@@ -855,6 +1179,12 @@ window.esdocSearchIndex = [
     "src/module/report/modulereport.js~modulereport#processhalsteaditems",
     "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-processHalsteadItems",
     "src/module/report/ModuleReport.js~ModuleReport#processHalsteadItems",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport#setsetting",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-setSetting",
+    "src/module/report/ModuleReport.js~ModuleReport#setSetting",
     "method"
   ],
   [
@@ -876,15 +1206,27 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/module/report/modulereport.js~modulereport#summetrics",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-sumMetrics",
-    "src/module/report/ModuleReport.js~ModuleReport#sumMetrics",
+    "src/module/report/modulereport.js~modulereport#toformat",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#instance-method-toFormat",
+    "src/module/report/ModuleReport.js~ModuleReport#toFormat",
     "method"
   ],
   [
-    "src/module/report/modulereport.js~modulereport.getmaintainabilitymetrics",
-    "class/src/module/report/ModuleReport.js~ModuleReport.html#static-method-getMaintainabilityMetrics",
-    "src/module/report/ModuleReport.js~ModuleReport.getMaintainabilityMetrics",
+    "src/module/report/modulereport.js~modulereport.getformatfileextensions",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#static-method-getFormatFileExtensions",
+    "src/module/report/ModuleReport.js~ModuleReport.getFormatFileExtensions",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport.getformatnames",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#static-method-getFormatNames",
+    "src/module/report/ModuleReport.js~ModuleReport.getFormatNames",
+    "method"
+  ],
+  [
+    "src/module/report/modulereport.js~modulereport.getformattypes",
+    "class/src/module/report/ModuleReport.js~ModuleReport.html#static-method-getFormatTypes",
+    "src/module/report/ModuleReport.js~ModuleReport.getFormatTypes",
     "method"
   ],
   [
@@ -892,6 +1234,144 @@ window.esdocSearchIndex = [
     "class/src/module/report/ModuleReport.js~ModuleReport.html#static-method-parse",
     "src/module/report/ModuleReport.js~ModuleReport.parse",
     "method"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js",
+    "file/src/module/report/averages/HalsteadAverage.js.html",
+    "src/module/report/averages/HalsteadAverage.js",
+    "file"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#bugs",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-bugs",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#bugs",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#constructor",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-constructor-constructor",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#difficulty",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-difficulty",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#difficulty",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#effort",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-effort",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#effort",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#length",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-length",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#length",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#operands",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-operands",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#operands",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#operators",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-operators",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#operators",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#time",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-time",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#time",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#vocabulary",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-vocabulary",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#vocabulary",
+    "member"
+  ],
+  [
+    "src/module/report/averages/halsteadaverage.js~halsteadaverage#volume",
+    "class/src/module/report/averages/HalsteadAverage.js~HalsteadAverage.html#instance-member-volume",
+    "src/module/report/averages/HalsteadAverage.js~HalsteadAverage#volume",
+    "member"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js",
+    "file/src/module/report/averages/MethodAverage.js.html",
+    "src/module/report/averages/MethodAverage.js",
+    "file"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js~methodaverage#constructor",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html#instance-constructor-constructor",
+    "src/module/report/averages/MethodAverage.js~MethodAverage#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js~methodaverage#cyclomatic",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html#instance-member-cyclomatic",
+    "src/module/report/averages/MethodAverage.js~MethodAverage#cyclomatic",
+    "member"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js~methodaverage#cyclomaticdensity",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html#instance-member-cyclomaticDensity",
+    "src/module/report/averages/MethodAverage.js~MethodAverage#cyclomaticDensity",
+    "member"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js~methodaverage#halstead",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html#instance-member-halstead",
+    "src/module/report/averages/MethodAverage.js~MethodAverage#halstead",
+    "member"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js~methodaverage#params",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html#instance-member-params",
+    "src/module/report/averages/MethodAverage.js~MethodAverage#params",
+    "member"
+  ],
+  [
+    "src/module/report/averages/methodaverage.js~methodaverage#sloc",
+    "class/src/module/report/averages/MethodAverage.js~MethodAverage.html#instance-member-sloc",
+    "src/module/report/averages/MethodAverage.js~MethodAverage#sloc",
+    "member"
+  ],
+  [
+    "src/module/report/averages/moduleaverage.js",
+    "file/src/module/report/averages/ModuleAverage.js.html",
+    "src/module/report/averages/ModuleAverage.js",
+    "file"
+  ],
+  [
+    "src/module/report/averages/moduleaverage.js~moduleaverage#constructor",
+    "class/src/module/report/averages/ModuleAverage.js~ModuleAverage.html#instance-constructor-constructor",
+    "src/module/report/averages/ModuleAverage.js~ModuleAverage#constructor",
+    "method"
+  ],
+  [
+    "src/module/report/averages/moduleaverage.js~moduleaverage#maintainability",
+    "class/src/module/report/averages/ModuleAverage.js~ModuleAverage.html#instance-member-maintainability",
+    "src/module/report/averages/ModuleAverage.js~ModuleAverage#maintainability",
+    "member"
+  ],
+  [
+    "src/module/report/averages/moduleaverage.js~moduleaverage#methodaverage",
+    "class/src/module/report/averages/ModuleAverage.js~ModuleAverage.html#instance-member-methodAverage",
+    "src/module/report/averages/ModuleAverage.js~ModuleAverage#methodAverage",
+    "member"
+  ],
+  [
+    "src/module/traits.js",
+    "test-file/src/module/traits.js.html",
+    "src/module/traits.js",
+    "testFile"
   ],
   [
     "src/module/traits/halsteadarray.js",
@@ -1062,6 +1542,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/project/result.js",
+    "test-file/src/project/result.js.html",
+    "src/project/result.js",
+    "testFile"
+  ],
+  [
     "src/project/result/projectresult.js",
     "file/src/project/result/ProjectResult.js.html",
     "src/project/result/ProjectResult.js",
@@ -1092,18 +1578,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/project/result/projectresult.js~projectresult#cyclomatic",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-cyclomatic",
-    "src/project/result/ProjectResult.js~ProjectResult#cyclomatic",
-    "member"
-  ],
-  [
-    "src/project/result/projectresult.js~projectresult#effort",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-effort",
-    "src/project/result/ProjectResult.js~ProjectResult#effort",
-    "member"
-  ],
-  [
     "src/project/result/projectresult.js~projectresult#finalize",
     "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-method-finalize",
     "src/project/result/ProjectResult.js~ProjectResult#finalize",
@@ -1116,21 +1590,15 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/project/result/projectresult.js~projectresult#loc",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-loc",
-    "src/project/result/ProjectResult.js~ProjectResult#loc",
-    "member"
+    "src/project/result/projectresult.js~projectresult#getsetting",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-method-getSetting",
+    "src/project/result/ProjectResult.js~ProjectResult#getSetting",
+    "method"
   ],
   [
-    "src/project/result/projectresult.js~projectresult#maintainability",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-maintainability",
-    "src/project/result/ProjectResult.js~ProjectResult#maintainability",
-    "member"
-  ],
-  [
-    "src/project/result/projectresult.js~projectresult#params",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-params",
-    "src/project/result/ProjectResult.js~ProjectResult#params",
+    "src/project/result/projectresult.js~projectresult#moduleaverage",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-moduleAverage",
+    "src/project/result/ProjectResult.js~ProjectResult#moduleAverage",
     "member"
   ],
   [
@@ -1140,21 +1608,21 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/project/result/projectresult.js~projectresult#setsetting",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-method-setSetting",
+    "src/project/result/ProjectResult.js~ProjectResult#setSetting",
+    "method"
+  ],
+  [
     "src/project/result/projectresult.js~projectresult#settings",
     "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-member-settings",
     "src/project/result/ProjectResult.js~ProjectResult#settings",
     "member"
   ],
   [
-    "src/project/result/projectresult.js~projectresult#tostringadjacency",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-method-toStringAdjacency",
-    "src/project/result/ProjectResult.js~ProjectResult#toStringAdjacency",
-    "method"
-  ],
-  [
-    "src/project/result/projectresult.js~projectresult#tostringvisibility",
-    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-method-toStringVisibility",
-    "src/project/result/ProjectResult.js~ProjectResult#toStringVisibility",
+    "src/project/result/projectresult.js~projectresult#toformat",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#instance-method-toFormat",
+    "src/project/result/ProjectResult.js~ProjectResult#toFormat",
     "method"
   ],
   [
@@ -1164,10 +1632,730 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/project/result/projectresult.js~projectresult.getformatfileextensions",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#static-method-getFormatFileExtensions",
+    "src/project/result/ProjectResult.js~ProjectResult.getFormatFileExtensions",
+    "method"
+  ],
+  [
+    "src/project/result/projectresult.js~projectresult.getformatnames",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#static-method-getFormatNames",
+    "src/project/result/ProjectResult.js~ProjectResult.getFormatNames",
+    "method"
+  ],
+  [
+    "src/project/result/projectresult.js~projectresult.getformattypes",
+    "class/src/project/result/ProjectResult.js~ProjectResult.html#static-method-getFormatTypes",
+    "src/project/result/ProjectResult.js~ProjectResult.getFormatTypes",
+    "method"
+  ],
+  [
     "src/project/result/projectresult.js~projectresult.parse",
     "class/src/project/result/ProjectResult.js~ProjectResult.html#static-method-parse",
     "src/project/result/ProjectResult.js~ProjectResult.parse",
     "method"
+  ],
+  [
+    "src/testconfig.js",
+    "test-file/src/testconfig.js.html",
+    "src/testconfig.js",
+    "testFile"
+  ],
+  [
+    "src/transform/transformformat.js",
+    "file/src/transform/TransformFormat.js.html",
+    "src/transform/TransformFormat.js",
+    "file"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.addformat",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-addFormat",
+    "src/transform/TransformFormat.js~TransformFormat.addFormat",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.foreach",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-forEach",
+    "src/transform/TransformFormat.js~TransformFormat.forEach",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.foreachext",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-forEachExt",
+    "src/transform/TransformFormat.js~TransformFormat.forEachExt",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.foreachtype",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-forEachType",
+    "src/transform/TransformFormat.js~TransformFormat.forEachType",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.format",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-format",
+    "src/transform/TransformFormat.js~TransformFormat.format",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.getfileextensions",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-getFileExtensions",
+    "src/transform/TransformFormat.js~TransformFormat.getFileExtensions",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.getnames",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-getNames",
+    "src/transform/TransformFormat.js~TransformFormat.getNames",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.gettypes",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-getTypes",
+    "src/transform/TransformFormat.js~TransformFormat.getTypes",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.isformat",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-isFormat",
+    "src/transform/TransformFormat.js~TransformFormat.isFormat",
+    "method"
+  ],
+  [
+    "src/transform/transformformat.js~transformformat.removeformat",
+    "class/src/transform/TransformFormat.js~TransformFormat.html#static-method-removeFormat",
+    "src/transform/TransformFormat.js~TransformFormat.removeFormat",
+    "method"
+  ],
+  [
+    "src/transform/format.js",
+    "test-file/src/transform/format.js.html",
+    "src/transform/format.js",
+    "testFile"
+  ],
+  [
+    "src/transform/formats/json/formatjson.js",
+    "file/src/transform/formats/json/FormatJSON.js.html",
+    "src/transform/formats/json/FormatJSON.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/json/formatjson.js~formatjson#extension",
+    "class/src/transform/formats/json/FormatJSON.js~FormatJSON.html#instance-get-extension",
+    "src/transform/formats/json/FormatJSON.js~FormatJSON#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjson.js~formatjson#formatreport",
+    "class/src/transform/formats/json/FormatJSON.js~FormatJSON.html#instance-method-formatReport",
+    "src/transform/formats/json/FormatJSON.js~FormatJSON#formatReport",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjson.js~formatjson#formatresult",
+    "class/src/transform/formats/json/FormatJSON.js~FormatJSON.html#instance-method-formatResult",
+    "src/transform/formats/json/FormatJSON.js~FormatJSON#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjson.js~formatjson#name",
+    "class/src/transform/formats/json/FormatJSON.js~FormatJSON.html#instance-get-name",
+    "src/transform/formats/json/FormatJSON.js~FormatJSON#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjson.js~formatjson#type",
+    "class/src/transform/formats/json/FormatJSON.js~FormatJSON.html#instance-get-type",
+    "src/transform/formats/json/FormatJSON.js~FormatJSON#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js",
+    "file/src/transform/formats/json/FormatJSONCheckstyle.js.html",
+    "src/transform/formats/json/FormatJSONCheckstyle.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#_formatmodule",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-method-_formatModule",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#_formatModule",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#_parseerrors",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-method-_parseErrors",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#_parseErrors",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#_thresholds",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-member-_thresholds",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#_thresholds",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#constructor",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-constructor-constructor",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#extension",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-get-extension",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#formatreport",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-method-formatReport",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#formatReport",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#formatresult",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-method-formatResult",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#name",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-get-name",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsoncheckstyle.js~formatjsoncheckstyle#type",
+    "class/src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle.html#instance-get-type",
+    "src/transform/formats/json/FormatJSONCheckstyle.js~FormatJSONCheckstyle#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js",
+    "file/src/transform/formats/json/FormatJSONMinimal.js.html",
+    "src/transform/formats/json/FormatJSONMinimal.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#_formatclasses",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-method-_formatClasses",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#_formatClasses",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#_formatmethods",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-method-_formatMethods",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#_formatMethods",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#_formatmodule",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-method-_formatModule",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#_formatModule",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#_keys",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-member-_keys",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#_keys",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#constructor",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-constructor-constructor",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#extension",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-get-extension",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#formatreport",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-method-formatReport",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#formatReport",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#formatresult",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-method-formatResult",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#name",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-get-name",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonminimal.js~formatjsonminimal#type",
+    "class/src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal.html#instance-get-type",
+    "src/transform/formats/json/FormatJSONMinimal.js~FormatJSONMinimal#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonmodules.js",
+    "file/src/transform/formats/json/FormatJSONModules.js.html",
+    "src/transform/formats/json/FormatJSONModules.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/json/formatjsonmodules.js~formatjsonmodules#extension",
+    "class/src/transform/formats/json/FormatJSONModules.js~FormatJSONModules.html#instance-get-extension",
+    "src/transform/formats/json/FormatJSONModules.js~FormatJSONModules#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonmodules.js~formatjsonmodules#formatreport",
+    "class/src/transform/formats/json/FormatJSONModules.js~FormatJSONModules.html#instance-method-formatReport",
+    "src/transform/formats/json/FormatJSONModules.js~FormatJSONModules#formatReport",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonmodules.js~formatjsonmodules#formatresult",
+    "class/src/transform/formats/json/FormatJSONModules.js~FormatJSONModules.html#instance-method-formatResult",
+    "src/transform/formats/json/FormatJSONModules.js~FormatJSONModules#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/json/formatjsonmodules.js~formatjsonmodules#name",
+    "class/src/transform/formats/json/FormatJSONModules.js~FormatJSONModules.html#instance-get-name",
+    "src/transform/formats/json/FormatJSONModules.js~FormatJSONModules#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/json/formatjsonmodules.js~formatjsonmodules#type",
+    "class/src/transform/formats/json/FormatJSONModules.js~FormatJSONModules.html#instance-get-type",
+    "src/transform/formats/json/FormatJSONModules.js~FormatJSONModules#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdown.js",
+    "file/src/transform/formats/markdown/FormatMarkdown.js.html",
+    "src/transform/formats/markdown/FormatMarkdown.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdown.js~formatmarkdown#constructor",
+    "class/src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown.html#instance-constructor-constructor",
+    "src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdown.js~formatmarkdown#extension",
+    "class/src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown.html#instance-get-extension",
+    "src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdown.js~formatmarkdown#name",
+    "class/src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown.html#instance-get-name",
+    "src/transform/formats/markdown/FormatMarkdown.js~FormatMarkdown#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownadjacency.js",
+    "file/src/transform/formats/markdown/FormatMarkdownAdjacency.js.html",
+    "src/transform/formats/markdown/FormatMarkdownAdjacency.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownadjacency.js~formatmarkdownadjacency#constructor",
+    "class/src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency.html#instance-constructor-constructor",
+    "src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownadjacency.js~formatmarkdownadjacency#extension",
+    "class/src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency.html#instance-get-extension",
+    "src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownadjacency.js~formatmarkdownadjacency#name",
+    "class/src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency.html#instance-get-name",
+    "src/transform/formats/markdown/FormatMarkdownAdjacency.js~FormatMarkdownAdjacency#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownminimal.js",
+    "file/src/transform/formats/markdown/FormatMarkdownMinimal.js.html",
+    "src/transform/formats/markdown/FormatMarkdownMinimal.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownminimal.js~formatmarkdownminimal#constructor",
+    "class/src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal.html#instance-constructor-constructor",
+    "src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownminimal.js~formatmarkdownminimal#extension",
+    "class/src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal.html#instance-get-extension",
+    "src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownminimal.js~formatmarkdownminimal#name",
+    "class/src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal.html#instance-get-name",
+    "src/transform/formats/markdown/FormatMarkdownMinimal.js~FormatMarkdownMinimal#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownmodules.js",
+    "file/src/transform/formats/markdown/FormatMarkdownModules.js.html",
+    "src/transform/formats/markdown/FormatMarkdownModules.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownmodules.js~formatmarkdownmodules#constructor",
+    "class/src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules.html#instance-constructor-constructor",
+    "src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownmodules.js~formatmarkdownmodules#extension",
+    "class/src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules.html#instance-get-extension",
+    "src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownmodules.js~formatmarkdownmodules#name",
+    "class/src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules.html#instance-get-name",
+    "src/transform/formats/markdown/FormatMarkdownModules.js~FormatMarkdownModules#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownvisibility.js",
+    "file/src/transform/formats/markdown/FormatMarkdownVisibility.js.html",
+    "src/transform/formats/markdown/FormatMarkdownVisibility.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownvisibility.js~formatmarkdownvisibility#constructor",
+    "class/src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility.html#instance-constructor-constructor",
+    "src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownvisibility.js~formatmarkdownvisibility#extension",
+    "class/src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility.html#instance-get-extension",
+    "src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/markdown/formatmarkdownvisibility.js~formatmarkdownvisibility#name",
+    "class/src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility.html#instance-get-name",
+    "src/transform/formats/markdown/FormatMarkdownVisibility.js~FormatMarkdownVisibility#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js",
+    "file/src/transform/formats/text/AbstractFormatText.js.html",
+    "src/transform/formats/text/AbstractFormatText.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatclass",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatClass",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatClass",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatclasses",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatClasses",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatClasses",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatentries",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatEntries",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatEntries",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatmethod",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatMethod",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatMethod",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatmethods",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatMethods",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatMethods",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatmodule",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatModule",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatModule",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_formatproject",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-_formatProject",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_formatProject",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_headers",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-member-_headers",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_headers",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#_keys",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-member-_keys",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#_keys",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#constructor",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-constructor-constructor",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#formatreport",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-formatReport",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#formatReport",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstractformattext.js~abstractformattext#formatresult",
+    "class/src/transform/formats/text/AbstractFormatText.js~AbstractFormatText.html#instance-method-formatResult",
+    "src/transform/formats/text/AbstractFormatText.js~AbstractFormatText#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js",
+    "file/src/transform/formats/text/AbstractTextMatrix.js.html",
+    "src/transform/formats/text/AbstractTextMatrix.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix#_formatmatrixlist",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html#instance-method-_formatMatrixList",
+    "src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix#_formatMatrixList",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix#_headers",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html#instance-member-_headers",
+    "src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix#_headers",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix#_keys",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html#instance-member-_keys",
+    "src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix#_keys",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix#constructor",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html#instance-constructor-constructor",
+    "src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix#formatreport",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html#instance-method-formatReport",
+    "src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix#formatReport",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/abstracttextmatrix.js~abstracttextmatrix#formatresult",
+    "class/src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix.html#instance-method-formatResult",
+    "src/transform/formats/text/AbstractTextMatrix.js~AbstractTextMatrix#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattext.js",
+    "file/src/transform/formats/text/FormatText.js.html",
+    "src/transform/formats/text/FormatText.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#_adjacencyformatname",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-member-_adjacencyFormatName",
+    "src/transform/formats/text/FormatText.js~FormatText#_adjacencyFormatName",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#_visibilityformatname",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-member-_visibilityFormatName",
+    "src/transform/formats/text/FormatText.js~FormatText#_visibilityFormatName",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#constructor",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-constructor-constructor",
+    "src/transform/formats/text/FormatText.js~FormatText#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#extension",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-get-extension",
+    "src/transform/formats/text/FormatText.js~FormatText#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#formatresult",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-method-formatResult",
+    "src/transform/formats/text/FormatText.js~FormatText#formatResult",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#name",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-get-name",
+    "src/transform/formats/text/FormatText.js~FormatText#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattext.js~formattext#type",
+    "class/src/transform/formats/text/FormatText.js~FormatText.html#instance-get-type",
+    "src/transform/formats/text/FormatText.js~FormatText#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextadjacency.js",
+    "file/src/transform/formats/text/FormatTextAdjacency.js.html",
+    "src/transform/formats/text/FormatTextAdjacency.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/formattextadjacency.js~formattextadjacency#constructor",
+    "class/src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency.html#instance-constructor-constructor",
+    "src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattextadjacency.js~formattextadjacency#extension",
+    "class/src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency.html#instance-get-extension",
+    "src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextadjacency.js~formattextadjacency#name",
+    "class/src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency.html#instance-get-name",
+    "src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextadjacency.js~formattextadjacency#type",
+    "class/src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency.html#instance-get-type",
+    "src/transform/formats/text/FormatTextAdjacency.js~FormatTextAdjacency#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextminimal.js",
+    "file/src/transform/formats/text/FormatTextMinimal.js.html",
+    "src/transform/formats/text/FormatTextMinimal.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/formattextminimal.js~formattextminimal#constructor",
+    "class/src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal.html#instance-constructor-constructor",
+    "src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattextminimal.js~formattextminimal#extension",
+    "class/src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal.html#instance-get-extension",
+    "src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextminimal.js~formattextminimal#name",
+    "class/src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal.html#instance-get-name",
+    "src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextminimal.js~formattextminimal#type",
+    "class/src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal.html#instance-get-type",
+    "src/transform/formats/text/FormatTextMinimal.js~FormatTextMinimal#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextmodules.js",
+    "file/src/transform/formats/text/FormatTextModules.js.html",
+    "src/transform/formats/text/FormatTextModules.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/formattextmodules.js~formattextmodules#constructor",
+    "class/src/transform/formats/text/FormatTextModules.js~FormatTextModules.html#instance-constructor-constructor",
+    "src/transform/formats/text/FormatTextModules.js~FormatTextModules#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattextmodules.js~formattextmodules#extension",
+    "class/src/transform/formats/text/FormatTextModules.js~FormatTextModules.html#instance-get-extension",
+    "src/transform/formats/text/FormatTextModules.js~FormatTextModules#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextmodules.js~formattextmodules#name",
+    "class/src/transform/formats/text/FormatTextModules.js~FormatTextModules.html#instance-get-name",
+    "src/transform/formats/text/FormatTextModules.js~FormatTextModules#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextmodules.js~formattextmodules#type",
+    "class/src/transform/formats/text/FormatTextModules.js~FormatTextModules.html#instance-get-type",
+    "src/transform/formats/text/FormatTextModules.js~FormatTextModules#type",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextvisibility.js",
+    "file/src/transform/formats/text/FormatTextVisibility.js.html",
+    "src/transform/formats/text/FormatTextVisibility.js",
+    "file"
+  ],
+  [
+    "src/transform/formats/text/formattextvisibility.js~formattextvisibility#constructor",
+    "class/src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility.html#instance-constructor-constructor",
+    "src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility#constructor",
+    "method"
+  ],
+  [
+    "src/transform/formats/text/formattextvisibility.js~formattextvisibility#extension",
+    "class/src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility.html#instance-get-extension",
+    "src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility#extension",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextvisibility.js~formattextvisibility#name",
+    "class/src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility.html#instance-get-name",
+    "src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility#name",
+    "member"
+  ],
+  [
+    "src/transform/formats/text/formattextvisibility.js~formattextvisibility#type",
+    "class/src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility.html#instance-get-type",
+    "src/transform/formats/text/FormatTextVisibility.js~FormatTextVisibility#type",
+    "member"
+  ],
+  [
+    "src/util/math.js",
+    "test-file/src/util/math.js.html",
+    "src/util/math.js",
+    "testFile"
+  ],
+  [
+    "src/util/object.js",
+    "test-file/src/util/object.js.html",
+    "src/util/object.js",
+    "testFile"
+  ],
+  [
+    "src/util/string.js",
+    "test-file/src/util/string.js.html",
+    "src/util/string.js",
+    "testFile"
   ],
   [
     "src/utils/mathutil.js",
@@ -1200,6 +2388,48 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/utils/mathutil.js~mathutil.tofixed",
+    "class/src/utils/MathUtil.js~MathUtil.html#static-method-toFixed",
+    "src/utils/MathUtil.js~MathUtil.toFixed",
+    "method"
+  ],
+  [
+    "src/utils/mathutil.js~mathutil.tofixedtraverse",
+    "class/src/utils/MathUtil.js~MathUtil.html#static-method-toFixedTraverse",
+    "src/utils/MathUtil.js~MathUtil.toFixedTraverse",
+    "method"
+  ],
+  [
+    "src/utils/objectutil.js",
+    "file/src/utils/ObjectUtil.js.html",
+    "src/utils/ObjectUtil.js",
+    "file"
+  ],
+  [
+    "src/utils/objectutil.js~objectutil.depthtraverse",
+    "class/src/utils/ObjectUtil.js~ObjectUtil.html#static-method-depthTraverse",
+    "src/utils/ObjectUtil.js~ObjectUtil.depthTraverse",
+    "method"
+  ],
+  [
+    "src/utils/objectutil.js~objectutil.getaccessorlist",
+    "class/src/utils/ObjectUtil.js~ObjectUtil.html#static-method-getAccessorList",
+    "src/utils/ObjectUtil.js~ObjectUtil.getAccessorList",
+    "method"
+  ],
+  [
+    "src/utils/objectutil.js~objectutil.safeaccess",
+    "class/src/utils/ObjectUtil.js~ObjectUtil.html#static-method-safeAccess",
+    "src/utils/ObjectUtil.js~ObjectUtil.safeAccess",
+    "method"
+  ],
+  [
+    "src/utils/objectutil.js~objectutil.safeset",
+    "class/src/utils/ObjectUtil.js~ObjectUtil.html#static-method-safeSet",
+    "src/utils/ObjectUtil.js~ObjectUtil.safeSet",
+    "method"
+  ],
+  [
     "src/utils/stringutil.js",
     "file/src/utils/StringUtil.js.html",
     "src/utils/StringUtil.js",
@@ -1210,5 +2440,599 @@ window.esdocSearchIndex = [
     "class/src/utils/StringUtil.js~StringUtil.html#static-method-compare",
     "src/utils/StringUtil.js~StringUtil.compare",
     "method"
+  ],
+  [
+    "src/utils/stringutil.js~stringutil.incrementindent",
+    "class/src/utils/StringUtil.js~StringUtil.html#static-method-incrementIndent",
+    "src/utils/StringUtil.js~StringUtil.incrementIndent",
+    "method"
+  ],
+  [
+    "src/utils/stringutil.js~stringutil.indent",
+    "class/src/utils/StringUtil.js~StringUtil.html#static-method-indent",
+    "src/utils/StringUtil.js~StringUtil.indent",
+    "method"
+  ],
+  [
+    "src/utils/stringutil.js~stringutil.safestringobject",
+    "class/src/utils/StringUtil.js~StringUtil.html#static-method-safeStringObject",
+    "src/utils/StringUtil.js~StringUtil.safeStringObject",
+    "method"
+  ],
+  [
+    "src/utils/stringutil.js~stringutil.safestringsobject",
+    "class/src/utils/StringUtil.js~StringUtil.html#static-method-safeStringsObject",
+    "src/utils/StringUtil.js~StringUtil.safeStringsObject",
+    "method"
+  ],
+  [
+    "src/utils/stringutil.js~stringutil.safestringsprependobject",
+    "class/src/utils/StringUtil.js~StringUtil.html#static-method-safeStringsPrependObject",
+    "src/utils/StringUtil.js~StringUtil.safeStringsPrependObject",
+    "method"
+  ],
+  [
+    "src/utils/stringutil.js~stringutil.tagescapehtml",
+    "class/src/utils/StringUtil.js~StringUtil.html#static-method-tagEscapeHTML",
+    "src/utils/StringUtil.js~StringUtil.tagEscapeHTML",
+    "method"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber15",
+    "traits:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber173",
+    "traits: HalsteadArray:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber244",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!):",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber261",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!): 1st item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber268",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!): 2nd item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber275",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!): 3rd item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber282",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!): 4th item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber291",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!): HalsteadArray valueOf converts raw data to strings",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber256",
+    "traits: HalsteadArray: multiple identifiers / raw TraitHalstead function data (undefined data posts warning!): result contained two items",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber175",
+    "traits: HalsteadArray: no identifiers:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber187",
+    "traits: HalsteadArray: no identifiers: result metric is correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber182",
+    "traits: HalsteadArray: no identifiers: result was empty",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber193",
+    "traits: HalsteadArray: one identifier:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber210",
+    "traits: HalsteadArray: one identifier: first item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber200",
+    "traits: HalsteadArray: one identifier: result contained one item",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber205",
+    "traits: HalsteadArray: one identifier: result forEach",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber305",
+    "traits: HalsteadArray: process report:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber307",
+    "traits: HalsteadArray: process report: report contains correct operator identifiers",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber217",
+    "traits: HalsteadArray: two identifiers:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber229",
+    "traits: HalsteadArray: two identifiers: first item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber224",
+    "traits: HalsteadArray: two identifiers: result contained two items",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber236",
+    "traits: HalsteadArray: two identifiers: second item was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber327",
+    "traits: HalsteadArray: valueOf:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber329",
+    "traits: HalsteadArray: valueOf: HalsteadArray valueOf contains correct operator identifiers",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber344",
+    "traits: HalsteadArray: valueOf: HalsteadArray valueOf contains correct operator identifiers w/ function values as strings",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber364",
+    "traits: Trait:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber366",
+    "traits: Trait: with function / params:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber373",
+    "traits: Trait: with function / params: result with function / params is correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber17",
+    "traits: actualize:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber98",
+    "traits: actualize: array arguments:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber110",
+    "traits: actualize: array arguments: cyclomatic was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber127",
+    "traits: actualize: array arguments: dependencies was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber115",
+    "traits: actualize: array arguments: ignoreKeys was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber105",
+    "traits: actualize: array arguments: lloc was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber122",
+    "traits: actualize: array arguments: newScope was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber133",
+    "traits: actualize: no arguments:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber141",
+    "traits: actualize: no arguments: ignoreKeys was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber19",
+    "traits: actualize: string arguments:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber39",
+    "traits: actualize: string arguments: cyclomatic was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber89",
+    "traits: actualize: string arguments: dependencies was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber71",
+    "traits: actualize: string arguments: ignoreKeys was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber31",
+    "traits: actualize: string arguments: lloc was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber81",
+    "traits: actualize: string arguments: newScope was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber59",
+    "traits: actualize: string arguments: operands was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber47",
+    "traits: actualize: string arguments: operators was correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber26",
+    "traits: actualize: string arguments: result was object",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber149",
+    "traits: safeName:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber151",
+    "traits: safeName: parsing is correct:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber165",
+    "traits: safeName: parsing is correct: result with `object.name`",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber153",
+    "traits: safeName: parsing is correct: result with no parameters return `<anonymous>`",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/module/traits.js.html#lineNumber159",
+    "traits: safeName: parsing is correct: result with null data and default value",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber21",
+    "transform:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber68",
+    "transform: ModuleReport:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber70",
+    "transform: ModuleReport: toFormat (large-module/report):",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber80",
+    "transform: ModuleReport: toFormat (large-module/report): ",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber93",
+    "transform: ProjectResult:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber95",
+    "transform: ProjectResult: toFormat (large-project/results):",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber105",
+    "transform: ProjectResult: toFormat (large-project/results): ",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber117",
+    "transform: ProjectResult: toFormat (large-project/results-no-reports):",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber128",
+    "transform: ProjectResult: toFormat (large-project/results-no-reports): ",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber23",
+    "transform: TransformFormat:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber25",
+    "transform: TransformFormat: forEach / formatReport (large-module/report):",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber33",
+    "transform: TransformFormat: forEach / formatReport (large-module/report): ",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber45",
+    "transform: TransformFormat: forEach / formatResult (large-module/report):",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/transform/format.js.html#lineNumber54",
+    "transform: TransformFormat: forEach / formatResult (large-module/report): ",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber13",
+    "utils:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber9",
+    "utils:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/object.js.html#lineNumber14",
+    "utils:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/object.js.html#lineNumber16",
+    "utils: ObjectUtil",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/object.js.html#lineNumber18",
+    "utils: ObjectUtil getAccessorList:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/object.js.html#lineNumber20",
+    "utils: ObjectUtil getAccessorList: MethodAverage accessors correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber11",
+    "utils: StringUtil",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber15",
+    "utils: StringUtil",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber13",
+    "utils: StringUtil compactMatrix:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber15",
+    "utils: StringUtil compactMatrix: matrix is compacted",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber17",
+    "utils: StringUtil compare:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber19",
+    "utils: StringUtil compare: basic test",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber61",
+    "utils: StringUtil getMedian:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber63",
+    "utils: StringUtil getMedian: median is returned",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber70",
+    "utils: StringUtil getPercent:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber72",
+    "utils: StringUtil getPercent: percent is returned",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber27",
+    "utils: StringUtil incrementIndent:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber29",
+    "utils: StringUtil incrementIndent: basic test",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber37",
+    "utils: StringUtil indent:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber39",
+    "utils: StringUtil indent: basic test",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber45",
+    "utils: StringUtil safeStringObject:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber47",
+    "utils: StringUtil safeStringObject: output is correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber62",
+    "utils: StringUtil safeStringsObject:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/string.js.html#lineNumber64",
+    "utils: StringUtil safeStringsObject: output is correct",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber79",
+    "utils: StringUtil toFixed:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber99",
+    "utils: StringUtil toFixed: correct JSON stringify results",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber81",
+    "utils: StringUtil toFixed: correct float rounding",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/util/math.js.html#lineNumber92",
+    "utils: StringUtil toFixed: pass-through of non-float data",
+    "test"
   ]
 ]
