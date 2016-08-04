@@ -1,0 +1,5235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">PluginSyntaxESTree | escomplex-plugin-syntax-estree API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-estree.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1470306762288" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-estree/tree/master/src" data-scm-type="github">src</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-estree/tree/master/src/PluginSyntaxESTree.js" data-scm-type="github">PluginSyntaxESTree.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html" data-scm-link="https://github.com/typhonjs-node-escomplex/escomplex-plugin-syntax-estree/tree/master/src/PluginSyntaxESTree.js#L12" data-scm-type="github">PluginSyntaxESTree</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><div class="header-notice">
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import PluginSyntaxESTree from &apos;<span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber12">escomplex-plugin-syntax-estree/src/PluginSyntaxESTree.js</a></span>&apos;</code></pre></div>
+  <span data-ice="access">public</span>
+  <span data-ice="kind">class</span>
+  
+  
+  
+  <span data-ice="source">| <span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber12">source</a></span></span>
+</div>
+
+<div class="self-detail detail">
+  <h1 data-ice="name">PluginSyntaxESTree</h1>
+
+  
+
+  
+  
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span>typhonjs-escomplex-commons/src/module/plugin/syntax/AbstractSyntaxLoader~AbstractSyntaxLoader</span> &#x2192; PluginSyntaxESTree</div></div>
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <div class="description" data-ice="description"><p>Provides an typhonjs-escomplex-module / ESComplexModule plugin which loads syntax definitions for trait resolution
+for all ESTree AST nodes up to and including ES6.</p>
+</div>
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://www.npmjs.com/package/typhonjs-escomplex-module">https://www.npmjs.com/package/typhonjs-escomplex-module</a></span></li></ul></div>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+<div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ArrayExpression">ArrayExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ArrayPattern">ArrayPattern</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ArrowFunctionExpression">ArrowFunctionExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-AssignmentExpression">AssignmentExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-AssignmentPattern">AssignmentPattern</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-BinaryExpression">BinaryExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-BlockStatement">BlockStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-BreakStatement">BreakStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-CallExpression">CallExpression</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-CatchClause">CatchClause</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ClassBody">ClassBody</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ClassDeclaration">ClassDeclaration</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ClassExpression">ClassExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ConditionalExpression">ConditionalExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ContinueStatement">ContinueStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-DoWhileStatement">DoWhileStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-EmptyStatement">EmptyStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ExportAllDeclaration">ExportAllDeclaration</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ExportDefaultDeclaration">ExportDefaultDeclaration</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ExportNamedDeclaration">ExportNamedDeclaration</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ExportSpecifier">ExportSpecifier</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ExpressionStatement">ExpressionStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ForInStatement">ForInStatement</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ForOfStatement">ForOfStatement</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ForStatement">ForStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-FunctionDeclaration">FunctionDeclaration</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-FunctionExpression">FunctionExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-Identifier">Identifier</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-IfStatement">IfStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ImportDeclaration">ImportDeclaration</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ImportDefaultSpecifier">ImportDefaultSpecifier</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ImportNamespaceSpecifier">ImportNamespaceSpecifier</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ImportSpecifier">ImportSpecifier</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-LabeledStatement">LabeledStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-Literal">Literal</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-LogicalExpression">LogicalExpression</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-MemberExpression">MemberExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-MetaProperty">MetaProperty</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-MethodDefinition">MethodDefinition</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-NewExpression">NewExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ObjectExpression">ObjectExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ObjectPattern">ObjectPattern</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-Property">Property</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-RestElement">RestElement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ReturnStatement">ReturnStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-SequenceExpression">SequenceExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-SpreadElement">SpreadElement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-Super">Super</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-SwitchCase">SwitchCase</a></span></span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-SwitchStatement">SwitchStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-TaggedTemplateExpression">TaggedTemplateExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-TemplateElement">TemplateElement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-TemplateLiteral">TemplateLiteral</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ThisExpression">ThisExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-ThrowStatement">ThrowStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-TryStatement">TryStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-UnaryExpression">UnaryExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-UpdateExpression">UpdateExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-VariableDeclaration">VariableDeclaration</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-VariableDeclarator">VariableDeclarator</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-WhileStatement">WhileStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-WithStatement">WithStatement</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES5 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-YieldExpression">YieldExpression</a></span></span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>ES6 Node</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/src/PluginSyntaxESTree.js~PluginSyntaxESTree.html#instance-method-onConfigure">onConfigure</a></span></span><span data-ice="signature">(ev: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Loads any default settings that are not already provided by any user options.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ArrayExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ArrayExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber58">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#arrayexpression">https://github.com/estree/estree/blob/master/spec.md#arrayexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ArrayPattern">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ArrayPattern</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber483">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#arraypattern">https://github.com/estree/estree/blob/master/es6.md#arraypattern</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ArrowFunctionExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ArrowFunctionExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber490">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#arrowfunctionexpression">https://github.com/estree/estree/blob/master/es6.md#arrowfunctionexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-AssignmentExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">AssignmentExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber65">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#assignmentexpression">https://github.com/estree/estree/blob/master/spec.md#assignmentexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-AssignmentPattern">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">AssignmentPattern</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber467">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#assignmentpattern">https://github.com/estree/estree/blob/master/es6.md#assignmentpattern</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-BinaryExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">BinaryExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber79">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#binaryexpression">https://github.com/estree/estree/blob/master/spec.md#binaryexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-BlockStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">BlockStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber72">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#blockstatement">https://github.com/estree/estree/blob/master/spec.md#blockstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-BreakStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">BreakStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber86">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#breakstatement">https://github.com/estree/estree/blob/master/spec.md#breakstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-CallExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">CallExpression</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber99">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+<p>Processes CommonJS dependencies if settings.commonjs is set to true. An optional function
+settings.dependencyResolver may be used to resolve dynamic dependencies.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#callexpression">https://github.com/estree/estree/blob/master/spec.md#callexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-CatchClause">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">CatchClause</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber136">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#catchclause">https://github.com/estree/estree/blob/master/spec.md#catchclause</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ClassBody">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ClassBody</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber497">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#classbody">https://github.com/estree/estree/blob/master/es6.md#classbody</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ClassDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ClassDeclaration</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber504">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#classdeclaration">https://github.com/estree/estree/blob/master/es6.md#classdeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ClassExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ClassExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber511">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#classexpression">https://github.com/estree/estree/blob/master/es6.md#classexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ConditionalExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ConditionalExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber143">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#conditionalexpression">https://github.com/estree/estree/blob/master/spec.md#conditionalexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ContinueStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ContinueStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber150">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#continuestatement">https://github.com/estree/estree/blob/master/spec.md#continuestatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-DoWhileStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">DoWhileStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber157">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#dowhilestatement">https://github.com/estree/estree/blob/master/spec.md#dowhilestatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-EmptyStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">EmptyStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber164">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#emptystatement">https://github.com/estree/estree/blob/master/spec.md#emptystatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ExportAllDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ExportAllDeclaration</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber518">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#exportalldeclaration">https://github.com/estree/estree/blob/master/es6.md#exportalldeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ExportDefaultDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ExportDefaultDeclaration</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber525">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#exportdefaultdeclaration">https://github.com/estree/estree/blob/master/es6.md#exportdefaultdeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ExportNamedDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ExportNamedDeclaration</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber532">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#exportnameddeclaration">https://github.com/estree/estree/blob/master/es6.md#exportnameddeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ExportSpecifier">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ExportSpecifier</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber539">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#exportspecifier">https://github.com/estree/estree/blob/master/es6.md#exportspecifier</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ExpressionStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ExpressionStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber171">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#expressionstatement">https://github.com/estree/estree/blob/master/spec.md#expressionstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ForInStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ForInStatement</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber179">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#forinstatement">https://github.com/estree/estree/blob/master/spec.md#forinstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ForOfStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ForOfStatement</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber550">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#forofstatement">https://github.com/estree/estree/blob/master/es6.md#forofstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ForStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ForStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber186">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#forstatement">https://github.com/estree/estree/blob/master/spec.md#forstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-FunctionDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">FunctionDeclaration</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber197">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+<p>Note: The function name (node.id) is returned as an operand and excluded from traversal as to not be included in
+the function operand calculations.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#functiondeclaration">https://github.com/estree/estree/blob/master/spec.md#functiondeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-FunctionExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">FunctionExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber220">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+<p>Note: The function name (node.id) is returned as an operand and excluded from traversal as to not be included in
+the function operand calculations.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#functionexpression">https://github.com/estree/estree/blob/master/spec.md#functionexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-Identifier">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">Identifier</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber242">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#identifier">https://github.com/estree/estree/blob/master/spec.md#identifier</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-IfStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">IfStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber249">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#ifstatement">https://github.com/estree/estree/blob/master/spec.md#ifstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ImportDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ImportDeclaration</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber558">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#importdeclaration">https://github.com/estree/estree/blob/master/es6.md#importdeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ImportDefaultSpecifier">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ImportDefaultSpecifier</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber575">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#importdefaultspecifier">https://github.com/estree/estree/blob/master/es6.md#importdefaultspecifier</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ImportNamespaceSpecifier">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ImportNamespaceSpecifier</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber582">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#importnamespacespecifier">https://github.com/estree/estree/blob/master/es6.md#importnamespacespecifier</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ImportSpecifier">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ImportSpecifier</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber589">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#importspecifier">https://github.com/estree/estree/blob/master/es6.md#importspecifier</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-LabeledStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">LabeledStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber260">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#labeledstatement">https://github.com/estree/estree/blob/master/spec.md#labeledstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-Literal">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">Literal</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber270">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+<p>Avoid conflicts between string literals and identifiers.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#literal">https://github.com/estree/estree/blob/master/spec.md#literal</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-LogicalExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">LogicalExpression</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber285">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#logicalexpression">https://github.com/estree/estree/blob/master/spec.md#logicalexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-MemberExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">MemberExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber302">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#memberexpression">https://github.com/estree/estree/blob/master/spec.md#memberexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-MetaProperty">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">MetaProperty</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber602">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+<p>Note: esprima doesn&apos;t follow the ESTree spec and <code>meta</code> &amp; <code>property</code> are strings instead of Identifier nodes.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#metaproperty">https://github.com/estree/estree/blob/master/es6.md#metaproperty</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-MethodDefinition">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">MethodDefinition</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber621">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+<p>Note: must skip as the following FunctionExpression assigns the name.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#methoddefinition">https://github.com/estree/estree/blob/master/es6.md#methoddefinition</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-NewExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">NewExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber318">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#newexpression">https://github.com/estree/estree/blob/master/spec.md#newexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ObjectExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ObjectExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber328">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#objectexpression">https://github.com/estree/estree/blob/master/spec.md#objectexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ObjectPattern">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ObjectPattern</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber640">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#objectpattern">https://github.com/estree/estree/blob/master/es6.md#objectpattern</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-Property">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">Property</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber338">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+<p>Note that w/ ES6+ <code>:</code> may be omitted and the Property node defines <code>shorthand</code> to indicate this case.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#property">https://github.com/estree/estree/blob/master/spec.md#property</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-RestElement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">RestElement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber647">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#restelement">https://github.com/estree/estree/blob/master/es6.md#restelement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ReturnStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ReturnStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber353">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#returnstatement">https://github.com/estree/estree/blob/master/spec.md#returnstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-SequenceExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">SequenceExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber360">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#sequenceexpression">https://github.com/estree/estree/blob/master/spec.md#sequenceexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-SpreadElement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">SpreadElement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber654">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#spreadelement">https://github.com/estree/estree/blob/master/es6.md#spreadelement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-Super">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">Super</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber661">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#super">https://github.com/estree/estree/blob/master/es6.md#super</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-SwitchCase">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">SwitchCase</span><span data-ice="signature">(settings: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber368">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">settings</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex settings</p>
+<p></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#switchcase">https://github.com/estree/estree/blob/master/spec.md#switchcase</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-SwitchStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">SwitchStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber379">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#switchstatement">https://github.com/estree/estree/blob/master/spec.md#switchstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-TaggedTemplateExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">TaggedTemplateExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber668">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#taggedtemplateexpression">https://github.com/estree/estree/blob/master/es6.md#taggedtemplateexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-TemplateElement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">TemplateElement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber675">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#templateelement">https://github.com/estree/estree/blob/master/es6.md#templateelement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-TemplateLiteral">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">TemplateLiteral</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber685">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#templateliteral">https://github.com/estree/estree/blob/master/es6.md#templateliteral</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ThisExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ThisExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber386">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#thisexpression">https://github.com/estree/estree/blob/master/spec.md#thisexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-ThrowStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">ThrowStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber393">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#throwstatement">https://github.com/estree/estree/blob/master/spec.md#throwstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-TryStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">TryStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber403">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+<p>Note: esprima has duplicate nodes the catch block; <code>handler</code> is the actual ESTree spec.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#trystatement">https://github.com/estree/estree/blob/master/spec.md#trystatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-UnaryExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">UnaryExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber414">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#unaryexpression">https://github.com/estree/estree/blob/master/spec.md#unaryexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-UpdateExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">UpdateExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber424">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#updateexpression">https://github.com/estree/estree/blob/master/spec.md#updateexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-VariableDeclaration">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">VariableDeclaration</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber434">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#variabledeclaration">https://github.com/estree/estree/blob/master/spec.md#variabledeclaration</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-VariableDeclarator">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">VariableDeclarator</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber441">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#variabledeclarator">https://github.com/estree/estree/blob/master/spec.md#variabledeclarator</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-WhileStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">WhileStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber451">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#whilestatement">https://github.com/estree/estree/blob/master/spec.md#whilestatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-WithStatement">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">WithStatement</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber458">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES5 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/spec.md#withstatement">https://github.com/estree/estree/blob/master/spec.md#withstatement</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-YieldExpression">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">YieldExpression</span><span data-ice="signature">(): {lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber692">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>ES6 Node</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType">{lloc: <span>*</span>, cyclomatic: <span>*</span>, operators: <span>*</span>, operands: <span>*</span>, ignoreKeys: <span>*</span>, newScope: <span>*</span>, dependencies: <span>*</span>}</td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="see"><h4>See:</h4><ul><li><span><a href="https://github.com/estree/estree/blob/master/es6.md#yieldexpression">https://github.com/estree/estree/blob/master/es6.md#yieldexpression</a></span></li></ul></div>
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-onConfigure">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">onConfigure</span><span data-ice="signature">(ev: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/PluginSyntaxESTree.js.html#lineNumber40">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Loads any default settings that are not already provided by any user options.</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">ev</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p></p><p>escomplex plugin event data.</p><p></p>
+<p></p><p>The following options are:</p><p></p>
+<p><pre><code><code class="source-code prettyprint">(boolean)   commonjs - Boolean indicating that source code being processed is CommonJS; defaults to false.
+
+(function)  dependencyResolver - Provides a function to resolve dynamic dependencies; defaults to undefined.
+
+(boolean)   forin - Boolean indicating whether for...in / for...of loops should be considered a source of
+                    cyclomatic complexity; defaults to false.
+
+(boolean)   logicalor - Boolean indicating whether operator || should be considered a source of cyclomatic
+                        complexity; defaults to true.
+
+(boolean)   switchcase - Boolean indicating whether switch statements should be considered a source of cyclomatic
+                         complexity; defaults to true.
+
+(boolean)   trycatch - Boolean indicating whether catch clauses should be considered a source of cyclomatic
+                       complexity; defaults to false.</code>
+</code></pre></p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
