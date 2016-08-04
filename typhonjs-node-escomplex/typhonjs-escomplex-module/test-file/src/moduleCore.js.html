@@ -1,0 +1,3236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/moduleCore.js | typhonjs-escomplex-module API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1470306035903" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module/tree/master/src" data-scm-type="github">src</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module/tree/master/src/ESComplexModule.js" data-scm-type="github">ESComplexModule.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/ESComplexModule.js~ESComplexModule.html" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module/tree/master/src/ESComplexModule.js#L8" data-scm-type="github">ESComplexModule</a></span></li>
+</ul>
+            </li>
+<li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-1" id="file-1" checked><label for="file-1" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module/tree/master/src/Plugins.js" data-scm-type="github">Plugins.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/Plugins.js~Plugins.html" data-scm-link="https://github.com/typhonjs-node-escomplex/typhonjs-escomplex-module/tree/master/src/Plugins.js#L16" data-scm-type="github">Plugins</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/moduleCore.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&apos;use strict&apos;;
+
+import { assert }       from &apos;chai&apos;;
+
+import parsers          from &apos;./parsers&apos;;
+import * as testconfig  from &apos;./testconfig&apos;;
+
+if (testconfig.modules[&apos;moduleCore&apos;])
+{
+   parsers.forEach((parser) =&gt;
+   {
+      suite(`(${parser.name}): module (Core):`, () =&gt;
+      {
+         suite(&apos;function call:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;parseInt(&quot;10&quot;, 10);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct physical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.physical, 1);
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity density&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomaticDensity, 100);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead operator identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operators.identifiers,
+                  report.methodAggregate.halstead.operators.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead operand identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operands.identifiers,
+                  report.methodAggregate.halstead.operands.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 0.5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead volume&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.volume, 8);
+            });
+
+            test(&apos;methodAggregate has correct Halstead effort&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.effort, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead bugs&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.bugs, 0.003);
+            });
+
+            test(&apos;methodAggregate has correct Halstead time&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.time, 0.222);
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 166.259);
+            });
+
+            test(&apos;methodAggregate has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.params, 0);
+            });
+
+            test(&apos;mean logical LOC is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.sloc.logical, 1);
+            });
+
+            test(&apos;mean cyclomatic complexity is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.cyclomatic, 1);
+            });
+
+            test(&apos;mean Halstead effort is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.halstead.effort, 4);
+            });
+
+            test(&apos;mean parameter count is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.params, 0);
+            });
+
+            test(&apos;dependencies is correct&apos;, () =&gt;
+            {
+               assert.lengthOf(report.dependencies, 0);
+            });
+         });
+
+         suite(&apos;condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;if (true) { &quot;foo&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct physical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.physical, 1);
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity density&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomaticDensity, 100);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead operator identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operators.identifiers,
+                  report.methodAggregate.halstead.operators.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead operand identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operands.identifiers,
+                  report.methodAggregate.halstead.operands.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 0.5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead volume&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.volume, 4.755);
+            });
+
+            test(&apos;methodAggregate has correct Halstead effort&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.effort, 2.377);
+            });
+
+            test(&apos;methodAggregate has correct Halstead bugs&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.bugs, 0.002);
+            });
+
+            test(&apos;methodAggregate has correct Halstead time&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.time, 0.132);
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 156.65);
+            });
+
+            test(&apos;mean logical LOC is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.sloc.logical, 2);
+            });
+
+            test(&apos;mean cyclomatic complexity is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.cyclomatic, 2);
+            });
+
+            test(&apos;mean Halstead effort is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.halstead.effort, 2.377);
+            });
+
+            test(&apos;mean parameter count is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.params, 0);
+            });
+
+            test(&apos;dependencies is correct&apos;, () =&gt;
+            {
+               assert.lengthOf(report.dependencies, 0);
+            });
+         });
+
+         suite(&apos;condition with alternate:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;if (true) { &quot;foo&quot;; } else { &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct physical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.physical, 1);
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead operator identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operators.identifiers,
+                  report.methodAggregate.halstead.operators.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead operand identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operands.identifiers,
+                  report.methodAggregate.halstead.operands.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead volume&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.volume, 11.61);
+            });
+
+            test(&apos;methodAggregate has correct Halstead effort&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.effort, 11.61);
+            });
+
+            test(&apos;methodAggregate has correct Halstead bugs&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.bugs, 0.004);
+            });
+
+            test(&apos;methodAggregate has correct Halstead time&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.time, 0.645);
+            });
+         });
+
+         suite(&apos;dual condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;if (true) { &quot;foo&quot;; } if (false) { &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead operator identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operators.identifiers,
+                  report.methodAggregate.halstead.operators.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead operand identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operands.identifiers,
+                  report.methodAggregate.halstead.operands.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 0.5);
+            });
+         });
+
+         suite(&apos;alternate dual condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;if (true) { &quot;foo&quot;; } else if (false) { &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 5);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead operator identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operators.identifiers,
+                  report.methodAggregate.halstead.operators.distinct
+               );
+            });
+
+            test(&apos;methodAggregate has correct Halstead operand identifier length&apos;, () =&gt;
+            {
+               assert.lengthOf(
+                  report.methodAggregate.halstead.operands.identifiers,
+                  report.methodAggregate.halstead.operands.distinct
+               );
+            });
+         });
+
+         suite(&apos;nested condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;if (true) { &quot;foo&quot;; if (false) { &quot;bar&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+         });
+
+         suite(&apos;switch statement:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;switch (Date.now()) { case 1: &quot;foo&quot;; break; case 2: &quot;bar&quot;; break; default: &quot;baz&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 9);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity density&apos;, () =&gt;
+            {
+               assert.isTrue(report.methodAggregate.cyclomaticDensity &gt; 33.3);
+               assert.isTrue(report.methodAggregate.cyclomaticDensity &lt; 33.4);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 8);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 7);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 7);
+            });
+         });
+
+         suite(&apos;switch statement with fall-through case:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;switch (Date.now()) { case 1: case 2: &quot;foo&quot;; break; default: &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 7);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 7);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+         });
+
+         suite(&apos;switch statement containing condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;switch (Date.now()) { &apos;
+                + &apos;    case 1: &quot;foo&quot;; break; &apos;
+                + &apos;    case 2: &quot;bar&quot;; break; &apos;
+                + &apos;    default: if (true) { &quot;baz&quot;; } &apos;
+                + &apos;}&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 10);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 4);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 9);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 7);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 8);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 8);
+            });
+         });
+
+         suite(&apos;for loop:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var i; for (i = 0; i &lt; 10; i += 1) { &quot;foo&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 3);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 8);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 13);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 10);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 4);
+            });
+         });
+
+         suite(&apos;for loop containing condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var i; for (i = 0; i &lt; 10; i += 1) { if (true) { &quot;foo&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 9);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+         });
+
+         suite(&apos;for...in loop:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var property; for (property in { foo: &quot;bar&quot;, baz: &quot;qux&quot; }) { &quot;wibble&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 5);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 7);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 12);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 10);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 2.333);
+            });
+         });
+
+         suite(&apos;for...in loop containing condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;var property, object = { foo: &quot;bar&quot;, baz: &quot;qux&quot; }; &apos;
+                + &apos;for (property in object) { if (object.hasOwnProperty(property)) { &quot;wibble&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 9);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 8);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 12);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 8);
+            });
+         });
+
+         suite(&apos;while loop:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;while (true) { &quot;foo&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;while loop containing condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;while (true) { if (true) { &quot;foo&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;do...while loop:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;do { &quot;foo&quot;; } while (true)&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 3);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;do...while loop containing condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;do { if (true) { &quot;foo&quot;; } } while (true)&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;try...catch:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;try { &quot;foo&quot;; } catch (e) { e.message; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;try containing condition&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;try { if (true) { &quot;foo&quot;; } } catch (e) { &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;catch containing condition&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;try { &quot;foo&quot;; } catch (e) { if (true) { &quot;bar&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;catch with finally containing condition&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;try { &quot;foo&quot;; } catch (e) { } finally { if (true) { &quot;bar&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;function declaration:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;foo&apos;);
+            });
+
+            test(&apos;method has correct physical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].sloc.physical, 1);
+            });
+
+            test(&apos;method has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].sloc.logical, 1);
+            });
+
+            test(&apos;method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomatic, 1);
+            });
+
+            test(&apos;method has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].params, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.length, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.vocabulary, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 0.5);
+            });
+
+            test(&apos;method has correct Halstead length&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.length, 1);
+            });
+
+            test(&apos;method has correct Halstead vocabulary&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.vocabulary, 1);
+            });
+
+            test(&apos;method has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.difficulty, 0);
+            });
+
+            test(&apos;method has correct Halstead volume&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.volume, 0);
+            });
+
+            test(&apos;method has correct Halstead effort&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.effort, 0);
+            });
+
+            test(&apos;method has correct Halstead bugs&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.bugs, 0);
+            });
+
+            test(&apos;method has correct Halstead time&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.time, 0);
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 171);
+            });
+
+            test(&apos;methodAggregate has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.params, 0);
+            });
+         });
+
+         suite(&apos;nested function declaration:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { bar(); function bar () { &quot;baz&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 2);
+            });
+
+            test(&apos;first method has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].sloc.logical, 2);
+            });
+
+            test(&apos;second method has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].sloc.logical, 1);
+            });
+
+            test(&apos;first method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;foo&apos;);
+            });
+
+            test(&apos;second method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].name, &apos;bar&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;function declaration containing condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { if (true) { &quot;bar&quot;; } }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomatic, 2);
+            });
+
+            test(&apos;method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomaticDensity, 100);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;assignment expression&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = &quot;bar&quot;;&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methods is empty&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;ternary condtional expression assigned to variable:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = true ? &quot;bar&quot; : &quot;baz&quot;;&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;nested ternary condtional expression:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = true ? &quot;bar&quot; : (false ? &quot;baz&quot; : &quot;qux&quot;);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+         });
+
+         suite(&apos;logical or expression assigned to variable:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = true || false;&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;anonymous function assigned to variable:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = function () { &quot;bar&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;named function assigned to variable:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = function bar () { &quot;baz&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;bar&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;ternary condtional expression returned from function:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { return true ? &quot;bar&quot; : &quot;baz&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;logical or expression returned from function:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { return true || false; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;anonymous function returned from function:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { return function () { &quot;bar&quot;; }; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 3);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 2);
+            });
+
+            test(&apos;first method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;foo&apos;);
+            });
+
+            test(&apos;second method is anonymous&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;named function returned from function:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { return function bar () { &quot;baz&quot;; }; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;second method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].name, &apos;bar&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;ternary condtional expression passed as argument:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;parseInt(&quot;10&quot;, true ? 10 : 8);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 5);
+            });
+         });
+
+         suite(&apos;logical or expression passed as argument:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;parseInt(&quot;10&quot;, 10 || 8);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+         });
+
+         suite(&apos;anonymous function passed as argument:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;setTimeout(function () { &quot;foo&quot;; }, 1000);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method is anonymous&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;named function passed as argument:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;setTimeout(function foo () { &quot;bar&quot;; }, 1000);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;foo&apos;);
+            });
+         });
+
+         suite(&apos;logical AND expression:&apos;, () =&gt;
+         {
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               const report = parser.analyze(&apos;var foo = true &amp;&amp; false;&apos;, {});
+               assert.strictEqual(report.methodAverage.cyclomatic, 2);
+            });
+         });
+
+         suite(&apos;logical OR expression with logicalor false:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = true || false;&apos;, { logicalor: false });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+         });
+
+         suite(&apos;switch statement with switchcase false:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;switch (Date.now()) { case 1: &quot;foo&quot;; break; case 2: &quot;bar&quot;; break; default: &quot;baz&quot;; }&apos;,
+                  { switchcase: false });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+         });
+
+         suite(&apos;for...in loop with forin true:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;var property; for (property in { foo: &quot;bar&quot;, baz: &quot;qux&quot; }) { &quot;wibble&quot;; }&apos;, { forin: true });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+         });
+
+         suite(&apos;try...catch with trycatch true:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;try { &quot;foo&quot;; } catch (e) { e.message; }&apos;, { trycatch: true });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+         });
+
+         suite(&apos;IIFE:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;(function (foo) { if (foo === &quot;foo&quot;) { console.log(foo); return; } &quot;bar&quot;; }(&quot;foo&quot;));&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 6);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomatic, 2);
+            });
+
+            test(&apos;method has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].params, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 7);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 9);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.params, 1);
+            });
+         });
+
+         suite(&apos;logical and condition:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;if (&quot;foo&quot; &amp;&amp; &quot;bar&quot;) { &quot;baz&quot;; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 3);
+            });
+         });
+
+         suite(&apos;call on function object:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;(function () { &quot;foo&quot;; }).call(this);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 3);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;anonymous function assigned to property:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = {}; foo.bar = function () { &quot;foobar&quot;; };&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 3);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 4);
+            });
+         });
+
+         suite(&apos;anonymous function assigned to property of literal:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;&quot;&quot;.bar = function () { &quot;bar&quot;; };&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 2);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+         });
+
+         suite(&apos;empty object literal:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = {};&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 3);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 1);
+            });
+         });
+
+         suite(&apos;function property of literal object:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = { bar: &quot;bar&quot;, baz: function () { &quot;baz&quot;; } };&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 5);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+         });
+
+         suite(&apos;duplicate function properties of literal object:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;var foo = { bar: function () { if (true) { &quot;bar&quot;; } }, bar: function () { &quot;bar&quot;; } };&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 2);
+            });
+
+            test(&apos;first method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;second method has correct name&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].name, &apos;&lt;anonymous&gt;&apos;);
+            });
+
+            test(&apos;first method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].cyclomatic, 2);
+            });
+
+            test(&apos;second method has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].cyclomatic, 1);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 2);
+            });
+         });
+
+         suite(&apos;throw exception:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;try { throw new Error(&quot;foo&quot;); } catch (e) { alert(error.message); }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 6);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 6);
+            });
+         });
+
+         suite(&apos;prefix and postfix increment:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var a = 0; ++a; a++;&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 3);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 4);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;array literal:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;[ &quot;foo&quot;, &quot;bar&quot; ];&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 1);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 0);
+            });
+
+            test(&apos;methodAggregate has correct cyclomatic complexity&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.cyclomatic, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 2);
+            });
+         });
+
+         suite(&apos;multiple physical lines:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t&apos;
+                + &apos;// commentz!\n\t\treturn [\n\t\t\t&quot;1&quot;,\n\t\t\t&quot;0&quot;\n\t\t].join(&quot;&quot;);\n\t}()),\n\t10\n);&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;report has correct line start / end&apos;, () =&gt;
+            {
+               switch (parser.name)
+               {
+                  // acorn &amp; babylon sets the start location at line 1 (first comment) instead of line 4 (first
+                  // line of code).
+                  case &apos;acorn&apos;:
+                  case &apos;babylon&apos;:
+                     assert.strictEqual(report.lineStart, 1);
+                     assert.strictEqual(report.lineEnd, 14);
+                     break;
+                  default:
+                     assert.strictEqual(report.lineStart, 4);
+                     assert.strictEqual(report.lineEnd, 14);
+               }
+            });
+
+            test(&apos;methodAggregate has correct physical lines of code&apos;, () =&gt;
+            {
+               switch (parser.name)
+               {
+                  // acorn &amp; babylon sets the start location at line 1 (first comment) instead of line 4 (first
+                  // line of code).
+                  case &apos;acorn&apos;:
+                  case &apos;babylon&apos;:
+                     assert.strictEqual(report.methodAggregate.sloc.physical, 14);
+                     break;
+                  default:
+                     assert.strictEqual(report.methodAggregate.sloc.physical, 11);
+               }
+            });
+
+            test(&apos;methodAggregate has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.sloc.logical, 4);
+            });
+
+            test(&apos;methods has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.methods, 1);
+            });
+
+            test(&apos;method has correct physical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].sloc.physical, 8);
+            });
+
+            test(&apos;method has correct logical lines of code&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].sloc.logical, 2);
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 146.532);
+            });
+         });
+
+         suite(&apos;multiple functions:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;function foo (a, b) { if (a) { b(a); } else { a(b); } } &apos;
+                + &apos;function bar (c, d) { var i; for (i = 0; i &lt; c.length; i += 1) { d += 1; } console.log(d); }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 128.115);
+            });
+
+            test(&apos;first method has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].params, 2);
+            });
+
+            test(&apos;second method has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[1].params, 2);
+            });
+
+            test(&apos;methodAggregate has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.params, 4);
+            });
+
+            test(&apos;mean logical LOC is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.sloc.logical, 4);
+            });
+
+            test(&apos;mean cyclomatic complexity is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.cyclomatic, 2);
+            });
+
+            test(&apos;mean Halstead effort is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.halstead.effort, 374.713);
+            });
+
+            test(&apos;mean parameter count is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.params, 2);
+            });
+         });
+
+         suite(&apos;issue 3 / reddit.ISV_Damocles:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;var callback = arguments[arguments.length-1] instanceof Function ? &apos;
+                + &apos;arguments[arguments.length-1] : function() {};&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 171);
+            });
+         });
+
+         suite(&apos;empty return:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { return; }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.total, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operators&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operators.distinct, 2);
+            });
+
+            test(&apos;methodAggregate has correct Halstead total operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.total, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead distinct operands&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.operands.distinct, 1);
+            });
+
+            test(&apos;methodAggregate has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.halstead.difficulty, 1);
+            });
+
+            test(&apos;method has correct Halstead difficulty&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methods[0].halstead.difficulty, 0.5);
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 171);
+            });
+         });
+
+         suite(&apos;Empty nested functions&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo () { function bar () {} }&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 171);
+            });
+         });
+
+         suite(&apos;Microsoft variant maintainability index:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;function foo (a, b) { if (a) { b(a); } else { a(b); } }&apos;
+                 + &apos;function bar (c, d) { var i; for (i = 0; i &lt; c.length; i += 1) { d += 1; } console.log(d); }&apos;,
+                    { newmi: true }
+               );
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;maintainability index is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.maintainability, 74.921);
+            });
+         });
+
+         suite(&apos;Functions with consistent parameter counts:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;function foo (a) {} function bar (b) {} function baz (c) {}&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.params, 3);
+            });
+
+            test(&apos;mean parameter count is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.params, 1);
+            });
+         });
+
+         suite(&apos;Functions with inconsistent parameter counts:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(
+                  &apos;function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}&apos;);
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;methodAggregate has correct parameter count&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAggregate.params, 11);
+            });
+
+            test(&apos;mean parameter count is correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.methodAverage.params, 3.667);
+            });
+         });
+
+         suite(&apos;CommonJS require literal:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;require(&quot;./foo&quot;);&apos;, { commonjs: true });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;dependencies has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.dependencies, 1);
+            });
+
+            test(&apos;dependencies are correct&apos;, () =&gt;
+            {
+               assert.isObject(report.dependencies[0]);
+               assert.strictEqual(report.dependencies[0].line, 1);
+               assert.strictEqual(report.dependencies[0].path, &apos;./foo&apos;);
+               assert.strictEqual(report.dependencies[0].type, &apos;cjs&apos;);
+            });
+         });
+
+         suite(&apos;alternative CommonJS require literal:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;require(&quot;./bar&quot;);&apos;, { commonjs: true });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;dependencies are correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.dependencies[0].path, &apos;./bar&apos;);
+            });
+         });
+
+         suite(&apos;CommonJS require multiple:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;require(&quot;./foo&quot;);\nrequire(&quot;./bar&quot;);\n\nrequire(&quot;./baz&quot;);&apos;, { commonjs: true });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;dependencies has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.dependencies, 3);
+            });
+
+            test(&apos;dependencies are correct&apos;, () =&gt;
+            {
+               assert.strictEqual(report.dependencies[0].line, 1);
+               assert.strictEqual(report.dependencies[0].path, &apos;./foo&apos;);
+               assert.strictEqual(report.dependencies[1].line, 2);
+               assert.strictEqual(report.dependencies[1].path, &apos;./bar&apos;);
+               assert.strictEqual(report.dependencies[2].line, 4);
+               assert.strictEqual(report.dependencies[2].path, &apos;./baz&apos;);
+            });
+         });
+
+         suite(&apos;CommonJS require variable:&apos;, () =&gt;
+         {
+            let report;
+
+            setup(() =&gt;
+            {
+               report = parser.analyze(&apos;var foo = &quot;./foo&quot;;require(foo);&apos;, { commonjs: true });
+            });
+
+            teardown(() =&gt;
+            {
+               report = undefined;
+            });
+
+            test(&apos;dependencies has correct length&apos;, () =&gt;
+            {
+               assert.lengthOf(report.dependencies, 1);
+            });
+
+            test(&apos;dependencies are correct&apos;, () =&gt;
+            {
+               assert.isObject(report.dependencies[0]);
+               assert.strictEqual(report.dependencies[0].line, 1);
+               assert.strictEqual(report.dependencies[0].path, &apos;* dynamic dependency *&apos;);
+               assert.strictEqual(report.dependencies[0].type, &apos;cjs&apos;);
+            });
+         });
+      });
+   });
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
