@@ -1,0 +1,296 @@
+{
+  "coverage": "88.61%",
+  "expectCount": 369,
+  "actualCount": 327,
+  "files": {
+    "src/utils/ast/ASTData.js": {
+      "expectCount": 7,
+      "actualCount": 1,
+      "undocumentLines": [
+        6,
+        9,
+        10,
+        8,
+        18,
+        13
+      ]
+    },
+    "src/utils/ast/ASTParser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/utils/ast/ASTState.js": {
+      "expectCount": 8,
+      "actualCount": 1,
+      "undocumentLines": [
+        5,
+        22,
+        25,
+        29,
+        27,
+        32,
+        19
+      ]
+    },
+    "src/utils/ast/ASTUtil.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        4
+      ]
+    },
+    "src/transform/formats/text/AbstractFormatText.js": {
+      "expectCount": 14,
+      "actualCount": 12,
+      "undocumentLines": [
+        19,
+        20
+      ]
+    },
+    "src/module/report/AbstractReport.js": {
+      "expectCount": 10,
+      "actualCount": 10,
+      "undocumentLines": []
+    },
+    "src/module/plugin/syntax/AbstractSyntaxLoader.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/transform/formats/text/AbstractTextMatrix.js": {
+      "expectCount": 8,
+      "actualCount": 6,
+      "undocumentLines": [
+        24,
+        25
+      ]
+    },
+    "src/module/report/AggregateMethodReport.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/analyze/AnalyzeError.js": {
+      "expectCount": 10,
+      "actualCount": 10,
+      "undocumentLines": []
+    },
+    "src/module/report/ClassMethodReport.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "src/module/report/ClassReport.js": {
+      "expectCount": 14,
+      "actualCount": 14,
+      "undocumentLines": []
+    },
+    "src/utils/Enum.js": {
+      "expectCount": 9,
+      "actualCount": 6,
+      "undocumentLines": [
+        66,
+        71,
+        80
+      ]
+    },
+    "src/transform/formats/json/FormatJSON.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/transform/formats/json/FormatJSONCheckstyle.js": {
+      "expectCount": 10,
+      "actualCount": 7,
+      "undocumentLines": [
+        173,
+        22,
+        20
+      ]
+    },
+    "src/transform/formats/json/FormatJSONMinimal.js": {
+      "expectCount": 12,
+      "actualCount": 10,
+      "undocumentLines": [
+        12,
+        10
+      ]
+    },
+    "src/transform/formats/json/FormatJSONModules.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
+    },
+    "src/transform/formats/markdown/FormatMarkdown.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        9
+      ]
+    },
+    "src/transform/formats/markdown/FormatMarkdownAdjacency.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "src/transform/formats/markdown/FormatMarkdownMinimal.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        11
+      ]
+    },
+    "src/transform/formats/markdown/FormatMarkdownModules.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        10
+      ]
+    },
+    "src/transform/formats/markdown/FormatMarkdownVisibility.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "src/transform/formats/text/FormatText.js": {
+      "expectCount": 9,
+      "actualCount": 6,
+      "undocumentLines": [
+        18,
+        19,
+        12
+      ]
+    },
+    "src/transform/formats/text/FormatTextAdjacency.js": {
+      "expectCount": 5,
+      "actualCount": 4,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "src/transform/formats/text/FormatTextMinimal.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        12
+      ]
+    },
+    "src/transform/formats/text/FormatTextModules.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        12
+      ]
+    },
+    "src/transform/formats/text/FormatTextVisibility.js": {
+      "expectCount": 5,
+      "actualCount": 4,
+      "undocumentLines": [
+        8
+      ]
+    },
+    "src/module/traits/HalsteadArray.js": {
+      "expectCount": 10,
+      "actualCount": 10,
+      "undocumentLines": []
+    },
+    "src/module/report/averages/HalsteadAverage.js": {
+      "expectCount": 11,
+      "actualCount": 11,
+      "undocumentLines": []
+    },
+    "src/module/report/HalsteadData.js": {
+      "expectCount": 12,
+      "actualCount": 12,
+      "undocumentLines": []
+    },
+    "src/utils/MathUtil.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/module/report/averages/MethodAverage.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/module/report/MethodReport.js": {
+      "expectCount": 11,
+      "actualCount": 11,
+      "undocumentLines": []
+    },
+    "src/module/report/averages/ModuleAverage.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        13
+      ]
+    },
+    "src/module/report/ModuleMethodReport.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "src/module/report/ModuleReport.js": {
+      "expectCount": 34,
+      "actualCount": 34,
+      "undocumentLines": []
+    },
+    "src/utils/ObjectUtil.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/project/report/ProjectReport.js": {
+      "expectCount": 21,
+      "actualCount": 21,
+      "undocumentLines": []
+    },
+    "src/types/ReportType.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    },
+    "src/utils/StringUtil.js": {
+      "expectCount": 21,
+      "actualCount": 21,
+      "undocumentLines": []
+    },
+    "src/module/traits/Trait.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/module/traits/TraitHalstead.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
+    },
+    "src/module/traits/TraitUtil.js": {
+      "expectCount": 8,
+      "actualCount": 7,
+      "undocumentLines": [
+        3
+      ]
+    },
+    "src/transform/TransformFormat.js": {
+      "expectCount": 10,
+      "actualCount": 9,
+      "undocumentLines": [
+        25
+      ]
+    },
+    "src/module/traits/actualize.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}
