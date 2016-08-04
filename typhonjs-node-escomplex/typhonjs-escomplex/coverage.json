@@ -1,0 +1,17 @@
+{
+  "coverage": "100%",
+  "expectCount": 18,
+  "actualCount": 18,
+  "files": {
+    "src/ESComplex.js": {
+      "expectCount": 16,
+      "actualCount": 16,
+      "undocumentLines": []
+    },
+    "src/Parser.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    }
+  }
+}
