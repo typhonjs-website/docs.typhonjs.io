@@ -1,0 +1,2677 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Events.js",
+    "memberof": null,
+    "longname": "src/Events.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/**\n * backbone-esnext-events / Backbone.Events - Provides the ability to bind and trigger custom named events.\n * (http://backbonejs.org/#Events)\n * ---------------\n *\n * An important consideration of Backbone-ESNext is that Events are no longer an object literal, but a full blown ES6\n * class. This is the biggest potential breaking change for Backbone-ESNext when compared to the original Backbone.\n *\n * Previously Events could be mixed in to any object. This is no longer possible with Backbone-ESNext when working from\n * source or the bundled versions. It should be noted that Events is also no longer mixed into Backbone itself, so\n * Backbone is not a Global events instance.\n *\n * Backbone-ESNext also separates Backbone into separate modules which may be used independently of Backbone itself. In\n * particular backbone-esnext-events is a standalone NPM module that has no other dependencies. Underscore is being\n * removed / minimized for Backbone-ESNext where possible.\n *\n * Catalog of Events:\n * Here's the complete list of built-in Backbone events, with arguments. You're also free to trigger your own events on\n * Models, Collections and Views as you see fit.\n *\n * \"add\" (model, collection, options) — when a model is added to a collection.\n * \"remove\" (model, collection, options) — when a model is removed from a collection.\n * \"update\" (collection, options) — single event triggered after any number of models have been added or removed from a\n * collection.\n * \"reset\" (collection, options) — when the collection's entire contents have been reset.\n * \"sort\" (collection, options) — when the collection has been re-sorted.\n * \"change\" (model, options) — when a model's attributes have changed.\n * \"change:[attribute]\" (model, value, options) — when a specific attribute has been updated.\n * \"destroy\" (model, collection, options) — when a model is destroyed.\n * \"request\" (model_or_collection, xhr, options) — when a model or collection has started a request to the server.\n * \"sync\" (model_or_collection, response, options) — when a model or collection has been successfully synced with the\n * server.\n * \"error\" (model_or_collection, response, options) — when a model's or collection's request to the server has failed.\n * \"invalid\" (model, error, options) — when a model's validation fails on the client.\n * \"route:[name]\" (params) — Fired by the router when a specific route is matched.\n * \"route\" (route, params) — Fired by the router when any route has been matched.\n * \"route\" (router, route, params) — Fired by history when any route has been matched.\n * \"all\" — this special event fires for any triggered event, passing the event name as the first argument followed by\n * all trigger arguments.\n *\n * Generally speaking, when calling a function that emits an event (model.set, collection.add, and so on...), if you'd\n * like to prevent the event from being triggered, you may pass {silent: true} as an option. Note that this is rarely,\n * perhaps even never, a good idea. Passing through a specific flag in the options for your event callback to look at,\n * and choose to ignore, will usually work out better.\n *\n * @example\n * This no longer works:\n *\n * let object = {};\n * _.extend(object, Backbone.Events);\n * object.on('expand', function(){ alert('expanded'); });\n * object.trigger('expand');\n *\n * One must now use ES6 extends syntax for Backbone.Events when inheriting events functionality:\n * import Backbone from 'backbone';\n *\n * class MyClass extends Backbone.Events {}\n *\n * Or if importing this module directly use:\n * import Events from 'backbone-esnext-events';\n * class MyClass extends Events {}\n *\n * @example\n * A nice ES6 pattern for creating a named events instance is the following:\n *\n * import Backbone from 'backbone';\n *\n * export default new Backbone.Events();\n *\n * This module / Events instance can then be imported by full path or if consuming in a modular runtime by creating\n * a mapped path to it.\n *\n * backbone-esnext-events provides a default main eventbus implementation found in `src/mainEventbus.js`.\n */\nexport default class Events\n{\n   /** */\n   constructor() {}\n\n   /**\n    * Delegates to `on`.\n    *\n    * @returns {*}\n    */\n   bind()\n   {\n      return this.on(...arguments);\n   }\n\n   /**\n    * Tell an object to listen to a particular event on an other object. The advantage of using this form, instead of\n    * other.on(event, callback, object), is that listenTo allows the object to keep track of the events, and they can\n    * be removed all at once later on. The callback will always be called with object as context.\n    *\n    * @example\n    * view.listenTo(model, 'change', view.render);\n    *\n    * @see http://backbonejs.org/#Events-listenTo\n    *\n    * @param {object}   obj      - Event context\n    * @param {string}   name     - Event name(s)\n    * @param {function} callback - Event callback function\n    * @returns {Events}\n    */\n   listenTo(obj, name, callback)\n   {\n      if (!obj) { return this; }\n      const id = obj._listenId || (obj._listenId = s_UNIQUE_ID('l'));\n      const listeningTo = this._listeningTo || (this._listeningTo = {});\n      let listening = listeningTo[id];\n\n      // This object is not listening to any other events on `obj` yet.\n      // Setup the necessary references to track the listening callbacks.\n      if (!listening)\n      {\n         const thisId = this._listenId || (this._listenId = s_UNIQUE_ID('l'));\n         listening = listeningTo[id] = { obj, objId: id, id: thisId, listeningTo, count: 0 };\n      }\n\n      // Bind callbacks on obj, and keep track of them on listening.\n      s_INTERNAL_ON(obj, name, callback, this, listening);\n      return this;\n   }\n\n   /**\n    * Just like `listenTo`, but causes the bound callback to fire only once before being removed.\n    *\n    * @see http://backbonejs.org/#Events-listenToOnce\n    *\n    * @param {object}   obj      - Event context\n    * @param {string}   name     - Event name(s)\n    * @param {function} callback - Event callback function\n    * @returns {Events}\n    */\n   listenToOnce(obj, name, callback)\n   {\n      // Map the event into a `{event: once}` object.\n      const events = s_EVENTS_API(s_ONCE_MAP, {}, name, callback, this.stopListening.bind(this, obj));\n\n      return this.listenTo(obj, events, void 0);\n   }\n\n   /**\n    * Remove a previously-bound callback function from an object. If no context is specified, all of the versions of\n    * the callback with different contexts will be removed. If no callback is specified, all callbacks for the event\n    * will be removed. If no event is specified, callbacks for all events will be removed.\n    *\n    * Note that calling model.off(), for example, will indeed remove all events on the model — including events that\n    * Backbone uses for internal bookkeeping.\n    *\n    * @example\n    * // Removes just the `onChange` callback.\n    * object.off(\"change\", onChange);\n    *\n    * // Removes all \"change\" callbacks.\n    * object.off(\"change\");\n    *\n    * // Removes the `onChange` callback for all events.\n    * object.off(null, onChange);\n    *\n    * // Removes all callbacks for `context` for all events.\n    * object.off(null, null, context);\n    *\n    * // Removes all callbacks on `object`.\n    * object.off();\n    *\n    * @see http://backbonejs.org/#Events-off\n    *\n    * @param {string}   name     - Event name(s)\n    * @param {function} callback - Event callback function\n    * @param {object}   context  - Event context\n    * @returns {Events}\n    */\n   off(name, callback = void 0, context = void 0)\n   {\n      /* istanbul ignore if */\n      if (!this._events) { return this; }\n      this._events = s_EVENTS_API(s_OFF_API, this._events, name, callback, { context, listeners: this._listeners });\n      return this;\n   }\n\n   /**\n    * Bind a callback function to an object. The callback will be invoked whenever the event is fired. If you have a\n    * large number of different events on a page, the convention is to use colons to namespace them: \"poll:start\", or\n    * \"change:selection\".\n    *\n    * To supply a context value for this when the callback is invoked, pass the optional last argument:\n    * model.on('change', this.render, this) or model.on({change: this.render}, this).\n    *\n    * @example\n    * The event string may also be a space-delimited list of several events...\n    * book.on(\"change:title change:author\", ...);\n    *\n    * @example\n    * Callbacks bound to the special \"all\" event will be triggered when any event occurs, and are passed the name of\n    * the event as the first argument. For example, to proxy all events from one object to another:\n    * proxy.on(\"all\", function(eventName) {\n    *    object.trigger(eventName);\n    * });\n    *\n    * @example\n    * All Backbone event methods also support an event map syntax, as an alternative to positional arguments:\n    * book.on({\n    *    \"change:author\": authorPane.update,\n    *    \"change:title change:subtitle\": titleView.update,\n    *    \"destroy\": bookView.remove\n    * });\n    *\n    * @see http://backbonejs.org/#Events-on\n    *\n    * @param {string}   name     - Event name(s)\n    * @param {function} callback - Event callback function\n    * @param {object}   context  - Event context\n    * @returns {*}\n    */\n   on(name, callback, context = void 0)\n   {\n      return s_INTERNAL_ON(this, name, callback, context, void 0);\n   }\n\n   /**\n    * Just like `on`, but causes the bound callback to fire only once before being removed. Handy for saying \"the next\n    * time that X happens, do this\". When multiple events are passed in using the space separated syntax, the event\n    * will fire once for every event you passed in, not once for a combination of all events\n    *\n    * @see http://backbonejs.org/#Events-once\n    *\n    * @param {string}   name     - Event name(s)\n    * @param {function} callback - Event callback function\n    * @param {object}   context  - Event context\n    * @returns {*}\n    */\n   once(name, callback, context = void 0)\n   {\n      // Map the event into a `{event: once}` object.\n      const events = s_EVENTS_API(s_ONCE_MAP, {}, name, callback, this.off.bind(this));\n\n      if (typeof name === 'string' && (context === null || typeof context === 'undefined')) { callback = void 0; }\n\n      return this.on(events, callback, context);\n   }\n\n   /**\n    * Tell an object to stop listening to events. Either call stopListening with no arguments to have the object remove\n    * all of its registered callbacks ... or be more precise by telling it to remove just the events it's listening to\n    * on a specific object, or a specific event, or just a specific callback.\n    *\n    * @example\n    * view.stopListening();\n    *\n    * view.stopListening(model);\n    *\n    * @see http://backbonejs.org/#Events-stopListening\n    *\n    * @param {object}   obj      - Event context\n    * @param {string}   name     - Event name(s)\n    * @param {function} callback - Event callback function\n    * @returns {Events}\n    */\n   stopListening(obj, name = void 0, callback = void 0)\n   {\n      const listeningTo = this._listeningTo;\n      if (!listeningTo) { return this; }\n\n      const ids = obj ? [obj._listenId] : Object.keys(listeningTo);\n\n      for (let i = 0; i < ids.length; i++)\n      {\n         const listening = listeningTo[ids[i]];\n\n         // If listening doesn't exist, this object is not currently listening to obj. Break out early.\n         if (!listening) { break; }\n\n         listening.obj.off(name, callback, this);\n      }\n\n      return this;\n   }\n\n   /**\n    * Trigger callbacks for the given event, or space-delimited list of events. Subsequent arguments to trigger will be\n    * passed along to the event callbacks.\n    *\n    * @see http://backbonejs.org/#Events-trigger\n    *\n    * @param {string}   name  - Event name(s)\n    * @returns {Events}\n    */\n   trigger(name)\n   {\n      /* istanbul ignore if */\n      if (!this._events) { return this; }\n\n      const length = Math.max(0, arguments.length - 1);\n      const args = new Array(length);\n\n      for (let i = 0; i < length; i++) { args[i] = arguments[i + 1]; }\n\n      s_EVENTS_API(s_TRIGGER_API, this._events, name, void 0, args);\n\n      return this;\n   }\n\n   /**\n    * Delegates to `off`.\n    *\n    * @returns {*}\n    */\n   unbind()\n   {\n      return this.off(...arguments);\n   }\n}\n\n// Private / internal methods ---------------------------------------------------------------------------------------\n\n/**\n * Regular expression used to split event strings.\n * @type {RegExp}\n */\nconst s_EVENT_SPLITTER = /\\s+/;\n\n/**\n * Iterates over the standard `event, callback` (as well as the fancy multiple space-separated events `\"change blur\",\n * callback` and jQuery-style event maps `{event: callback}`).\n *\n * @param {function} iteratee    - Event operation to invoke.\n * @param {Object.<{callback: function, context: object, ctx: object, listening:{}}>} events - Events object\n * @param {string|object} name   - A single event name, compound event names, or a hash of event names.\n * @param {function} callback    - Event callback function\n * @param {object}   opts        - Optional parameters\n * @returns {*}\n */\nconst s_EVENTS_API = (iteratee, events, name, callback, opts) =>\n{\n   let i = 0, names;\n   if (name && typeof name === 'object')\n   {\n      // Handle event maps.\n      if (callback !== void 0 && 'context' in opts && opts.context === void 0) { opts.context = callback; }\n      for (names = Object.keys(name); i < names.length; i++)\n      {\n         events = s_EVENTS_API(iteratee, events, names[i], name[names[i]], opts);\n      }\n   }\n   else if (name && s_EVENT_SPLITTER.test(name))\n   {\n      // Handle space-separated event names by delegating them individually.\n      for (names = name.split(s_EVENT_SPLITTER); i < names.length; i++)\n      {\n         events = iteratee(events, names[i], callback, opts);\n      }\n   }\n   else\n   {\n      // Finally, standard events.\n      events = iteratee(events, name, callback, opts);\n   }\n   return events;\n};\n\n/**\n * Guard the `listening` argument from the public API.\n *\n * @param {Events}   obj      - The Events instance\n * @param {string}   name     - Event name\n * @param {function} callback - Event callback\n * @param {object}   context  - Event context\n * @param {Object.<{obj: object, objId: string, id: string, listeningTo: object, count: number}>} listening -\n *                              Listening object\n * @returns {*}\n */\nconst s_INTERNAL_ON = (obj, name, callback, context, listening) =>\n{\n   obj._events = s_EVENTS_API(s_ON_API, obj._events || {}, name, callback, { context, ctx: obj, listening });\n\n   if (listening)\n   {\n      const listeners = obj._listeners || (obj._listeners = {});\n      listeners[listening.id] = listening;\n   }\n\n   return obj;\n};\n\n/**\n * The reducing API that removes a callback from the `events` object.\n *\n * @param {Object.<{callback: function, context: object, ctx: object, listening:{}}>} events - Events object\n * @param {string}   name     - Event name\n * @param {function} callback - Event callback\n * @param {object}   options  - Optional parameters\n * @returns {*}\n */\nconst s_OFF_API = (events, name, callback, options) =>\n{\n   if (!events) { return; }\n\n   let i = 0, listening;\n   const context = options.context, listeners = options.listeners;\n\n   // Delete all events listeners and \"drop\" events.\n   if (!name && !callback && !context)\n   {\n      const ids = Object.keys(listeners);\n      for (; i < ids.length; i++)\n      {\n         listening = listeners[ids[i]];\n         delete listeners[listening.id];\n         delete listening.listeningTo[listening.objId];\n      }\n      return;\n   }\n\n   const names = name ? [name] : Object.keys(events);\n   for (; i < names.length; i++)\n   {\n      name = names[i];\n      const handlers = events[name];\n\n      // Bail out if there are no events stored.\n      /* istanbul ignore if */\n      if (!handlers) { break; }\n\n      // Replace events if there are any remaining.  Otherwise, clean up.\n      const remaining = [];\n      for (let j = 0; j < handlers.length; j++)\n      {\n         const handler = handlers[j];\n         if (\n          callback && callback !== handler.callback &&\n          callback !== handler.callback._callback ||\n          context && context !== handler.context\n         )\n         {\n            remaining.push(handler);\n         }\n         else\n         {\n            listening = handler.listening;\n            if (listening && --listening.count === 0)\n            {\n               delete listeners[listening.id];\n               delete listening.listeningTo[listening.objId];\n            }\n         }\n      }\n\n      // Update tail event if the list has any events.  Otherwise, clean up.\n      if (remaining.length)\n      {\n         events[name] = remaining;\n      }\n      else\n      {\n         delete events[name];\n      }\n   }\n\n   return events;\n};\n\n/**\n * The reducing API that adds a callback to the `events` object.\n *\n * @param {Object.<{callback: function, context: object, ctx: object, listening:{}}>} events - Events object\n * @param {string}   name     - Event name\n * @param {function} callback - Event callback\n * @param {object}   options  - Optional parameters\n * @returns {*}\n */\nconst s_ON_API = (events, name, callback, options) =>\n{\n   if (callback)\n   {\n      const handlers = events[name] || (events[name] = []);\n      const context = options.context, ctx = options.ctx, listening = options.listening;\n\n      if (listening) { listening.count++; }\n\n      handlers.push({ callback, context, ctx: context || ctx, listening });\n   }\n   return events;\n};\n\n/**\n * Reduces the event callbacks into a map of `{event: onceWrapper}`. `offer` unbinds the `onceWrapper` after\n * it has been called.\n *\n * @param {Object.<{callback: function, context: object, ctx: object, listening:{}}>} map - Events object\n * @param {string}   name     - Event name\n * @param {function} callback - Event callback\n * @param {function} offer    - Function to invoke after event has been triggered once; `off()`\n * @returns {*}\n */\nconst s_ONCE_MAP = function(map, name, callback, offer)\n{\n   if (callback)\n   {\n      const once = map[name] = () =>\n      {\n         offer(name, once);\n         return callback.apply(this, arguments);\n      };\n\n      once._callback = callback;\n   }\n   return map;\n};\n\n/**\n * Handles triggering the appropriate event callbacks.\n *\n * @param {Object.<{callback: function, context: object, ctx: object, listening:{}}>} objEvents - Events object\n * @param {string}   name  - Event name\n * @param {function} callback - Event callback\n * @param {Array<*>} args  - Event arguments\n * @returns {*}\n */\nconst s_TRIGGER_API = (objEvents, name, callback, args) =>\n{\n   if (objEvents)\n   {\n      const events = objEvents[name];\n      let allEvents = objEvents.all;\n      if (events && allEvents) { allEvents = allEvents.slice(); }\n      if (events) { s_TRIGGER_EVENTS(events, args); }\n      if (allEvents) { s_TRIGGER_EVENTS(allEvents, [name].concat(args)); }\n   }\n   return objEvents;\n};\n\n/**\n * A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual\n * cases speedy (most internal Backbone events have 3 arguments).\n *\n * @param {Object.<{callback: function, context: object, ctx: object, listening:{}}>}  events - events array\n * @param {Array<*>} args - event argument array\n */\nconst s_TRIGGER_EVENTS = (events, args) =>\n{\n   let ev, i = -1;\n   const a1 = args[0], a2 = args[1], a3 = args[2], l = events.length;\n\n   switch (args.length)\n   {\n      case 0:\n         while (++i < l) { (ev = events[i]).callback.call(ev.ctx); }\n         return;\n      case 1:\n         while (++i < l) { (ev = events[i]).callback.call(ev.ctx, a1); }\n         return;\n      case 2:\n         while (++i < l) { (ev = events[i]).callback.call(ev.ctx, a1, a2); }\n         return;\n      case 3:\n         while (++i < l) { (ev = events[i]).callback.call(ev.ctx, a1, a2, a3); }\n         return;\n      default:\n         while (++i < l) { (ev = events[i]).callback.apply(ev.ctx, args); }\n         return;\n   }\n};\n\n/**\n * Generate a unique integer ID (unique within the entire client session).\n *\n * @type {number} - unique ID counter.\n */\nlet idCounter = 0;\n\n/**\n * Creates a new unique ID with a given prefix\n *\n * @param {string}   prefix - An optional prefix to add to unique ID.\n * @returns {string}\n */\nconst s_UNIQUE_ID = (prefix = '') =>\n{\n   const id = `${++idCounter}`;\n   return prefix ? `${prefix}${id}` : id;\n};\n",
+    "___id": "T000002R000002",
+    "___s": true
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Events",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~Events",
+    "access": null,
+    "export": true,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": "Events",
+    "description": "backbone-esnext-events / Backbone.Events - Provides the ability to bind and trigger custom named events.\n(http://backbonejs.org/#Events)\n---------------\n\nAn important consideration of Backbone-ESNext is that Events are no longer an object literal, but a full blown ES6\nclass. This is the biggest potential breaking change for Backbone-ESNext when compared to the original Backbone.\n\nPreviously Events could be mixed in to any object. This is no longer possible with Backbone-ESNext when working from\nsource or the bundled versions. It should be noted that Events is also no longer mixed into Backbone itself, so\nBackbone is not a Global events instance.\n\nBackbone-ESNext also separates Backbone into separate modules which may be used independently of Backbone itself. In\nparticular backbone-esnext-events is a standalone NPM module that has no other dependencies. Underscore is being\nremoved / minimized for Backbone-ESNext where possible.\n\nCatalog of Events:\nHere's the complete list of built-in Backbone events, with arguments. You're also free to trigger your own events on\nModels, Collections and Views as you see fit.\n\n\"add\" (model, collection, options) — when a model is added to a collection.\n\"remove\" (model, collection, options) — when a model is removed from a collection.\n\"update\" (collection, options) — single event triggered after any number of models have been added or removed from a\ncollection.\n\"reset\" (collection, options) — when the collection's entire contents have been reset.\n\"sort\" (collection, options) — when the collection has been re-sorted.\n\"change\" (model, options) — when a model's attributes have changed.\n\"change:[attribute]\" (model, value, options) — when a specific attribute has been updated.\n\"destroy\" (model, collection, options) — when a model is destroyed.\n\"request\" (model_or_collection, xhr, options) — when a model or collection has started a request to the server.\n\"sync\" (model_or_collection, response, options) — when a model or collection has been successfully synced with the\nserver.\n\"error\" (model_or_collection, response, options) — when a model's or collection's request to the server has failed.\n\"invalid\" (model, error, options) — when a model's validation fails on the client.\n\"route:[name]\" (params) — Fired by the router when a specific route is matched.\n\"route\" (route, params) — Fired by the router when any route has been matched.\n\"route\" (router, route, params) — Fired by history when any route has been matched.\n\"all\" — this special event fires for any triggered event, passing the event name as the first argument followed by\nall trigger arguments.\n\nGenerally speaking, when calling a function that emits an event (model.set, collection.add, and so on...), if you'd\nlike to prevent the event from being triggered, you may pass {silent: true} as an option. Note that this is rarely,\nperhaps even never, a good idea. Passing through a specific flag in the options for your event callback to look at,\nand choose to ignore, will usually work out better.",
+    "examples": [
+      "This no longer works:\n\nlet object = {};\n_.extend(object, Backbone.Events);\nobject.on('expand', function(){ alert('expanded'); });\nobject.trigger('expand');\n\nOne must now use ES6 extends syntax for Backbone.Events when inheriting events functionality:\nimport Backbone from 'backbone';\n\nclass MyClass extends Backbone.Events {}\n\nOr if importing this module directly use:\nimport Events from 'backbone-esnext-events';\nclass MyClass extends Events {}",
+      "A nice ES6 pattern for creating a named events instance is the following:\n\nimport Backbone from 'backbone';\n\nexport default new Backbone.Events();\n\nThis module / Events instance can then be imported by full path or if consuming in a modular runtime by creating\na mapped path to it.\n\nbackbone-esnext-events provides a default main eventbus implementation found in `src/mainEventbus.js`."
+    ],
+    "lineNumber": 75,
+    "interface": false,
+    "___id": "T000002R000003",
+    "___s": true,
+    "_custom_direct_subclasses": [
+      "src/TyphonEvents.js~TyphonEvents"
+    ]
+  },
+  {
+    "__docId__": 2,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 78,
+    "params": [],
+    "generator": false,
+    "___id": "T000002R000004",
+    "___s": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "bind",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#bind",
+    "access": null,
+    "description": "Delegates to `on`.",
+    "lineNumber": 85,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000005",
+    "___s": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "listenTo",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#listenTo",
+    "access": null,
+    "description": "Tell an object to listen to a particular event on an other object. The advantage of using this form, instead of\nother.on(event, callback, object), is that listenTo allows the object to keep track of the events, and they can\nbe removed all at once later on. The callback will always be called with object as context.",
+    "examples": [
+      "view.listenTo(model, 'change', view.render);"
+    ],
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-listenTo\">http://backbonejs.org/#Events-listenTo</a>"
+    ],
+    "lineNumber": 105,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Events}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "obj",
+        "description": "<p>Event context</p>\n",
+        "descriptionRaw": "Event context"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "<p>Event callback function</p>\n",
+        "descriptionRaw": "Event callback function"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Events"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000006",
+    "___s": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "listenToOnce",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#listenToOnce",
+    "access": null,
+    "description": "Just like `listenTo`, but causes the bound callback to fire only once before being removed.",
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-listenToOnce\">http://backbonejs.org/#Events-listenToOnce</a>"
+    ],
+    "lineNumber": 135,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Events}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "obj",
+        "description": "<p>Event context</p>\n",
+        "descriptionRaw": "Event context"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "<p>Event callback function</p>\n",
+        "descriptionRaw": "Event callback function"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Events"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000007",
+    "___s": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "off",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#off",
+    "access": null,
+    "description": "Remove a previously-bound callback function from an object. If no context is specified, all of the versions of\nthe callback with different contexts will be removed. If no callback is specified, all callbacks for the event\nwill be removed. If no event is specified, callbacks for all events will be removed.\n\nNote that calling model.off(), for example, will indeed remove all events on the model — including events that\nBackbone uses for internal bookkeeping.",
+    "examples": [
+      "// Removes just the `onChange` callback.\nobject.off(\"change\", onChange);\n\n// Removes all \"change\" callbacks.\nobject.off(\"change\");\n\n// Removes the `onChange` callback for all events.\nobject.off(null, onChange);\n\n// Removes all callbacks for `context` for all events.\nobject.off(null, null, context);\n\n// Removes all callbacks on `object`.\nobject.off();"
+    ],
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-off\">http://backbonejs.org/#Events-off</a>"
+    ],
+    "lineNumber": 174,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Events}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "<p>Event callback function</p>\n",
+        "descriptionRaw": "Event callback function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": "<p>Event context</p>\n",
+        "descriptionRaw": "Event context"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Events"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000008",
+    "___s": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_events",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#_events",
+    "access": null,
+    "description": null,
+    "lineNumber": 178,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000009",
+    "___s": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "on",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#on",
+    "access": null,
+    "description": "Bind a callback function to an object. The callback will be invoked whenever the event is fired. If you have a\nlarge number of different events on a page, the convention is to use colons to namespace them: \"poll:start\", or\n\"change:selection\".\n\nTo supply a context value for this when the callback is invoked, pass the optional last argument:\nmodel.on('change', this.render, this) or model.on({change: this.render}, this).",
+    "examples": [
+      "The event string may also be a space-delimited list of several events...\nbook.on(\"change:title change:author\", ...);",
+      "Callbacks bound to the special \"all\" event will be triggered when any event occurs, and are passed the name of\nthe event as the first argument. For example, to proxy all events from one object to another:\nproxy.on(\"all\", function(eventName) {\n   object.trigger(eventName);\n});",
+      "All Backbone event methods also support an event map syntax, as an alternative to positional arguments:\nbook.on({\n   \"change:author\": authorPane.update,\n   \"change:title change:subtitle\": titleView.update,\n   \"destroy\": bookView.remove\n});"
+    ],
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-on\">http://backbonejs.org/#Events-on</a>"
+    ],
+    "lineNumber": 216,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "<p>Event callback function</p>\n",
+        "descriptionRaw": "Event callback function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": "<p>Event context</p>\n",
+        "descriptionRaw": "Event context"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000010",
+    "___s": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "once",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#once",
+    "access": null,
+    "description": "Just like `on`, but causes the bound callback to fire only once before being removed. Handy for saying \"the next\ntime that X happens, do this\". When multiple events are passed in using the space separated syntax, the event\nwill fire once for every event you passed in, not once for a combination of all events",
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-once\">http://backbonejs.org/#Events-once</a>"
+    ],
+    "lineNumber": 233,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "<p>Event callback function</p>\n",
+        "descriptionRaw": "Event callback function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": "<p>Event context</p>\n",
+        "descriptionRaw": "Event context"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000011",
+    "___s": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "stopListening",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#stopListening",
+    "access": null,
+    "description": "Tell an object to stop listening to events. Either call stopListening with no arguments to have the object remove\nall of its registered callbacks ... or be more precise by telling it to remove just the events it's listening to\non a specific object, or a specific event, or just a specific callback.",
+    "examples": [
+      "view.stopListening();\n\nview.stopListening(model);"
+    ],
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-stopListening\">http://backbonejs.org/#Events-stopListening</a>"
+    ],
+    "lineNumber": 260,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Events}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "obj",
+        "description": "<p>Event context</p>\n",
+        "descriptionRaw": "Event context"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "<p>Event callback function</p>\n",
+        "descriptionRaw": "Event callback function"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Events"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000012",
+    "___s": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "trigger",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#trigger",
+    "access": null,
+    "description": "Trigger callbacks for the given event, or space-delimited list of events. Subsequent arguments to trigger will be\npassed along to the event callbacks.",
+    "see": [
+      "<a href=\"http://backbonejs.org/#Events-trigger\">http://backbonejs.org/#Events-trigger</a>"
+    ],
+    "lineNumber": 289,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Events}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Events"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000013",
+    "___s": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "unbind",
+    "memberof": "src/Events.js~Events",
+    "longname": "src/Events.js~Events#unbind",
+    "access": null,
+    "description": "Delegates to `off`.",
+    "lineNumber": 309,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000014",
+    "___s": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_EVENT_SPLITTER",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_EVENT_SPLITTER",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Regular expression used to split event strings.",
+    "lineNumber": 321,
+    "type": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000015",
+    "___s": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_EVENTS_API",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_EVENTS_API",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Iterates over the standard `event, callback` (as well as the fancy multiple space-separated events `\"change blur\",\ncallback` and jQuery-style event maps `{event: callback}`).",
+    "lineNumber": 334,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "iteratee",
+        "description": "Event operation to invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{callback: function, context: object, ctx: object, listening:{}}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "Events object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "A single event name, compound event names, or a hash of event names."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "Event callback function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "opts",
+        "description": "Optional parameters"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000016",
+    "___s": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_INTERNAL_ON",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_INTERNAL_ON",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Guard the `listening` argument from the public API.",
+    "lineNumber": 373,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Events"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "obj",
+        "description": "The Events instance"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "Event callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "context",
+        "description": "Event context"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{obj: object, objId: string, id: string, listeningTo: object, count: number}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "listening",
+        "description": "Listening object"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000017",
+    "___s": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_OFF_API",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_OFF_API",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "The reducing API that removes a callback from the `events` object.",
+    "lineNumber": 395,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{callback: function, context: object, ctx: object, listening:{}}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "Events object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "Event callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "Optional parameters"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000018",
+    "___s": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_ON_API",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_ON_API",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "The reducing API that adds a callback to the `events` object.",
+    "lineNumber": 472,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{callback: function, context: object, ctx: object, listening:{}}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "Events object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "Event callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "Optional parameters"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000019",
+    "___s": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "s_ONCE_MAP",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_ONCE_MAP",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Reduces the event callbacks into a map of `{event: onceWrapper}`. `offer` unbinds the `onceWrapper` after\nit has been called.",
+    "lineNumber": 496,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{callback: function, context: object, ctx: object, listening:{}}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "map",
+        "description": "Events object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "Event callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "offer",
+        "description": "Function to invoke after event has been triggered once; `off()`"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false,
+    "___id": "T000002R000020",
+    "___s": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_TRIGGER_API",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_TRIGGER_API",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Handles triggering the appropriate event callbacks.",
+    "lineNumber": 520,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{callback: function, context: object, ctx: object, listening:{}}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "objEvents",
+        "description": "Events object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "Event callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "Event arguments"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000021",
+    "___s": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_TRIGGER_EVENTS",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_TRIGGER_EVENTS",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual\ncases speedy (most internal Backbone events have 3 arguments).",
+    "lineNumber": 540,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object.<{callback: function, context: object, ctx: object, listening:{}}>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "events array"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "event argument array"
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000022",
+    "___s": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "idCounter",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~idCounter",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Generate a unique integer ID (unique within the entire client session).",
+    "lineNumber": 570,
+    "type": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000023",
+    "___s": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_UNIQUE_ID",
+    "memberof": "src/Events.js",
+    "longname": "src/Events.js~s_UNIQUE_ID",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/Events.js",
+    "importStyle": null,
+    "description": "Creates a new unique ID with a given prefix",
+    "lineNumber": 578,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "prefix",
+        "description": "An optional prefix to add to unique ID."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000024",
+    "___s": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/TyphonEvents.js",
+    "memberof": null,
+    "longname": "src/TyphonEvents.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import Events  from './Events.js';\n\n/**\n * TyphonEvents adds new functionality for trigger events. The following are new trigger mechanisms:\n *\n * `triggerDefer` - Defers invoking `trigger`.\n *\n * `triggerSync` - Invokes all targets matched and passes back a single result or an array of results in an array to\n *  the callee.\n *\n * `triggerAsync` - Invokes all targets matched and adds any returned results through `Promise.all` which returns\n *  a single promise to the callee.\n *\n * Please refer to the Events documentation for all inherited functionality.\n */\nexport default class TyphonEvents extends Events\n{\n   /**\n    * Provides a constructor which optionally takes the eventbus name.\n    *\n    * @param {string}   eventbusName - Optional eventbus name.\n    */\n   constructor(eventbusName = void 0)\n   {\n      super();\n\n      this.setEventbusName(eventbusName);\n   }\n\n   /**\n    * Returns the current eventbusName.\n    *\n    * @returns {string|*}\n    */\n   getEventbusName()\n   {\n      return this._eventbusName;\n   }\n\n   /**\n    * Sets the eventbus name.\n    *\n    * @param {string}   name - The name for this eventbus.\n    *\n    * @return {TyphonEvents}\n    */\n   setEventbusName(name)\n   {\n      this._eventbusName = name;\n\n      return this;\n   }\n\n   /**\n    * Defers invoking `trigger`. This is useful for triggering events in the next clock tick.\n    *\n    * @returns {TyphonEvents}\n    */\n   triggerDefer()\n   {\n      setTimeout(() => { super.trigger(...arguments); }, 0);\n\n      return this;\n   }\n\n   /**\n    * Provides `trigger` functionality, but collects any returned result or results from invoked targets as a single\n    * value or in an array and passes it back to the callee in a synchronous manner.\n    *\n    * @param {string}   name  - Event name(s)\n    * @returns {Array<*>}\n    */\n   triggerSync(name)\n   {\n      /* istanbul ignore if */\n      if (!this._events) { return void 0; }\n\n      const start = 1;\n      const length = Math.max(0, arguments.length - 1);\n      const args = new Array(length);\n      for (let i = 0; i < length; i++) { args[i] = arguments[i + start]; }\n\n      return s_EVENTS_API(s_TRIGGER_API, s_TRIGGER_SYNC_EVENTS, this._events, name, void 0, args);\n   }\n\n   /**\n    * Provides `trigger` functionality, but collects any returned Promises from invoked targets and returns a\n    * single Promise generated by `Promise.resolve` for a single value or `Promise.all` for multiple results. This is\n    * a very useful mechanism to invoke asynchronous operations over an eventbus.\n    *\n    * @param {string}   name  - Event name(s)\n    * @returns {Promise}\n    */\n   triggerAsync(name)\n   {\n      /* istanbul ignore if */\n      if (!this._events) { Promise.all([]); }\n\n      const length = Math.max(0, arguments.length - 1);\n      const args = new Array(length);\n      for (let i = 0; i < length; i++) { args[i] = arguments[i + 1]; }\n\n      const promise = s_EVENTS_API(s_TRIGGER_API, s_TRIGGER_ASYNC_EVENTS, this._events, name, void 0, args);\n\n      return promise !== void 0 ? promise : Promise.resolve();\n   }\n}\n\n// Private / internal methods ---------------------------------------------------------------------------------------\n\n/**\n * Regular expression used to split event strings.\n * @type {RegExp}\n */\nconst s_EVENT_SPLITTER = /\\s+/;\n\n/**\n * Iterates over the standard `event, callback` (as well as the fancy multiple space-separated events `\"change blur\",\n * callback` and jQuery-style event maps `{event: callback}`).\n *\n * @param {function} iteratee       - Trigger API\n * @param {function} iterateeTarget - Internal function which is dispatched to.\n * @param {Array<*>} events         - Array of stored event callback data.\n * @param {string}   name           - Event name(s)\n * @param {function} callback       - callback\n * @param {Object}   opts           - Optional parameters\n * @returns {*}\n */\nconst s_EVENTS_API = (iteratee, iterateeTarget, events, name, callback, opts) =>\n{\n   let i = 0, names;\n\n   if (name && typeof name === 'object')\n   {\n      // Handle event maps.\n      if (callback !== void 0 && 'context' in opts && opts.context === void 0) { opts.context = callback; }\n      for (names = Object.keys(name); i < names.length; i++)\n      {\n         events = s_EVENTS_API(iteratee, iterateeTarget, events, names[i], name[names[i]], opts);\n      }\n   }\n   else if (name && s_EVENT_SPLITTER.test(name))\n   {\n      // Handle space-separated event names by delegating them individually.\n      for (names = name.split(s_EVENT_SPLITTER); i < names.length; i++)\n      {\n         events = iteratee(iterateeTarget, events, names[i], callback, opts);\n      }\n   }\n   else\n   {\n      // Finally, standard events.\n      events = iteratee(iterateeTarget, events, name, callback, opts);\n   }\n\n   return events;\n};\n\n/**\n * Handles triggering the appropriate event callbacks.\n *\n * @param {function} iterateeTarget - Internal function which is dispatched to.\n * @param {Array<*>} objEvents      - Array of stored event callback data.\n * @param {string}   name           - Event name(s)\n * @param {function} cb             - callback\n * @param {Array<*>} args           - Arguments supplied to a trigger method.\n * @returns {*}\n */\nconst s_TRIGGER_API = (iterateeTarget, objEvents, name, cb, args) =>\n{\n   let result;\n\n   if (objEvents)\n   {\n      const events = objEvents[name];\n      let allEvents = objEvents.all;\n      if (events && allEvents) { allEvents = allEvents.slice(); }\n      if (events) { result = iterateeTarget(events, args); }\n      if (allEvents) { result = iterateeTarget(allEvents, [name].concat(args)); }\n   }\n\n   return result;\n};\n\n/**\n * A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual\n * cases speedy (most internal Backbone events have 3 arguments). This dispatch method passes back an array with\n * all results returned by any invoked targets.\n *\n * @param {Array<*>} events   -  Array of stored event callback data.\n * @param {Array<*>} args     -  Arguments supplied to `triggerSync`.\n * @returns {Array<*>}\n */\nconst s_TRIGGER_SYNC_EVENTS = (events, args) =>\n{\n   let ev, i = -1;\n   const a1 = args[0], a2 = args[1], a3 = args[2], l = events.length;\n\n   let result;\n   const results = [];\n\n   switch (args.length)\n   {\n      case 0:\n         while (++i < l)\n         {\n            result = (ev = events[i]).callback.call(ev.ctx);\n\n            // If we received a valid result return immediately.\n            if (result !== null || typeof result !== 'undefined')\n            {\n               results.push(result);\n            }\n         }\n         break;\n      case 1:\n         while (++i < l)\n         {\n            result = (ev = events[i]).callback.call(ev.ctx, a1);\n\n            // If we received a valid result return immediately.\n            if (result !== null || typeof result !== 'undefined')\n            {\n               results.push(result);\n            }\n         }\n         break;\n      case 2:\n         while (++i < l)\n         {\n            result = (ev = events[i]).callback.call(ev.ctx, a1, a2);\n\n            // If we received a valid result return immediately.\n            if (result !== null || typeof result !== 'undefined')\n            {\n               results.push(result);\n            }\n         }\n         break;\n      case 3:\n         while (++i < l)\n         {\n            result = (ev = events[i]).callback.call(ev.ctx, a1, a2, a3);\n\n            // If we received a valid result return immediately.\n            if (result !== null || typeof result !== 'undefined')\n            {\n               results.push(result);\n            }\n         }\n         break;\n      default:\n         while (++i < l)\n         {\n            result = (ev = events[i]).callback.apply(ev.ctx, args);\n\n            // If we received a valid result return immediately.\n            if (result !== null || typeof result !== 'undefined')\n            {\n               results.push(result);\n            }\n         }\n         break;\n   }\n\n   // Return the results array if there are more than one or just a single result.\n   return results.length > 1 ? results : result;\n};\n\n/**\n * A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual\n * cases speedy (most internal Backbone events have 3 arguments). This dispatch method uses ES6 Promises and adds\n * any returned results to an array which is added to a Promise.all construction which passes back a Promise which\n * waits until all Promises complete. Any target invoked may return a Promise or any result. This is very useful to\n * use for any asynchronous operations.\n *\n * @param {Array<*>} events   -  Array of stored event callback data.\n * @param {Array<*>} args     -  Arguments supplied to `triggerAsync`.\n * @returns {Promise}\n */\nconst s_TRIGGER_ASYNC_EVENTS = (events, args) =>\n{\n   let ev, i = -1;\n   const a1 = args[0], a2 = args[1], a3 = args[2], l = events.length;\n\n   let result;\n   const results = [];\n\n   try\n   {\n      switch (args.length)\n      {\n         case 0:\n            while (++i < l)\n            {\n               result = (ev = events[i]).callback.call(ev.ctx);\n\n               // If we received a valid result add it to the promises array.\n               if (result !== null || typeof result !== 'undefined')\n               {\n                  results.push(result);\n               }\n            }\n            break;\n\n         case 1:\n            while (++i < l)\n            {\n               result = (ev = events[i]).callback.call(ev.ctx, a1);\n\n               // If we received a valid result add it to the promises array.\n               if (result !== null || typeof result !== 'undefined')\n               {\n                  results.push(result);\n               }\n            }\n            break;\n\n         case 2:\n            while (++i < l)\n            {\n               result = (ev = events[i]).callback.call(ev.ctx, a1, a2);\n\n               // If we received a valid result add it to the promises array.\n               if (result !== null || typeof result !== 'undefined')\n               {\n                  results.push(result);\n               }\n            }\n            break;\n\n         case 3:\n            while (++i < l)\n            {\n               result = (ev = events[i]).callback.call(ev.ctx, a1, a2, a3);\n\n               // If we received a valid result add it to the promises array.\n               if (result !== null || typeof result !== 'undefined')\n               {\n                  results.push(result);\n               }\n            }\n            break;\n\n         default:\n            while (++i < l)\n            {\n               result = (ev = events[i]).callback.apply(ev.ctx, args);\n\n               // If we received a valid result add it to the promises array.\n               if (result !== null || typeof result !== 'undefined')\n               {\n                  results.push(result);\n               }\n            }\n            break;\n      }\n   }\n   catch (error)\n   {\n      return Promise.reject(error);\n   }\n\n   return results.length > 1 ? Promise.all(results) : Promise.resolve(result);\n};",
+    "___id": "T000002R000025",
+    "___s": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "TyphonEvents",
+    "memberof": "src/TyphonEvents.js",
+    "longname": "src/TyphonEvents.js~TyphonEvents",
+    "access": null,
+    "export": true,
+    "importPath": "backbone-esnext-events/src/TyphonEvents.js",
+    "importStyle": "TyphonEvents",
+    "description": "TyphonEvents adds new functionality for trigger events. The following are new trigger mechanisms:\n\n`triggerDefer` - Defers invoking `trigger`.\n\n`triggerSync` - Invokes all targets matched and passes back a single result or an array of results in an array to\n the callee.\n\n`triggerAsync` - Invokes all targets matched and adds any returned results through `Promise.all` which returns\n a single promise to the callee.\n\nPlease refer to the Events documentation for all inherited functionality.",
+    "lineNumber": 16,
+    "interface": false,
+    "extends": [
+      "src/Events.js~Events"
+    ],
+    "___id": "T000002R000026",
+    "___s": true,
+    "_custom_extends_chains": [
+      "src/Events.js~Events"
+    ]
+  },
+  {
+    "__docId__": 25,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#constructor",
+    "access": null,
+    "description": "Provides a constructor which optionally takes the eventbus name.",
+    "lineNumber": 23,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "eventbusName",
+        "description": "<p>Optional eventbus name.</p>\n",
+        "descriptionRaw": "Optional eventbus name."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000027",
+    "___s": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getEventbusName",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#getEventbusName",
+    "access": null,
+    "description": "Returns the current eventbusName.",
+    "lineNumber": 35,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string|*}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string",
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000028",
+    "___s": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "setEventbusName",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#setEventbusName",
+    "access": null,
+    "description": "Sets the eventbus name.",
+    "lineNumber": 47,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The name for this eventbus.</p>\n",
+        "descriptionRaw": "The name for this eventbus."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "TyphonEvents"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000029",
+    "___s": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventbusName",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#_eventbusName",
+    "access": null,
+    "description": null,
+    "lineNumber": 49,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000030",
+    "___s": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "triggerDefer",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#triggerDefer",
+    "access": null,
+    "description": "Defers invoking `trigger`. This is useful for triggering events in the next clock tick.",
+    "lineNumber": 59,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{TyphonEvents}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "TyphonEvents"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000031",
+    "___s": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "triggerSync",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#triggerSync",
+    "access": null,
+    "description": "Provides `trigger` functionality, but collects any returned result or results from invoked targets as a single\nvalue or in an array and passes it back to the callee in a synchronous manner.",
+    "lineNumber": 73,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array<*>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<*>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000032",
+    "___s": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "triggerAsync",
+    "memberof": "src/TyphonEvents.js~TyphonEvents",
+    "longname": "src/TyphonEvents.js~TyphonEvents#triggerAsync",
+    "access": null,
+    "description": "Provides `trigger` functionality, but collects any returned Promises from invoked targets and returns a\nsingle Promise generated by `Promise.resolve` for a single value or `Promise.all` for multiple results. This is\na very useful mechanism to invoke asynchronous operations over an eventbus.",
+    "lineNumber": 94,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Event name(s)</p>\n",
+        "descriptionRaw": "Event name(s)"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000033",
+    "___s": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_EVENT_SPLITTER",
+    "memberof": "src/TyphonEvents.js",
+    "longname": "src/TyphonEvents.js~s_EVENT_SPLITTER",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/TyphonEvents.js",
+    "importStyle": null,
+    "description": "Regular expression used to split event strings.",
+    "lineNumber": 115,
+    "type": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000034",
+    "___s": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_EVENTS_API",
+    "memberof": "src/TyphonEvents.js",
+    "longname": "src/TyphonEvents.js~s_EVENTS_API",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/TyphonEvents.js",
+    "importStyle": null,
+    "description": "Iterates over the standard `event, callback` (as well as the fancy multiple space-separated events `\"change blur\",\ncallback` and jQuery-style event maps `{event: callback}`).",
+    "lineNumber": 129,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "iteratee",
+        "description": "Trigger API"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "iterateeTarget",
+        "description": "Internal function which is dispatched to."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "Array of stored event callback data."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "callback",
+        "description": "callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "opts",
+        "description": "Optional parameters"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000035",
+    "___s": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_TRIGGER_API",
+    "memberof": "src/TyphonEvents.js",
+    "longname": "src/TyphonEvents.js~s_TRIGGER_API",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/TyphonEvents.js",
+    "importStyle": null,
+    "description": "Handles triggering the appropriate event callbacks.",
+    "lineNumber": 169,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "iterateeTarget",
+        "description": "Internal function which is dispatched to."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "objEvents",
+        "description": "Array of stored event callback data."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "Event name(s)"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "cb",
+        "description": "callback"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "Arguments supplied to a trigger method."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000036",
+    "___s": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_TRIGGER_SYNC_EVENTS",
+    "memberof": "src/TyphonEvents.js",
+    "longname": "src/TyphonEvents.js~s_TRIGGER_SYNC_EVENTS",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/TyphonEvents.js",
+    "importStyle": null,
+    "description": "A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual\ncases speedy (most internal Backbone events have 3 arguments). This dispatch method passes back an array with\nall results returned by any invoked targets.",
+    "lineNumber": 194,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array<*>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "Array of stored event callback data."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "Arguments supplied to `triggerSync`."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<*>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000037",
+    "___s": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_TRIGGER_ASYNC_EVENTS",
+    "memberof": "src/TyphonEvents.js",
+    "longname": "src/TyphonEvents.js~s_TRIGGER_ASYNC_EVENTS",
+    "access": null,
+    "export": false,
+    "importPath": "backbone-esnext-events/src/TyphonEvents.js",
+    "importStyle": null,
+    "description": "A difficult-to-believe, but optimized internal dispatch function for triggering events. Tries to keep the usual\ncases speedy (most internal Backbone events have 3 arguments). This dispatch method uses ES6 Promises and adds\nany returned results to an array which is added to a Promise.all construction which passes back a Promise which\nwaits until all Promises complete. Any target invoked may return a Promise or any result. This is very useful to\nuse for any asynchronous operations.",
+    "lineNumber": 281,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "events",
+        "description": "Array of stored event callback data."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<*>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "Arguments supplied to `triggerAsync`."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000038",
+    "___s": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/mainEventbus.js",
+    "memberof": null,
+    "longname": "src/mainEventbus.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "'use strict';\n\nimport TyphonEvents  from './TyphonEvents.js';\n\n/**\n * Exports an instance of `TyphonEvents` which adds asynchronous capabilities to `Backbone.Events` which is used as a\n * main eventbus. Note that an instance of `TyphonEvents` is exported and is also associated to a mapped path,\n * `mainEventbus` in the SystemJS extra configuration data loaded by all TyphonJS repos in\n * `./config/config-app-paths.js`. By using a mapped path any other module may import the main eventbus via:\n * `import eventbus from 'mainEventbus';`\n */\nexport default new TyphonEvents(\"mainEventbus\");\n",
+    "___id": "T000002R000039",
+    "___s": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000040",
+    "___s": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000041",
+    "___s": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000042",
+    "___s": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000043",
+    "___s": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000044",
+    "___s": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000045",
+    "___s": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000046",
+    "___s": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000047",
+    "___s": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000048",
+    "___s": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000049",
+    "___s": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000050",
+    "___s": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000051",
+    "___s": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000052",
+    "___s": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000053",
+    "___s": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000054",
+    "___s": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000055",
+    "___s": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000056",
+    "___s": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000057",
+    "___s": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000058",
+    "___s": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000059",
+    "___s": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000060",
+    "___s": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000061",
+    "___s": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000062",
+    "___s": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000063",
+    "___s": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000064",
+    "___s": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000065",
+    "___s": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000066",
+    "___s": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000067",
+    "___s": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000068",
+    "___s": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000069",
+    "___s": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000070",
+    "___s": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000071",
+    "___s": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000072",
+    "___s": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000073",
+    "___s": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000074",
+    "___s": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000075",
+    "___s": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000076",
+    "___s": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000077",
+    "___s": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000078",
+    "___s": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000079",
+    "___s": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000080",
+    "___s": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000081",
+    "___s": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000082",
+    "___s": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000083",
+    "___s": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000084",
+    "___s": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000085",
+    "___s": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true,
+    "___id": "T000002R000086",
+    "___s": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000087",
+    "___s": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000088",
+    "___s": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000089",
+    "___s": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000090",
+    "___s": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000091",
+    "___s": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000092",
+    "___s": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000093",
+    "___s": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true,
+    "___id": "T000002R000094",
+    "___s": true
+  }
+]
