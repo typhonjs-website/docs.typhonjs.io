@@ -46,7 +46,7 @@
   </div>
 </header>
 
-<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1483412979606" data-ice="navData">
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1483414792083" data-ice="navData">
 <li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
    <ul>
       
@@ -80,15 +80,18 @@
 <p><a href="https://travis-ci.org/typhonjs-backbone-esnext/backbone-esnext-events"><img src="https://travis-ci.org/typhonjs-backbone-esnext/backbone-esnext-events.svg" alt="Build Status"></a>
 <a href="https://codecov.io/github/typhonjs-backbone-esnext/backbone-esnext-events"><img src="https://img.shields.io/codecov/c/github/typhonjs-backbone-esnext/backbone-esnext-events.svg" alt="Coverage"></a>
 <a href="https://david-dm.org/typhonjs-backbone-esnext/backbone-esnext-events"><img src="https://david-dm.org/typhonjs-backbone-esnext/backbone-esnext-events.svg" alt="Dependency Status"></a></p>
-<p>Separates &apos;Events&apos; support from <a href="https://github.com/typhonjs-backbone-esnext">backbone-esnext</a> in addition to adding TyphonJS extensions found in <a href="https://github.com/typhonjs-backbone-esnext/backbone-esnext-events/blob/master/src/TyphonEvents.js">TyphonEvents</a>. The events dispatch functionality is useful well outside the context of Backbone and is utilized across several TyphonJS repos.</p>
+<p>Separates &apos;Events&apos; support from <a href="https://github.com/typhonjs-backbone-esnext">backbone-esnext</a> in addition to adding TyphonJS extensions found in <a href="https://github.com/typhonjs-backbone-esnext/backbone-esnext-events/blob/master/src/TyphonEvents.js">TyphonEvents</a>. The events dispatch functionality is useful well outside the context of Backbone and is utilized across several TyphonJS repos. It should be noted that there are no dependencies with backbone-esnext-events and it can be used independently in any project without pulling in Underscore like Backbone does. </p>
 <p>TyphonEvents adds new functionality for triggering events. The following are new trigger mechanisms:</p>
 <ul>
-<li><code>triggerDefer</code> - Defers invoking <code>trigger</code>.</li>
-<li><code>triggerSync</code> - Invokes all targets matched and passes back a single value or an array of results to the callee.</li>
-<li><code>triggerAsync</code> - Invokes all targets matched and passes back a promise resolved with a single value or an array of 
-results through <code>Promise.all</code> which returns a single promise to the callee.</li>
+<li><code>triggerDefer</code> - Defers invoking <code>trigger</code> to the next clock tick.</li>
+<li><code>triggerSync</code> - Synchronously invokes all targets matched and passes back a single value or an array of results to the callee.</li>
+<li><code>triggerAsync</code> - Asynchronously invokes all targets matched and passes back a promise resolved with a single value or an array of results through <code>Promise.all</code> which returns a single promise to the callee.</li>
 </ul>
-<p><a href="https://github.com/typhonjs-backbone-esnext/backbone-esnext-events/blob/master/src/mainEventbus.js">mainEventbus.js</a> provides a standardized instance of TyphonEvents which serves as the name implies a main eventbus. In several TyphonJS repos it is mapped via JSPM to &apos;mainEventbus&apos; such that one can import it via <code>import eventbus from &apos;mainEventbus&apos;;</code></p>
+<p>To import TyphonEvents and create a new instance: </p>
+<pre><code><code class="source-code prettyprint">import Events from &apos;backbone-esnext-events&apos;;
+
+const eventbus = new Events();</code>
+</code></pre><p><a href="https://github.com/typhonjs-backbone-esnext/backbone-esnext-events/blob/master/src/mainEventbus.js">mainEventbus.js</a> provides a standardized instance of TyphonEvents which serves as the name implies a main eventbus. In several TyphonJS repos it is mapped via JSPM to &apos;mainEventbus&apos; such that one can import it via <code>import eventbus from &apos;mainEventbus&apos;;</code> If not using a module system that can remap source code such as NPM one can import it via <code>import eventbus from &apos;backbone-esnext-events/src/mainEventbus&apos;;</code></p>
 </div>
 </div>
 
