@@ -1,0 +1,22 @@
+{
+  "coverage": "100%",
+  "expectCount": 33,
+  "actualCount": 33,
+  "files": {
+    "src/EventProxy.js": {
+      "expectCount": 13,
+      "actualCount": 13,
+      "undocumentLines": []
+    },
+    "src/Events.js": {
+      "expectCount": 12,
+      "actualCount": 12,
+      "undocumentLines": []
+    },
+    "src/TyphonEvents.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
+    }
+  }
+}
