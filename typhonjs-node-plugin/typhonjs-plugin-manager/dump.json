@@ -1,0 +1,3474 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/PluginEntry.js",
+    "memberof": null,
+    "longname": "src/PluginEntry.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/**\n * Defines a class holding the data associated with a plugin including it's instance.\n */\nexport default class PluginEntry\n{\n   /**\n    * Get enabled.\n    * @returns {boolean}\n    */\n   get enabled() { return this._enabled; }\n\n   /**\n    * Get name.\n    * @returns {string}\n    */\n   get name() { return this._name; }\n\n   /**\n    * Get plugin type.\n    * @returns {string}\n    */\n   get type() { return this._type; }\n\n   /**\n    * Get plugin instance.\n    * @returns {Object}\n    */\n   get instance() { return this._instance; }\n\n   /**\n    * Get associated EventProxy.\n    * @returns {EventProxy}\n    */\n   get eventProxy() { return this._eventProxy; }\n\n   /**\n    * Get plugin options.\n    * @returns {Object}\n    */\n   get options() { return this._options; }\n\n   /**\n    * Set enabled.\n    * @param {boolean} enabled - New enabled state.\n    */\n   set enabled(enabled)\n   {\n      /**\n       * The plugin enabled state.\n       * @type {boolean}\n       * @private\n       */\n      this._enabled = enabled;\n   }\n\n   /**\n    * Instantiates a PluginEntry.\n    *\n    * @param {string}      name - The plugin name.\n    * @param {string}      type - The plugin type: `require` or `instance`.\n    * @param {Object}      instance - The loaded plugin instance.\n    * @param {EventProxy}  eventProxy - An EventProxy associated with the plugin wrapping the plugin manager eventbus.\n    * @param {object}      [options] - Optional plugin options.\n    */\n   constructor(name, type, instance, eventProxy = void 0, options = void 0)\n   {\n      this._enabled = true;\n\n      /**\n       * The plugin name.\n       * @type {string}\n       * @private\n       */\n      this._name = name;\n\n      /**\n       * The plugin type: `require` or `instance`.\n       * @type {string}\n       * @private\n       */\n      this._type = type;\n\n      /**\n       * The loaded plugin instance.\n       * @type {Object}\n       * @private\n       */\n      this._instance = instance;\n\n      /**\n       * An EventProxy associated with the plugin wrapping the plugin manager eventbus.\n       * @type {EventProxy}\n       * @private\n       */\n      this._eventProxy = eventProxy;\n\n      /**\n       * Optional plugin options.\n       * @type {Object}\n       * @private\n       */\n      this._options = options;\n   }\n}\n",
+    "___id": "T000002R000002",
+    "___s": true
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "PluginEntry",
+    "memberof": "src/PluginEntry.js",
+    "longname": "src/PluginEntry.js~PluginEntry",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-plugin-manager/src/PluginEntry.js",
+    "importStyle": "PluginEntry",
+    "description": "Defines a class holding the data associated with a plugin including it's instance.",
+    "lineNumber": 4,
+    "interface": false,
+    "___id": "T000002R000003",
+    "___s": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "enabled",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#enabled",
+    "access": null,
+    "description": "Get enabled.",
+    "lineNumber": 10,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000004",
+    "___s": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "name",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#name",
+    "access": null,
+    "description": "Get name.",
+    "lineNumber": 16,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000005",
+    "___s": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "type",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#type",
+    "access": null,
+    "description": "Get plugin type.",
+    "lineNumber": 22,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000006",
+    "___s": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "instance",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#instance",
+    "access": null,
+    "description": "Get plugin instance.",
+    "lineNumber": 28,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000007",
+    "___s": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "eventProxy",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#eventProxy",
+    "access": null,
+    "description": "Get associated EventProxy.",
+    "lineNumber": 34,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{EventProxy}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "EventProxy"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000008",
+    "___s": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "options",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#options",
+    "access": null,
+    "description": "Get plugin options.",
+    "lineNumber": 40,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000009",
+    "___s": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "set",
+    "static": false,
+    "variation": null,
+    "name": "enabled",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#enabled",
+    "access": null,
+    "description": "Set enabled.",
+    "lineNumber": 46,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>New enabled state.</p>\n",
+        "descriptionRaw": "New enabled state."
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000010",
+    "___s": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_enabled",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_enabled",
+    "access": "private",
+    "description": "<p>The plugin enabled state.</p>\n",
+    "lineNumber": 53,
+    "type": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000011",
+    "___s": true,
+    "descriptionRaw": "The plugin enabled state."
+  },
+  {
+    "__docId__": 10,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#constructor",
+    "access": null,
+    "description": "Instantiates a PluginEntry.",
+    "lineNumber": 65,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The plugin name.</p>\n",
+        "descriptionRaw": "The plugin name."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "<p>The plugin type: <code>require</code> or <code>instance</code>.</p>\n",
+        "descriptionRaw": "The plugin type: `require` or `instance`."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance",
+        "description": "<p>The loaded plugin instance.</p>\n",
+        "descriptionRaw": "The loaded plugin instance."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "EventProxy"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "eventProxy",
+        "description": "<p>An EventProxy associated with the plugin wrapping the plugin manager eventbus.</p>\n",
+        "descriptionRaw": "An EventProxy associated with the plugin wrapping the plugin manager eventbus."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "<p>Optional plugin options.</p>\n",
+        "descriptionRaw": "Optional plugin options."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000012",
+    "___s": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_enabled",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_enabled",
+    "access": null,
+    "description": null,
+    "lineNumber": 67,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    },
+    "___id": "T000002R000013",
+    "___s": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_name",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_name",
+    "access": "private",
+    "description": "<p>The plugin name.</p>\n",
+    "lineNumber": 74,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000014",
+    "___s": true,
+    "descriptionRaw": "The plugin name."
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_type",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_type",
+    "access": "private",
+    "description": "<p>The plugin type: <code>require</code> or <code>instance</code>.</p>\n",
+    "lineNumber": 81,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000015",
+    "___s": true,
+    "descriptionRaw": "The plugin type: `require` or `instance`."
+  },
+  {
+    "__docId__": 14,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_instance",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_instance",
+    "access": "private",
+    "description": "<p>The loaded plugin instance.</p>\n",
+    "lineNumber": 88,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000016",
+    "___s": true,
+    "descriptionRaw": "The loaded plugin instance."
+  },
+  {
+    "__docId__": 15,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventProxy",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_eventProxy",
+    "access": "private",
+    "description": "<p>An EventProxy associated with the plugin wrapping the plugin manager eventbus.</p>\n",
+    "lineNumber": 95,
+    "type": {
+      "nullable": null,
+      "types": [
+        "EventProxy"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000017",
+    "___s": true,
+    "descriptionRaw": "An EventProxy associated with the plugin wrapping the plugin manager eventbus."
+  },
+  {
+    "__docId__": 16,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_options",
+    "memberof": "src/PluginEntry.js~PluginEntry",
+    "longname": "src/PluginEntry.js~PluginEntry#_options",
+    "access": "private",
+    "description": "<p>Optional plugin options.</p>\n",
+    "lineNumber": 102,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000018",
+    "___s": true,
+    "descriptionRaw": "Optional plugin options."
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/PluginEvent.js",
+    "memberof": null,
+    "longname": "src/PluginEvent.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/**\n * PluginEvent - Provides the data / event passed to all invoked methods in {@link PluginManager#invokeSyncEvent}. The\n * `event.data` field is returned to the caller. Before returning though additional the following additional metadata\n * is attached:\n *\n * (number)          `$$plugin_invoke_count` - The count of plugins invoked.\n *\n * (Array<string>)   `$$plugin_invoke_names` - The names of plugins invoked.\n */\nexport default class PluginEvent\n{\n   /**\n    * Initializes PluginEvent.\n    *\n    * @param {object} copyProps - Event data to copy.\n    * @param {object} passthruProps - Event data to pass through.\n    */\n   constructor(copyProps = {}, passthruProps = {})\n   {\n      /**\n       * Provides the unified event data assigning any pass through data to the copied data supplied.\n       */\n      this.data = Object.assign(JSON.parse(JSON.stringify(copyProps)), passthruProps);\n\n      /**\n       * Unique data available in each plugin invoked.\n       * @type {EventProxy} - The active EventProxy for that particular plugin.\n       */\n      this.eventbus = void 0;\n\n      /**\n       * Unique data available in each plugin invoked.\n       * @type {string} - The active plugin name.\n       */\n      this.pluginName = void 0;\n\n      /**\n       * Unique data available in each plugin invoked.\n       * @type {object} - The active plugin options.\n       */\n      this.pluginOptions = void 0;\n   }\n}\n",
+    "___id": "T000002R000019",
+    "___s": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "PluginEvent",
+    "memberof": "src/PluginEvent.js",
+    "longname": "src/PluginEvent.js~PluginEvent",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-plugin-manager/src/PluginEvent.js",
+    "importStyle": "PluginEvent",
+    "description": "PluginEvent - Provides the data / event passed to all invoked methods in {@link PluginManager#invokeSyncEvent}. The\n`event.data` field is returned to the caller. Before returning though additional the following additional metadata\nis attached:\n\n(number)          `$$plugin_invoke_count` - The count of plugins invoked.\n\n(Array<string>)   `$$plugin_invoke_names` - The names of plugins invoked.",
+    "lineNumber": 10,
+    "interface": false,
+    "___id": "T000002R000020",
+    "___s": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/PluginEvent.js~PluginEvent",
+    "longname": "src/PluginEvent.js~PluginEvent#constructor",
+    "access": null,
+    "description": "Initializes PluginEvent.",
+    "lineNumber": 18,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "copyProps",
+        "description": "<p>Event data to copy.</p>\n",
+        "descriptionRaw": "Event data to copy."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "passthruProps",
+        "description": "<p>Event data to pass through.</p>\n",
+        "descriptionRaw": "Event data to pass through."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000021",
+    "___s": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "data",
+    "memberof": "src/PluginEvent.js~PluginEvent",
+    "longname": "src/PluginEvent.js~PluginEvent#data",
+    "access": null,
+    "description": "Provides the unified event data assigning any pass through data to the copied data supplied.",
+    "lineNumber": 23,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000022",
+    "___s": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "eventbus",
+    "memberof": "src/PluginEvent.js~PluginEvent",
+    "longname": "src/PluginEvent.js~PluginEvent#eventbus",
+    "access": null,
+    "description": "Unique data available in each plugin invoked.",
+    "lineNumber": 29,
+    "type": {
+      "nullable": null,
+      "types": [
+        "EventProxy"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000023",
+    "___s": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "pluginName",
+    "memberof": "src/PluginEvent.js~PluginEvent",
+    "longname": "src/PluginEvent.js~PluginEvent#pluginName",
+    "access": null,
+    "description": "Unique data available in each plugin invoked.",
+    "lineNumber": 35,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000024",
+    "___s": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "pluginOptions",
+    "memberof": "src/PluginEvent.js~PluginEvent",
+    "longname": "src/PluginEvent.js~PluginEvent#pluginOptions",
+    "access": null,
+    "description": "Unique data available in each plugin invoked.",
+    "lineNumber": 41,
+    "type": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000025",
+    "___s": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/PluginManager.js",
+    "memberof": null,
+    "longname": "src/PluginManager.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import path         from 'path';\n\nimport EventProxy   from 'backbone-esnext-events/src/EventProxy.js';\n\nimport PluginEntry  from './PluginEntry.js';\nimport PluginEvent  from './PluginEvent.js';\n\n/**\n * Provides a lightweight plugin manager for Node / NPM with optional `backbone-esnext-events`\n * integration for plugins in a safe and protected manner across NPM modules, local files, and preloaded object\n * instances. This pattern facilitates message passing between modules versus direct dependencies / method invocation.\n *\n * It isn't necessary to use an eventbus associated with the plugin manager though invocation then relies on invoking\n * methods directly with the plugin manager instance.\n *\n * When passing in an eventbus from `backbone-esnext-events` the plugin manager will register by default under these\n * event categories:\n *\n * `plugins:add` - {@link PluginManager#add}\n *\n * `plugins:add:all` - {@link PluginManager#addAll}\n *\n * `plugins:enable:all:plugins` - {@link PluginManager#enableAllPlugins}\n *\n * `plugins:enable:plugin` - {@link PluginManager#enablePlugin}\n *\n * `plugins:enable:plugins` - {@link PluginManager#enablePlugins}\n *\n * `plugins:get:method:names` - {@link PluginManager#getMethodNames}\n *\n * `plugins:get:options` - {@link PluginManager#getOptions}\n *\n * `plugins:get:plugin:method:names` - {@link PluginManager#getPluginMethodNames}\n *\n * `plugins:get:plugin:names` - {@link PluginManager#getPluginNames}\n *\n * `plugins:get:plugin:options` - {@link PluginManager#getPluginOptions}\n *\n * `plugins:has:method` - {@link PluginManager#hasMethod}\n *\n * `plugins:has:plugin` - {@link PluginManager#hasPlugin}\n *\n * `plugins:has:plugin:method` - {@link PluginManager#hasPluginMethod}\n *\n * `plugins:invoke:async` - {@link PluginManager#invokeAsync}\n *\n * `plugins:invoke:sync` - {@link PluginManager#invokeSync}\n *\n * `plugins:invoke:sync:event` - {@link PluginManager#invokeSyncEvent}\n *\n * `plugins:remove` - {@link PluginManager#remove}\n *\n * `plugins:remove:all` - {@link PluginManager#removeAll}\n *\n * Automatically when a plugin is loaded and unloaded respective callbacks `onPluginLoad` and `onPluginUnload` will\n * be attempted to be invoked on the plugin. This is an opportunity for the plugin to receive any associated eventbus\n * and wire itself into it. It should be noted that a protected proxy around the eventbus is passed to the plugins\n * such that when the plugin is removed automatically all events registered on the eventbus are cleaned up without\n * a plugin author needing to do this manually in the `onPluginUnload` callback. This solves any dangling event binding\n * issues.\n *\n * If eventbus functionality is enabled it is important especially if using a process / global level eventbus such as\n * `backbone-esnext-eventbus` to call {@link PluginManager#destroy} to clean up all plugin eventbus resources and\n * the plugin manager event bindings.\n *\n * @see https://www.npmjs.com/package/backbone-esnext-events\n * @see https://www.npmjs.com/package/backbone-esnext-eventbus\n *\n * @example\n * import Events        from 'backbone-esnext-events';   // Imports the TyphonEvents class for local usage.\n * ::or alternatively::\n * import eventbus      from 'backbone-esnext-eventbus'; // Imports a global / process level eventbus.\n *\n * import PluginManager from 'typhonjs-plugin-manager';\n *\n * const pluginManager = new PluginManager({ eventbus });\n *\n * pluginManager.add({ name: 'an-npm-plugin-enabled-module' });\n * pluginManager.add({ name: 'my-local-module', target: './myModule.js' });\n *\n * // Let's say an-npm-plugin-enabled-module responds to 'cool:event' which returns 'true'.\n * // Let's say my-local-module responds to 'hot:event' which returns 'false'.\n * // Both of the plugin / modules will have 'onPluginLoaded' invoked with a proxy to the eventbus and any plugin\n * // options defined.\n *\n * // One can then use the eventbus functionality to invoke associated module / plugin methods even retrieving results.\n * assert(eventbus.triggerSync('cool:event') === true);\n * assert(eventbus.triggerSync('hot:event') === false);\n *\n * // One can also indirectly invoke any method of the plugin via:\n * eventbus.triggerSync('plugins:invoke:sync:event', 'aCoolMethod'); // Any plugin with a method named `aCoolMethod` is invoked.\n * eventbus.triggerSync('plugins:invoke:sync:event', 'aCoolMethod', {}, {}, 'an-npm-plugin-enabled-module'); // specific invocation.\n *\n * // The 3rd parameter defines a pass through object hash and the 4th will make a copy of the hash sending a single\n * // event / object hash to the invoked method.\n *\n * // -----------------------\n *\n * // Given that `backbone-esnext-eventbus` defines a global / process level eventbus you can import it in an entirely\n * // different file or even NPM module and invoke methods of loaded plugins like this:\n *\n * import eventbus from 'backbone-esnext-eventbus';\n *\n * eventbus.triggerSync('plugins:invoke', 'aCoolMethod'); // Any plugin with a method named `aCoolMethod` is invoked.\n *\n * assert(eventbus.triggerSync('cool:event') === true);\n *\n * eventbus.trigger('plugins:remove', 'an-npm-plugin-enabled-module'); // Removes the plugin and unregisters events.\n *\n * assert(eventbus.triggerSync('cool:event') === true); // Will now fail!\n *\n * // In this case though when using the global eventbus be mindful to always call `pluginManager.destroy()` in the main\n * // thread of execution scope to remove all plugins and the plugin manager event bindings!\n */\nexport default class PluginManager\n{\n   /**\n    * Instantiates PluginManager\n    *\n    * @param {object}   [options] - Provides various configuration options:\n    *\n    * @param {TyphonEvents}   [options.eventbus] - An instance of 'backbone-esnext-events' used as the plugin eventbus.\n    *\n    * @param {string}   [options.eventPrepend='plugin'] - A customized name to prepend PluginManager events on the\n    *                                                     eventbus.\n    *\n    * @param {boolean}  [options.throwNoMethod=false] - If true then when a method fails to be invoked by any plugin\n    *                                                   an exception will be thrown.\n    *\n    * @param {boolean}  [options.throwNoPlugin=false] - If true then when no plugin is matched to be invoked an\n    *                                                   exception will be thrown.\n    */\n   constructor(options = {})\n   {\n      if (typeof options !== 'object') { throw new TypeError(`'options' is not an object.`); }\n\n      /**\n       * Stores the plugins by name with an associated PluginEntry.\n       * @type {Map<string, PluginEntry>}\n       * @private\n       */\n      this._pluginMap = new Map();\n\n      /**\n       * Stores any associated eventbus.\n       * @type {TyphonEvents}\n       * @private\n       */\n      this._eventbus = null;\n\n      /**\n       * Defines options for throwing exceptions. Turned off by default.\n       * @type {ManagerOptions}\n       * @private\n       */\n      this._options = { noEventAdd: false, noEventRemoval: false, throwNoMethod: false, throwNoPlugin: false };\n\n      if (typeof options.eventbus === 'object') { this.setEventbus(options.eventbus, options.eventPrepend); }\n\n      this.setOptions(options);\n   }\n\n   /**\n    * Adds a plugin by the given configuration parameters. A plugin `name` is always required. If no other options\n    * are provided then the `name` doubles as the NPM module / local file to load. The loading first checks for an\n    * existing `instance` to use as the plugin. Then the `target` is chosen as the NPM module / local file to load.\n    * By passing in `options` this will be stored and accessible to the plugin during all callbacks.\n    *\n    * @param {PluginConfig}   pluginConfig - Defines the plugin to load.\n    */\n   add(pluginConfig)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof pluginConfig !== 'object') { throw new TypeError(`'pluginConfig' is not an 'object'.`); }\n\n      if (typeof pluginConfig.name !== 'string')\n      {\n         throw new TypeError(`'pluginConfig.name' is not a 'string' for entry: ${JSON.stringify(pluginConfig)}.`);\n      }\n\n      if (typeof pluginConfig.target !== 'undefined' && typeof pluginConfig.target !== 'string')\n      {\n         throw new TypeError(`'pluginConfig.target' is not a string for entry: ${JSON.stringify(pluginConfig)}.`);\n      }\n\n      if (typeof pluginConfig.options !== 'undefined' && typeof pluginConfig.options !== 'object')\n      {\n         throw new TypeError(`'pluginConfig.options' is not an 'object' for entry: ${JSON.stringify(pluginConfig)}.`);\n      }\n\n      let instance, type;\n\n      // Use an existing instance of a plugin\n      if (typeof pluginConfig.instance === 'object')\n      {\n         instance = pluginConfig.instance;\n         type = 'instance';\n      }\n      else\n      {\n         // If a target is defined use it instead of the name.\n         const target = pluginConfig.target || pluginConfig.name;\n\n         if (target.match(/^[.\\/\\\\]/))\n         {\n            instance = require(path.resolve(target)); // eslint-disable global-require\n         }\n         else\n         {\n            instance = require(target);               // eslint-disable global-require\n         }\n\n         type = 'require';\n      }\n\n      const eventProxy = this._eventbus !== null && typeof this._eventbus !== 'undefined' ?\n       new EventProxy(this._eventbus) : void 0;\n\n      this._pluginMap.set(pluginConfig.name, new PluginEntry(pluginConfig.name, type, instance, eventProxy,\n       pluginConfig.options));\n\n      // Invoke private module method which allows skipping optional error checking.\n      s_INVOKE_SYNC_EVENTS('onPluginLoad', {}, {}, pluginConfig.name, this._pluginMap, this._options, false);\n   }\n\n   /**\n    * Initializes multiple plugins in a single call.\n    *\n    * @param {Array<PluginConfig>} pluginConfigs - An array of plugin config object hash entries.\n    */\n   addAll(pluginConfigs = [])\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (!Array.isArray(pluginConfigs)) { throw new TypeError(`'plugins' is not an array.`); }\n\n      for (const pluginConfig of pluginConfigs) { this.add(pluginConfig); }\n   }\n\n   /**\n    * Provides the eventbus callback which may prevent addition if optional `noEventAdd` is enabled. This disables\n    * the ability for plugins to be added via events preventing any external code adding plugins in this manner.\n    *\n    * @param {string}   pluginName - The plugin name to remove.\n    *\n    * @returns {boolean} - Operation success.\n    * @private\n    */\n   _addEventbus(pluginName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      return !this._options.noEventAdd ? this.add(pluginName) : false;\n   }\n\n   /**\n    * Provides the eventbus callback which may prevent addition if optional `noEventAdd` is enabled. This disables\n    * the ability for plugins to be added via events preventing any external code adding plugins in this manner.\n    *\n    * @private\n    */\n   _addAllEventbus()\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (!this._options.noEventAdd) { this.addAll(); }\n   }\n\n   /**\n    * Destroys all managed plugins after unloading them.\n    */\n   destroy()\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      this.removeAll();\n\n      if (this._eventbus !== null && typeof this._eventbus !== 'undefined')\n      {\n         this._eventbus.off(`${this._eventPrepend}:add`, this._addEventbus, this);\n         this._eventbus.off(`${this._eventPrepend}:add:all`, this._addAllEventbus, this);\n         this._eventbus.off(`${this._eventPrepend}:enable:all:plugins`, this.enableAllPlugins, this);\n         this._eventbus.off(`${this._eventPrepend}:enable:plugin`, this.enablePlugin, this);\n         this._eventbus.off(`${this._eventPrepend}:enable:plugins`, this.enablePlugins, this);\n         this._eventbus.off(`${this._eventPrepend}:get:method:names`, this.getMethodNames, this);\n         this._eventbus.off(`${this._eventPrepend}:get:options`, this.getOptions, this);\n         this._eventbus.off(`${this._eventPrepend}:get:plugin:method:names`, this.getPluginMethodNames, this);\n         this._eventbus.off(`${this._eventPrepend}:get:plugin:names`, this.getPluginNames, this);\n         this._eventbus.off(`${this._eventPrepend}:get:plugin:options`, this.getPluginOptions, this);\n         this._eventbus.off(`${this._eventPrepend}:has:method`, this.hasMethod, this);\n         this._eventbus.off(`${this._eventPrepend}:has:plugin`, this.hasPlugin, this);\n         this._eventbus.off(`${this._eventPrepend}:has:plugin:method`, this.hasPluginMethod, this);\n         this._eventbus.off(`${this._eventPrepend}:invoke:async`, this.invokeAsync, this);\n         this._eventbus.off(`${this._eventPrepend}:invoke:sync`, this.invokeSync, this);\n         this._eventbus.off(`${this._eventPrepend}:invoke:sync:event`, this.invokeSyncEvent, this);\n         this._eventbus.off(`${this._eventPrepend}:remove`, this._removeEventbus, this);\n         this._eventbus.off(`${this._eventPrepend}:remove:all`, this._removeAllEventbus, this);\n      }\n\n      this._pluginMap = null;\n      this._eventbus = null;\n   }\n\n   /**\n    * Enables or disables all plugins.\n    *\n    * @param {boolean}  enabled - The new enabled state.\n    */\n   enableAllPlugins(enabled)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof enabled !== 'boolean') { throw new TypeError(`'enabled' is not a boolean.`); }\n\n      for (const plugin of this._pluginMap.values()) { plugin.enabled = enabled; }\n   }\n\n   /**\n    * Enables or disables a single plugin.\n    *\n    * @param {string}   pluginName - Plugin name to set state.\n    * @param {boolean}  enabled - The new enabled state.\n    *\n    * @returns {boolean} - Operation success.\n    */\n   enablePlugin(pluginName, enabled)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof pluginName !== 'string') { throw new TypeError(`'pluginName' is not a string.`); }\n      if (typeof enabled !== 'boolean') { throw new TypeError(`'enabled' is not a boolean.`); }\n\n      const entry = this._pluginMap.get(pluginName);\n\n      if (entry instanceof PluginEntry)\n      {\n         entry.enabled = enabled;\n         return true;\n      }\n\n      return false;\n   }\n\n   /**\n    * Enables or disables a set of plugins given an array or iterabe of plugin names.\n    *\n    * @param {Array<string>}  pluginNames - An array / iterable of plugin names.\n    * @param {boolean}        enabled - The new enabled state.\n    *\n    * @returns {boolean} - Operation success.\n    */\n   enablePlugins(pluginNames, enabled)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof enabled !== 'boolean') { throw new TypeError(`'enabled' is not a boolean.`); }\n\n      let success = true;\n\n      for (const pluginName of pluginNames)\n      {\n         const entry = this._pluginMap.get(pluginName);\n\n         if (entry instanceof PluginEntry)\n         {\n            entry.enabled = enabled;\n         }\n         else\n         {\n            success = false;\n         }\n      }\n\n      return success;\n   }\n\n   /**\n    * Returns any associated eventbus.\n    *\n    * @returns {TyphonEvents|null}\n    */\n   getEventbus()\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      return this._eventbus;\n   }\n\n   /**\n    * Returns all method names or if a boolean is passed in will return method names for plugins by current enabled\n    * state.\n    *\n    * @param {boolean|undefined} enabled - If enabled is a boolean it will return plugin methods names given their\n    *                                      enabled state.\n    *\n    * @param {string|undefined}  pluginName - If a string then just this plugins methods names are returned.\n    *\n    * @returns {Array<string>}\n    */\n   getMethodNames(enabled = void 0, pluginName = void 0)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof enabled !== 'boolean' && typeof enabled !== 'undefined')\n      {\n         throw new TypeError(`'enabled' is not a 'boolean' or 'undefined'.`);\n      }\n\n      const results = {};\n      const allEnabled = typeof enabled === 'undefined';\n      const allNames = typeof pluginName === 'undefined';\n\n      for (const plugin of this._pluginMap.values())\n      {\n         if (plugin.instance && (allEnabled || plugin.enabled === enabled) && (allNames || plugin.name === pluginName))\n         {\n            for (const name of s_GET_ALL_PROPERTY_NAMES(plugin.instance))\n            {\n               // Skip any names that are not a function or are the constructor.\n               if (plugin.instance[name] instanceof Function && name !== 'constructor') { results[name] = true; }\n            }\n         }\n      }\n\n      return Object.keys(results);\n   }\n\n   /**\n    * Returns a copy of the plugin manager options.\n    *\n    * @returns {ManagerOptions}\n    */\n   getOptions()\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      return JSON.parse(JSON.stringify(this._options));\n   }\n\n   /**\n    * Returns all plugin names or if a boolean is passed in will return plugin names by current enabled state.\n    *\n    * @param {boolean|undefined} enabled - If enabled is a boolean it will return plugins given their enabled state.\n    *\n    * @returns {Array<{plugin: string, method: string}>}\n    */\n   getPluginMethodNames(enabled = void 0)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof enabled !== 'boolean' && typeof enabled !== 'undefined')\n      {\n         throw new TypeError(`'enabled' is not a 'boolean' or 'undefined'.`);\n      }\n\n      const results = [];\n      const allPlugins = typeof enabled === 'undefined';\n\n      for (const plugin of this._pluginMap.values())\n      {\n         if (plugin.instance && (allPlugins || plugin.enabled === enabled))\n         {\n            for (const name of s_GET_ALL_PROPERTY_NAMES(plugin.instance))\n            {\n               // Skip any names that are not a function or are the constructor.\n               if (plugin.instance[name] instanceof Function && name !== 'constructor')\n               {\n                  results.push({ plugin: plugin.name, method: name });\n               }\n            }\n         }\n      }\n\n      return results;\n   }\n\n   /**\n    * Returns all plugin names or if a boolean is passed in will return plugin names by current enabled state.\n    *\n    * @param {boolean|undefined} enabled - If enabled is a boolean it will return plugins given their enabled state.\n    *\n    * @returns {Array<string>}\n    */\n   getPluginNames(enabled = void 0)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof enabled !== 'boolean' && typeof enabled !== 'undefined')\n      {\n         throw new TypeError(`'enabled' is not a 'boolean' or 'undefined'.`);\n      }\n\n      // Return all plugin names if enabled is not defined.\n      if (enabled === void 0) { return Array.from(this._pluginMap.keys()); }\n\n      const results = [];\n\n      for (const plugin of this._pluginMap.values())\n      {\n         if (plugin.enabled === enabled) { results.push(plugin.name); }\n      }\n\n      return results;\n   }\n\n   /**\n    * Returns a copy of the given plugin options.\n    *\n    * @param {string}   pluginName - Plugin name to retrieve.\n    *\n    * @returns {*}\n    */\n   getPluginOptions(pluginName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof pluginName !== 'string') { throw new TypeError(`'pluginName' is not a string.`); }\n\n      let result;\n\n      const entry = this._pluginMap.get(pluginName);\n\n      if (entry instanceof PluginEntry) { result = JSON.parse(JSON.stringify(entry.options)); }\n\n      return result;\n   }\n\n   /**\n    * Returns true if there is at least one plugin loaded with the given method name.\n    *\n    * @param {string}   methodName - Method name to test.\n    *\n    * @returns {boolean} - True method is found.\n    */\n   hasMethod(methodName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof methodName !== 'string') { throw new TypeError(`'methodName' is not a string.`); }\n\n      for (const plugin of this._pluginMap.values())\n      {\n         if (typeof plugin.instance[methodName] === 'function') { return true; }\n      }\n\n      return false;\n   }\n\n   /**\n    * Returns true if there is a plugin loaded with the given plugin name.\n    *\n    * @param {string}   pluginName - Plugin name to test.\n    *\n    * @returns {boolean} - True if a plugin exists.\n    */\n   hasPlugin(pluginName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof pluginName !== 'string') { throw new TypeError(`'pluginName' is not a string.`); }\n\n      return this._pluginMap.has(pluginName);\n   }\n\n   /**\n    * Returns true if there is a plugin loaded with the given plugin name that also has a method with the given\n    * method name.\n    *\n    * @param {string}   pluginName - Plugin name to test.\n    * @param {string}   methodName - Method name to test.\n    *\n    * @returns {boolean} - True if a plugin and method exists.\n    */\n   hasPluginMethod(pluginName, methodName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof pluginName !== 'string') { throw new TypeError(`'pluginName' is not a string.`); }\n      if (typeof methodName !== 'string') { throw new TypeError(`'methodName' is not a string.`); }\n\n      const plugin = this._pluginMap.get(pluginName);\n\n      return plugin instanceof PluginEntry && typeof plugin[methodName] === 'function';\n   }\n\n   /**\n    * This dispatch method uses ES6 Promises and adds any returned results to an array which is added to a Promise.all\n    * construction which passes back a Promise which waits until all Promises complete. Any target invoked may return a\n    * Promise or any result. This is very useful to use for any asynchronous operations.\n    *\n    * @param {string|Array<string>} nameOrList - An optional plugin name or array / iterable of plugin names to\n    *                                            invoke.\n    * @param {string}               methodName - Method name to invoke.\n    * @param {*}                    args - Optional arguments.\n    *\n    * @returns {*|Array<*>}\n    */\n   invokeAsync(nameOrList = this._pluginMap.keys(), methodName, ...args)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof nameOrList !== 'string' && !Array.isArray(nameOrList) &&\n       typeof nameOrList[Symbol.iterator] !== 'function')\n      {\n         throw new TypeError(`'nameOrList' is not a string, array, or iterator.`);\n      }\n\n      if (typeof methodName !== 'string') { throw new TypeError(`'methodName' is not a string.`); }\n\n      // Track if a plugin method is invoked.\n      let hasMethod = false;\n      let hasPlugin = false;\n\n      // Capture results.\n      let result;\n      const results = [];\n\n      try\n      {\n         if (typeof nameOrList === 'string')\n         {\n            const plugin = this._pluginMap.get(nameOrList);\n\n            if (plugin instanceof PluginEntry && plugin.enabled && plugin.instance)\n            {\n               hasPlugin = true;\n\n               if (typeof plugin.instance[methodName] === 'function')\n               {\n                  result = args.length > 0 ? plugin.instance[methodName](...args) : plugin.instance[methodName]();\n\n                  // If we received a valid result return immediately.\n                  if (result !== null || typeof result !== 'undefined') { results.push(result); }\n\n                  hasMethod = true;\n               }\n            }\n         }\n         else\n         {\n            for (const name of nameOrList)\n            {\n               const plugin = this._pluginMap.get(name);\n\n               if (plugin instanceof PluginEntry && plugin.enabled && plugin.instance)\n               {\n                  hasPlugin = true;\n\n                  if (typeof plugin.instance[methodName] === 'function')\n                  {\n                     result = args.length > 0 ? plugin.instance[methodName](...args) : plugin.instance[methodName]();\n\n                     // If we received a valid result return immediately.\n                     if (result !== null || typeof result !== 'undefined') { results.push(result); }\n\n                     hasMethod = true;\n                  }\n               }\n            }\n         }\n\n         if (this._options.throwNoPlugin && !hasPlugin)\n         {\n            return Promise.reject(new Error(`PluginManager failed to find any target plugins.`));\n         }\n\n         if (this._options.throwNoMethod && !hasMethod)\n         {\n            return Promise.reject(new Error(`PluginManager failed to invoke '${methodName}'.`));\n         }\n      }\n      catch (error)\n      {\n         return Promise.reject(error);\n      }\n\n      // If there are multiple results then use Promise.all otherwise Promise.resolve.\n      return results.length > 1 ? Promise.all(results) : Promise.resolve(result);\n   }\n\n   /**\n    * This dispatch method synchronously passes back a single value or an array with all results returned by any\n    * invoked targets.\n    *\n    * @param {string|Array<string>} nameOrList - An optional plugin name or array / iterable of plugin names to\n    *                                             invoke.\n    * @param {string}               methodName - Method name to invoke.\n    * @param {*}                    args - Optional arguments.\n    *\n    * @returns {*|Array<*>}\n    */\n   invokeSync(nameOrList = this._pluginMap.keys(), methodName, ...args)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof nameOrList !== 'string' && !Array.isArray(nameOrList) &&\n       typeof nameOrList[Symbol.iterator] !== 'function')\n      {\n         throw new TypeError(`'nameOrList' is not a string, array, or iterator.`);\n      }\n\n      if (typeof methodName !== 'string') { throw new TypeError(`'methodName' is not a string.`); }\n\n      // Track if a plugin method is invoked.\n      let hasMethod = false;\n      let hasPlugin = false;\n\n      // Capture results.\n      let result;\n      const results = [];\n\n      if (typeof nameOrList === 'string')\n      {\n         const plugin = this._pluginMap.get(nameOrList);\n\n         if (plugin instanceof PluginEntry && plugin.enabled && plugin.instance)\n         {\n            hasPlugin = true;\n\n            if (typeof plugin.instance[methodName] === 'function')\n            {\n               result = args.length > 0 ? plugin.instance[methodName](...args) : plugin.instance[methodName]();\n\n               // If we received a valid result return immediately.\n               if (result !== null || typeof result !== 'undefined') { results.push(result); }\n\n               hasMethod = true;\n            }\n         }\n      }\n      else\n      {\n         for (const name of nameOrList)\n         {\n            const plugin = this._pluginMap.get(name);\n\n            if (plugin instanceof PluginEntry && plugin.enabled && plugin.instance)\n            {\n               hasPlugin = true;\n\n               if (typeof plugin.instance[methodName] === 'function')\n               {\n                  result = args.length > 0 ? plugin.instance[methodName](...args) : plugin.instance[methodName]();\n\n                  // If we received a valid result return immediately.\n                  if (result !== null || typeof result !== 'undefined') { results.push(result); }\n\n                  hasMethod = true;\n               }\n            }\n         }\n      }\n\n      if (this._options.throwNoPlugin && !hasPlugin)\n      {\n         throw new Error(`PluginManager failed to find any target plugins.`);\n      }\n\n      if (this._options.throwNoMethod && !hasMethod)\n      {\n         throw new Error(`PluginManager failed to invoke '${methodName}'.`);\n      }\n\n      // Return the results array if there are more than one or just a single result.\n      return results.length > 1 ? results : result;\n   }\n\n   /**\n    * This dispatch method synchronously passes to and returns from any invoked targets a PluginEvent.\n    *\n    * @param {string}                methodName - Method name to invoke.\n    *\n    * @param {object}                copyProps - plugin event object.\n    *\n    * @param {object}                passthruProps - if true, event has plugin option.\n    *\n    * @param {string|Array<string>}  nameOrList - An optional plugin name or array / iterable of plugin names to\n    *                                             invoke.\n    *\n    * @returns {PluginEvent}\n    */\n   invokeSyncEvent(methodName, copyProps = {}, passthruProps = {}, nameOrList = this._pluginMap.keys())\n   {\n      // Invokes the private internal sync events method with optional error checking enabled.\n      return s_INVOKE_SYNC_EVENTS(methodName, copyProps, passthruProps, nameOrList, this._pluginMap, this._options);\n   }\n\n   /**\n    * Sets the eventbus associated with this plugin manager. If any previous eventbus was associated all plugin manager\n    * events will be removed then added to the new eventbus. If there are any existing plugins being managed their\n    * events will be removed from the old eventbus and then `onPluginLoad` will be called with the new eventbus.\n    *\n    * @param {TyphonEvents}   targetEventbus - The target eventbus to associate.\n    *\n    * @param {string}         [eventPrepend='plugins'] - An optional string to prepend to all of the event binding\n    *                                                    targets.\n    *\n    * @returns {PluginManager}\n    */\n   setEventbus(targetEventbus, eventPrepend = 'plugins')\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (typeof targetEventbus !== 'object') { throw new TypeError(`'targetEventbus' is not an 'object'.`); }\n      if (typeof eventPrepend !== 'string') { throw new TypeError(`'eventPrepend' is not a 'string'.`); }\n\n      // Early escape if the targetEventbus is the same as the current eventbus.\n      if (targetEventbus === this._eventbus) { return this; }\n\n      const oldPrepend = this._eventPrepend;\n\n      /**\n       * Stores the prepend string for eventbus registration.\n       * @type {string}\n       * @private\n       */\n      this._eventPrepend = eventPrepend;\n\n      // Unload and reload any existing plugins from the old eventbus to the target eventbus.\n      if (this._pluginMap.size > 0)\n      {\n         // Invoke private module method which allows skipping optional error checking.\n         s_INVOKE_SYNC_EVENTS('onPluginUnload', {}, {}, this._pluginMap.keys(), this._pluginMap, this._options, false);\n\n         for (const entry of this._pluginMap.values())\n         {\n            if (entry.eventProxy instanceof EventProxy) { entry.eventProxy.destroy(); }\n\n            entry.eventProxy = new EventProxy(targetEventbus);\n         }\n\n         // Invoke private module method which allows skipping optional error checking.\n         s_INVOKE_SYNC_EVENTS('onPluginLoad', {}, {}, this._pluginMap.keys(), this._pluginMap, this._options, false);\n      }\n\n      if (this._eventbus !== null)\n      {\n         this._eventbus.off(`${oldPrepend}:add`, this._addEventbus, this);\n         this._eventbus.off(`${oldPrepend}:add:all`, this._addAllEventbus, this);\n         this._eventbus.off(`${oldPrepend}:enable:all:plugins`, this.enableAllPlugins, this);\n         this._eventbus.off(`${oldPrepend}:enable:plugin`, this.enablePlugin, this);\n         this._eventbus.off(`${oldPrepend}:enable:plugins`, this.enablePlugins, this);\n         this._eventbus.off(`${oldPrepend}:get:method:names`, this.getMethodNames, this);\n         this._eventbus.off(`${oldPrepend}:get:options`, this.getOptions, this);\n         this._eventbus.off(`${oldPrepend}:get:plugin:method:names`, this.getPluginMethodNames, this);\n         this._eventbus.off(`${oldPrepend}:get:plugin:names`, this.getPluginNames, this);\n         this._eventbus.off(`${oldPrepend}:get:plugin:options`, this.getPluginOptions, this);\n         this._eventbus.off(`${oldPrepend}:has:method`, this.hasMethod, this);\n         this._eventbus.off(`${oldPrepend}:has:plugin`, this.hasPlugin, this);\n         this._eventbus.off(`${oldPrepend}:has:plugin:method`, this.hasPluginMethod, this);\n         this._eventbus.off(`${oldPrepend}:invoke:async`, this.invokeAsync, this);\n         this._eventbus.off(`${oldPrepend}:invoke:sync`, this.invokeSync, this);\n         this._eventbus.off(`${oldPrepend}:invoke:sync:event`, this.invokeSyncEvent, this);\n         this._eventbus.off(`${oldPrepend}:remove`, this._removeEventbus, this);\n         this._eventbus.off(`${oldPrepend}:remove:all`, this._removeAllEventbus, this);\n      }\n\n      targetEventbus.on(`${eventPrepend}:add`, this._addEventbus, this);\n      targetEventbus.on(`${eventPrepend}:add:all`, this._addAllEventbus, this);\n      targetEventbus.on(`${eventPrepend}:enable:all:plugins`, this.enableAllPlugins, this);\n      targetEventbus.on(`${eventPrepend}:enable:plugin`, this.enablePlugin, this);\n      targetEventbus.on(`${eventPrepend}:enable:plugins`, this.enablePlugins, this);\n      targetEventbus.on(`${eventPrepend}:get:method:names`, this.getMethodNames, this);\n      targetEventbus.on(`${eventPrepend}:get:options`, this.getOptions, this);\n      targetEventbus.on(`${eventPrepend}:get:plugin:method:names`, this.getPluginMethodNames, this);\n      targetEventbus.on(`${eventPrepend}:get:plugin:names`, this.getPluginNames, this);\n      targetEventbus.on(`${eventPrepend}:get:plugin:options`, this.getPluginOptions, this);\n      targetEventbus.on(`${eventPrepend}:has:method`, this.hasMethod, this);\n      targetEventbus.on(`${eventPrepend}:has:plugin`, this.hasPlugin, this);\n      targetEventbus.on(`${eventPrepend}:has:plugin:method`, this.hasPluginMethod, this);\n      targetEventbus.on(`${eventPrepend}:invoke:async`, this.invokeAsync, this);\n      targetEventbus.on(`${eventPrepend}:invoke:sync`, this.invokeSync, this);\n      targetEventbus.on(`${eventPrepend}:invoke:sync:event`, this.invokeSyncEvent, this);\n      targetEventbus.on(`${eventPrepend}:remove`, this._removeEventbus, this);\n      targetEventbus.on(`${eventPrepend}:remove:all`, this._removeAllEventbus, this);\n\n      this._eventbus = targetEventbus;\n\n      return this;\n   }\n\n   /**\n    * Set optional parameters. All parameters are off by default.\n    *\n    * @param {ManagerOptions} options - Defines optional parameters to set.\n    */\n   setOptions(options = {})\n   {\n      if (typeof options !== 'object') { throw new TypeError(`'options' is not an object.`); }\n\n      if (typeof options.noEventAdd === 'boolean') { this._options.noEventAdd = options.noEventAdd; }\n      if (typeof options.noEventRemoval === 'boolean') { this._options.noEventRemoval = options.noEventRemoval; }\n      if (typeof options.throwNoMethod === 'boolean') { this._options.throwNoMethod = options.throwNoMethod; }\n      if (typeof options.throwNoPlugin === 'boolean') { this._options.throwNoPlugin = options.throwNoPlugin; }\n   }\n\n   /**\n    * Removes a plugin by name after unloading it and clearing any event bindings automatically.\n    *\n    * @param {string}   pluginName - The plugin name to remove.\n    *\n    * @returns {boolean} - Operation success.\n    */\n   remove(pluginName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      const entry = this._pluginMap.get(pluginName);\n\n      if (entry instanceof PluginEntry)\n      {\n         // Invoke private module method which allows skipping optional error checking.\n         s_INVOKE_SYNC_EVENTS('onPluginUnload', {}, {}, pluginName, this._pluginMap, this._options, false);\n\n         if (entry.eventProxy instanceof EventProxy) { entry.eventProxy.destroy(); }\n\n         this._pluginMap.delete(pluginName);\n\n         return true;\n      }\n\n      return false;\n   }\n\n   /**\n    * Removes all plugins after unloading them and clearing any event bindings automatically.\n    */\n   removeAll()\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      // Invoke private module method which allows skipping optional error checking.\n      s_INVOKE_SYNC_EVENTS('onPluginUnload', {}, {}, this._pluginMap.keys(), this._pluginMap, this._options, false);\n\n      for (const entry of this._pluginMap.values())\n      {\n         if (entry.eventProxy instanceof EventProxy) { entry.eventProxy.destroy(); }\n      }\n\n      this._pluginMap.clear();\n   }\n\n   /**\n    * Provides the eventbus callback which may prevent removal if optional `noEventRemoval` is enabled. This disables\n    * the ability for plugins to be removed via events preventing any external code removing plugins in this manner.\n    *\n    * @param {string}   pluginName - The plugin name to remove.\n    *\n    * @returns {boolean} - Operation success.\n    * @private\n    */\n   _removeEventbus(pluginName)\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      return !this._options.noEventRemoval ? this.remove(pluginName) : false;\n   }\n\n   /**\n    * Provides the eventbus callback which may prevent removal if optional `noEventRemoval` is enabled. This disables\n    * the ability for plugins to be removed via events preventing any external code removing plugins in this manner.\n    *\n    * @private\n    */\n   _removeAllEventbus()\n   {\n      if (this._pluginMap === null) { throw new ReferenceError('This PluginManager instance has been destroyed.'); }\n\n      if (!this._options.noEventRemoval) { this.removeAll(); }\n   }\n}\n/**\n * Private implementation to invoke synchronous events. This allows internal calls in PluginManager for\n * `onPluginLoad` and `onPluginUnload` callbacks to bypass optional error checking.\n *\n * This dispatch method synchronously passes to and returns from any invoked targets a PluginEvent.\n *\n * @param {string}                     methodName - Method name to invoke.\n *\n * @param {object}                     copyProps - plugin event object.\n *\n * @param {object}                     passthruProps - if true, event has plugin option.\n *\n * @param {string|Array<string>}       nameOrList - An optional plugin name or array / iterable of plugin names to\n *                                                  invoke.\n *\n * @param {Map<string, PluginEvent>}   pluginMap - Stores the plugins by name with an associated PluginEntry.\n *\n * @param {object}                     options - Defines options for throwing exceptions. Turned off by default.\n *\n * @param {boolean}                    [performErrorCheck=true] - If false optional error checking is disabled.\n *\n * @returns {PluginEvent}\n */\nconst s_INVOKE_SYNC_EVENTS = (methodName, copyProps = {}, passthruProps = {}, nameOrList, pluginMap, options,\n                              performErrorCheck = true) =>\n{\n   if (typeof methodName !== 'string') { throw new TypeError(`'methodName' is not a string.`); }\n   if (typeof passthruProps !== 'object') { throw new TypeError(`'passthruProps' is not an object.`); }\n   if (typeof copyProps !== 'object') { throw new TypeError(`'copyProps' is not an object.`); }\n\n   if (typeof nameOrList !== 'string' && !Array.isArray(nameOrList) &&\n    typeof nameOrList[Symbol.iterator] !== 'function')\n   {\n      throw new TypeError(`'nameOrList' is not a string, array, or iterator.`);\n   }\n\n   // Track how many plugins were invoked.\n   let pluginInvokeCount = 0;\n   const pluginInvokeNames = [];\n\n   // Track if a plugin method is invoked\n   let hasMethod = false;\n   let hasPlugin = false;\n\n   // Create plugin event.\n   const ev = new PluginEvent(copyProps, passthruProps);\n\n   if (typeof nameOrList === 'string')\n   {\n      const plugin = pluginMap.get(nameOrList);\n\n      if (plugin instanceof PluginEntry && plugin.enabled && plugin.instance)\n      {\n         hasPlugin = true;\n\n         if (typeof plugin.instance[methodName] === 'function')\n         {\n            ev.eventbus = plugin.eventProxy;\n            ev.pluginName = plugin.name;\n            ev.pluginOptions = plugin.options;\n\n            plugin.instance[methodName](ev);\n\n            hasMethod = true;\n            pluginInvokeCount++;\n            pluginInvokeNames.push(plugin.name);\n         }\n      }\n   }\n   else\n   {\n      for (const name of nameOrList)\n      {\n         const plugin = pluginMap.get(name);\n\n         if (plugin instanceof PluginEntry && plugin.enabled && plugin.instance)\n         {\n            hasPlugin = true;\n\n            if (typeof plugin.instance[methodName] === 'function')\n            {\n               ev.eventbus = plugin.eventProxy;\n               ev.pluginName = plugin.name;\n               ev.pluginOptions = plugin.options;\n\n               plugin.instance[methodName](ev);\n\n               hasMethod = true;\n               pluginInvokeCount++;\n               pluginInvokeNames.push(plugin.name);\n            }\n         }\n      }\n   }\n\n   if (performErrorCheck && options.throwNoPlugin && !hasPlugin)\n   {\n      throw new Error(`PluginManager failed to find any target plugins.`);\n   }\n\n   if (performErrorCheck && options.throwNoMethod && !hasMethod)\n   {\n      throw new Error(`PluginManager failed to invoke '${methodName}'.`);\n   }\n\n   // Add meta data for plugin invoke count.\n   ev.data.$$plugin_invoke_count = pluginInvokeCount;\n   ev.data.$$plugin_invoke_names = pluginInvokeNames;\n\n   return ev.data;\n};\n\n/**\n * Walks an objects inheritance tree collecting property names stopping before `Object` is reached.\n *\n * @param {object}   obj - object to walks.\n *\n * @returns {Array}\n * @ignore\n */\nconst s_GET_ALL_PROPERTY_NAMES = (obj) =>\n{\n   const props = [];\n\n   do\n   {\n      Object.getOwnPropertyNames(obj).forEach((prop) => { if (props.indexOf(prop) === -1) { props.push(prop); } });\n      obj = Object.getPrototypeOf(obj);\n   } while (typeof obj !== 'undefined' && obj !== null && !(obj === Object.prototype));\n\n   return props;\n};\n",
+    "___id": "T000002R000026",
+    "___s": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "PluginManager",
+    "memberof": "src/PluginManager.js",
+    "longname": "src/PluginManager.js~PluginManager",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-plugin-manager/src/PluginManager.js",
+    "importStyle": "PluginManager",
+    "description": "Provides a lightweight plugin manager for Node / NPM with optional `backbone-esnext-events`\nintegration for plugins in a safe and protected manner across NPM modules, local files, and preloaded object\ninstances. This pattern facilitates message passing between modules versus direct dependencies / method invocation.\n\nIt isn't necessary to use an eventbus associated with the plugin manager though invocation then relies on invoking\nmethods directly with the plugin manager instance.\n\nWhen passing in an eventbus from `backbone-esnext-events` the plugin manager will register by default under these\nevent categories:\n\n`plugins:add` - {@link PluginManager#add}\n\n`plugins:add:all` - {@link PluginManager#addAll}\n\n`plugins:enable:all:plugins` - {@link PluginManager#enableAllPlugins}\n\n`plugins:enable:plugin` - {@link PluginManager#enablePlugin}\n\n`plugins:enable:plugins` - {@link PluginManager#enablePlugins}\n\n`plugins:get:method:names` - {@link PluginManager#getMethodNames}\n\n`plugins:get:options` - {@link PluginManager#getOptions}\n\n`plugins:get:plugin:method:names` - {@link PluginManager#getPluginMethodNames}\n\n`plugins:get:plugin:names` - {@link PluginManager#getPluginNames}\n\n`plugins:get:plugin:options` - {@link PluginManager#getPluginOptions}\n\n`plugins:has:method` - {@link PluginManager#hasMethod}\n\n`plugins:has:plugin` - {@link PluginManager#hasPlugin}\n\n`plugins:has:plugin:method` - {@link PluginManager#hasPluginMethod}\n\n`plugins:invoke:async` - {@link PluginManager#invokeAsync}\n\n`plugins:invoke:sync` - {@link PluginManager#invokeSync}\n\n`plugins:invoke:sync:event` - {@link PluginManager#invokeSyncEvent}\n\n`plugins:remove` - {@link PluginManager#remove}\n\n`plugins:remove:all` - {@link PluginManager#removeAll}\n\nAutomatically when a plugin is loaded and unloaded respective callbacks `onPluginLoad` and `onPluginUnload` will\nbe attempted to be invoked on the plugin. This is an opportunity for the plugin to receive any associated eventbus\nand wire itself into it. It should be noted that a protected proxy around the eventbus is passed to the plugins\nsuch that when the plugin is removed automatically all events registered on the eventbus are cleaned up without\na plugin author needing to do this manually in the `onPluginUnload` callback. This solves any dangling event binding\nissues.\n\nIf eventbus functionality is enabled it is important especially if using a process / global level eventbus such as\n`backbone-esnext-eventbus` to call {@link PluginManager#destroy} to clean up all plugin eventbus resources and\nthe plugin manager event bindings.",
+    "examples": [
+      "import Events        from 'backbone-esnext-events';   // Imports the TyphonEvents class for local usage.\n::or alternatively::\nimport eventbus      from 'backbone-esnext-eventbus'; // Imports a global / process level eventbus.\n\nimport PluginManager from 'typhonjs-plugin-manager';\n\nconst pluginManager = new PluginManager({ eventbus });\n\npluginManager.add({ name: 'an-npm-plugin-enabled-module' });\npluginManager.add({ name: 'my-local-module', target: './myModule.js' });\n\n// Let's say an-npm-plugin-enabled-module responds to 'cool:event' which returns 'true'.\n// Let's say my-local-module responds to 'hot:event' which returns 'false'.\n// Both of the plugin / modules will have 'onPluginLoaded' invoked with a proxy to the eventbus and any plugin\n// options defined.\n\n// One can then use the eventbus functionality to invoke associated module / plugin methods even retrieving results.\nassert(eventbus.triggerSync('cool:event') === true);\nassert(eventbus.triggerSync('hot:event') === false);\n\n// One can also indirectly invoke any method of the plugin via:\neventbus.triggerSync('plugins:invoke:sync:event', 'aCoolMethod'); // Any plugin with a method named `aCoolMethod` is invoked.\neventbus.triggerSync('plugins:invoke:sync:event', 'aCoolMethod', {}, {}, 'an-npm-plugin-enabled-module'); // specific invocation.\n\n// The 3rd parameter defines a pass through object hash and the 4th will make a copy of the hash sending a single\n// event / object hash to the invoked method.\n\n// -----------------------\n\n// Given that `backbone-esnext-eventbus` defines a global / process level eventbus you can import it in an entirely\n// different file or even NPM module and invoke methods of loaded plugins like this:\n\nimport eventbus from 'backbone-esnext-eventbus';\n\neventbus.triggerSync('plugins:invoke', 'aCoolMethod'); // Any plugin with a method named `aCoolMethod` is invoked.\n\nassert(eventbus.triggerSync('cool:event') === true);\n\neventbus.trigger('plugins:remove', 'an-npm-plugin-enabled-module'); // Removes the plugin and unregisters events.\n\nassert(eventbus.triggerSync('cool:event') === true); // Will now fail!\n\n// In this case though when using the global eventbus be mindful to always call `pluginManager.destroy()` in the main\n// thread of execution scope to remove all plugins and the plugin manager event bindings!"
+    ],
+    "see": [
+      "<a href=\"https://www.npmjs.com/package/backbone-esnext-events\">https://www.npmjs.com/package/backbone-esnext-events</a>",
+      "<a href=\"https://www.npmjs.com/package/backbone-esnext-eventbus\">https://www.npmjs.com/package/backbone-esnext-eventbus</a>"
+    ],
+    "lineNumber": 115,
+    "interface": false,
+    "___id": "T000002R000027",
+    "___s": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#constructor",
+    "access": null,
+    "description": "Instantiates PluginManager",
+    "lineNumber": 133,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "<p>Provides various configuration options:</p>\n",
+        "descriptionRaw": "Provides various configuration options:"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "TyphonEvents"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.eventbus",
+        "description": "<p>An instance of &#39;backbone-esnext-events&#39; used as the plugin eventbus.</p>\n",
+        "descriptionRaw": "An instance of 'backbone-esnext-events' used as the plugin eventbus."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "'plugin'",
+        "defaultRaw": "'plugin'",
+        "name": "options.eventPrepend",
+        "description": "<p>A customized name to prepend PluginManager events on the\n                                                    eventbus.</p>\n",
+        "descriptionRaw": "A customized name to prepend PluginManager events on the\n                                                    eventbus."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "options.throwNoMethod",
+        "description": "<p>If true then when a method fails to be invoked by any plugin\n                                                  an exception will be thrown.</p>\n",
+        "descriptionRaw": "If true then when a method fails to be invoked by any plugin\n                                                  an exception will be thrown."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "options.throwNoPlugin",
+        "description": "<p>If true then when no plugin is matched to be invoked an\n                                                  exception will be thrown.</p>\n",
+        "descriptionRaw": "If true then when no plugin is matched to be invoked an\n                                                  exception will be thrown."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000028",
+    "___s": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_pluginMap",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_pluginMap",
+    "access": "private",
+    "description": "<p>Stores the plugins by name with an associated PluginEntry.</p>\n",
+    "lineNumber": 142,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<string, PluginEntry>"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000029",
+    "___s": true,
+    "descriptionRaw": "Stores the plugins by name with an associated PluginEntry."
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_eventbus",
+    "access": "private",
+    "description": "<p>Stores any associated eventbus.</p>\n",
+    "lineNumber": 149,
+    "type": {
+      "nullable": null,
+      "types": [
+        "TyphonEvents"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000030",
+    "___s": true,
+    "descriptionRaw": "Stores any associated eventbus."
+  },
+  {
+    "__docId__": 29,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_options",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_options",
+    "access": "private",
+    "description": "<p>Defines options for throwing exceptions. Turned off by default.</p>\n",
+    "lineNumber": 156,
+    "type": {
+      "nullable": null,
+      "types": [
+        "ManagerOptions"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000031",
+    "___s": true,
+    "descriptionRaw": "Defines options for throwing exceptions. Turned off by default."
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "add",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#add",
+    "access": null,
+    "description": "Adds a plugin by the given configuration parameters. A plugin `name` is always required. If no other options\nare provided then the `name` doubles as the NPM module / local file to load. The loading first checks for an\nexisting `instance` to use as the plugin. Then the `target` is chosen as the NPM module / local file to load.\nBy passing in `options` this will be stored and accessible to the plugin during all callbacks.",
+    "lineNumber": 171,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "PluginConfig"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginConfig",
+        "description": "<p>Defines the plugin to load.</p>\n",
+        "descriptionRaw": "Defines the plugin to load."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000032",
+    "___s": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addAll",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#addAll",
+    "access": null,
+    "description": "Initializes multiple plugins in a single call.",
+    "lineNumber": 232,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<PluginConfig>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginConfigs",
+        "description": "<p>An array of plugin config object hash entries.</p>\n",
+        "descriptionRaw": "An array of plugin config object hash entries."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000033",
+    "___s": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_addEventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_addEventbus",
+    "access": "private",
+    "description": "<p>Provides the eventbus callback which may prevent addition if optional <code>noEventAdd</code> is enabled. This disables\nthe ability for plugins to be added via events preventing any external code adding plugins in this manner.</p>\n",
+    "lineNumber": 250,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - Operation success."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>The plugin name to remove.</p>\n",
+        "descriptionRaw": "The plugin name to remove."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>Operation success.</p>\n",
+      "descriptionRaw": "Operation success."
+    },
+    "generator": false,
+    "___id": "T000002R000034",
+    "___s": true,
+    "descriptionRaw": "Provides the eventbus callback which may prevent addition if optional `noEventAdd` is enabled. This disables\nthe ability for plugins to be added via events preventing any external code adding plugins in this manner."
+  },
+  {
+    "__docId__": 33,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_addAllEventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_addAllEventbus",
+    "access": "private",
+    "description": "<p>Provides the eventbus callback which may prevent addition if optional <code>noEventAdd</code> is enabled. This disables\nthe ability for plugins to be added via events preventing any external code adding plugins in this manner.</p>\n",
+    "lineNumber": 263,
+    "params": [],
+    "generator": false,
+    "___id": "T000002R000035",
+    "___s": true,
+    "descriptionRaw": "Provides the eventbus callback which may prevent addition if optional `noEventAdd` is enabled. This disables\nthe ability for plugins to be added via events preventing any external code adding plugins in this manner."
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "destroy",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#destroy",
+    "access": null,
+    "description": "Destroys all managed plugins after unloading them.",
+    "lineNumber": 273,
+    "params": [],
+    "generator": false,
+    "___id": "T000002R000036",
+    "___s": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_pluginMap",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_pluginMap",
+    "access": null,
+    "description": null,
+    "lineNumber": 301,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000037",
+    "___s": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_eventbus",
+    "access": null,
+    "description": null,
+    "lineNumber": 302,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000038",
+    "___s": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "enableAllPlugins",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#enableAllPlugins",
+    "access": null,
+    "description": "Enables or disables all plugins.",
+    "lineNumber": 310,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>The new enabled state.</p>\n",
+        "descriptionRaw": "The new enabled state."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000039",
+    "___s": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "enablePlugin",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#enablePlugin",
+    "access": null,
+    "description": "Enables or disables a single plugin.",
+    "lineNumber": 327,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - Operation success."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>Plugin name to set state.</p>\n",
+        "descriptionRaw": "Plugin name to set state."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>The new enabled state.</p>\n",
+        "descriptionRaw": "The new enabled state."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>Operation success.</p>\n",
+      "descriptionRaw": "Operation success."
+    },
+    "generator": false,
+    "___id": "T000002R000040",
+    "___s": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "enablePlugins",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#enablePlugins",
+    "access": null,
+    "description": "Enables or disables a set of plugins given an array or iterabe of plugin names.",
+    "lineNumber": 353,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - Operation success."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<string>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginNames",
+        "description": "<p>An array / iterable of plugin names.</p>\n",
+        "descriptionRaw": "An array / iterable of plugin names."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>The new enabled state.</p>\n",
+        "descriptionRaw": "The new enabled state."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>Operation success.</p>\n",
+      "descriptionRaw": "Operation success."
+    },
+    "generator": false,
+    "___id": "T000002R000041",
+    "___s": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getEventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#getEventbus",
+    "access": null,
+    "description": "Returns any associated eventbus.",
+    "lineNumber": 383,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{TyphonEvents|null}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "TyphonEvents",
+        "null"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000042",
+    "___s": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getMethodNames",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#getMethodNames",
+    "access": null,
+    "description": "Returns all method names or if a boolean is passed in will return method names for plugins by current enabled\nstate.",
+    "lineNumber": 401,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array<string>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean",
+          "undefined"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>If enabled is a boolean it will return plugin methods names given their\n                                     enabled state.</p>\n",
+        "descriptionRaw": "If enabled is a boolean it will return plugin methods names given their\n                                     enabled state."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "undefined"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>If a string then just this plugins methods names are returned.</p>\n",
+        "descriptionRaw": "If a string then just this plugins methods names are returned."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<string>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000043",
+    "___s": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getOptions",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#getOptions",
+    "access": null,
+    "description": "Returns a copy of the plugin manager options.",
+    "lineNumber": 434,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{ManagerOptions}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "ManagerOptions"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000044",
+    "___s": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getPluginMethodNames",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#getPluginMethodNames",
+    "access": null,
+    "description": "Returns all plugin names or if a boolean is passed in will return plugin names by current enabled state.",
+    "lineNumber": 448,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array<{plugin: string, method: string}>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean",
+          "undefined"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>If enabled is a boolean it will return plugins given their enabled state.</p>\n",
+        "descriptionRaw": "If enabled is a boolean it will return plugins given their enabled state."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<{plugin: string, method: string}>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000045",
+    "___s": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getPluginNames",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#getPluginNames",
+    "access": null,
+    "description": "Returns all plugin names or if a boolean is passed in will return plugin names by current enabled state.",
+    "lineNumber": 485,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array<string>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean",
+          "undefined"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>If enabled is a boolean it will return plugins given their enabled state.</p>\n",
+        "descriptionRaw": "If enabled is a boolean it will return plugins given their enabled state."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<string>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000046",
+    "___s": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getPluginOptions",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#getPluginOptions",
+    "access": null,
+    "description": "Returns a copy of the given plugin options.",
+    "lineNumber": 514,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>Plugin name to retrieve.</p>\n",
+        "descriptionRaw": "Plugin name to retrieve."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000047",
+    "___s": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "hasMethod",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#hasMethod",
+    "access": null,
+    "description": "Returns true if there is at least one plugin loaded with the given method name.",
+    "lineNumber": 536,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - True method is found."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "methodName",
+        "description": "<p>Method name to test.</p>\n",
+        "descriptionRaw": "Method name to test."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True method is found.</p>\n",
+      "descriptionRaw": "True method is found."
+    },
+    "generator": false,
+    "___id": "T000002R000048",
+    "___s": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "hasPlugin",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#hasPlugin",
+    "access": null,
+    "description": "Returns true if there is a plugin loaded with the given plugin name.",
+    "lineNumber": 557,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - True if a plugin exists."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>Plugin name to test.</p>\n",
+        "descriptionRaw": "Plugin name to test."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True if a plugin exists.</p>\n",
+      "descriptionRaw": "True if a plugin exists."
+    },
+    "generator": false,
+    "___id": "T000002R000049",
+    "___s": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "hasPluginMethod",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#hasPluginMethod",
+    "access": null,
+    "description": "Returns true if there is a plugin loaded with the given plugin name that also has a method with the given\nmethod name.",
+    "lineNumber": 575,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - True if a plugin and method exists."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>Plugin name to test.</p>\n",
+        "descriptionRaw": "Plugin name to test."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "methodName",
+        "description": "<p>Method name to test.</p>\n",
+        "descriptionRaw": "Method name to test."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True if a plugin and method exists.</p>\n",
+      "descriptionRaw": "True if a plugin and method exists."
+    },
+    "generator": false,
+    "___id": "T000002R000050",
+    "___s": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "invokeAsync",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#invokeAsync",
+    "access": null,
+    "description": "This dispatch method uses ES6 Promises and adds any returned results to an array which is added to a Promise.all\nconstruction which passes back a Promise which waits until all Promises complete. Any target invoked may return a\nPromise or any result. This is very useful to use for any asynchronous operations.",
+    "lineNumber": 599,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Array<*>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "Array<string>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nameOrList",
+        "description": "<p>An optional plugin name or array / iterable of plugin names to\n                                           invoke.</p>\n",
+        "descriptionRaw": "An optional plugin name or array / iterable of plugin names to\n                                           invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "methodName",
+        "description": "<p>Method name to invoke.</p>\n",
+        "descriptionRaw": "Method name to invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "<p>Optional arguments.</p>\n",
+        "descriptionRaw": "Optional arguments."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Array<*>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000051",
+    "___s": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "invokeSync",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#invokeSync",
+    "access": null,
+    "description": "This dispatch method synchronously passes back a single value or an array with all results returned by any\ninvoked targets.",
+    "lineNumber": 693,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Array<*>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "Array<string>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nameOrList",
+        "description": "<p>An optional plugin name or array / iterable of plugin names to\n                                            invoke.</p>\n",
+        "descriptionRaw": "An optional plugin name or array / iterable of plugin names to\n                                            invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "methodName",
+        "description": "<p>Method name to invoke.</p>\n",
+        "descriptionRaw": "Method name to invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "args",
+        "description": "<p>Optional arguments.</p>\n",
+        "descriptionRaw": "Optional arguments."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Array<*>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000052",
+    "___s": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "invokeSyncEvent",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#invokeSyncEvent",
+    "access": null,
+    "description": "This dispatch method synchronously passes to and returns from any invoked targets a PluginEvent.",
+    "lineNumber": 783,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{PluginEvent}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "methodName",
+        "description": "<p>Method name to invoke.</p>\n",
+        "descriptionRaw": "Method name to invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "copyProps",
+        "description": "<p>plugin event object.</p>\n",
+        "descriptionRaw": "plugin event object."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "passthruProps",
+        "description": "<p>if true, event has plugin option.</p>\n",
+        "descriptionRaw": "if true, event has plugin option."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "Array<string>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nameOrList",
+        "description": "<p>An optional plugin name or array / iterable of plugin names to\n                                            invoke.</p>\n",
+        "descriptionRaw": "An optional plugin name or array / iterable of plugin names to\n                                            invoke."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "PluginEvent"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000053",
+    "___s": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "setEventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#setEventbus",
+    "access": null,
+    "description": "Sets the eventbus associated with this plugin manager. If any previous eventbus was associated all plugin manager\nevents will be removed then added to the new eventbus. If there are any existing plugins being managed their\nevents will be removed from the old eventbus and then `onPluginLoad` will be called with the new eventbus.",
+    "lineNumber": 801,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{PluginManager}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "TyphonEvents"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "targetEventbus",
+        "description": "<p>The target eventbus to associate.</p>\n",
+        "descriptionRaw": "The target eventbus to associate."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "'plugins'",
+        "defaultRaw": "'plugins'",
+        "name": "eventPrepend",
+        "description": "<p>An optional string to prepend to all of the event binding\n                                                   targets.</p>\n",
+        "descriptionRaw": "An optional string to prepend to all of the event binding\n                                                   targets."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "PluginManager"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000054",
+    "___s": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventPrepend",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_eventPrepend",
+    "access": "private",
+    "description": "<p>Stores the prepend string for eventbus registration.</p>\n",
+    "lineNumber": 818,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000055",
+    "___s": true,
+    "descriptionRaw": "Stores the prepend string for eventbus registration."
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_eventbus",
+    "access": null,
+    "description": null,
+    "lineNumber": 878,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000056",
+    "___s": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "setOptions",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#setOptions",
+    "access": null,
+    "description": "Set optional parameters. All parameters are off by default.",
+    "lineNumber": 888,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "ManagerOptions"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>Defines optional parameters to set.</p>\n",
+        "descriptionRaw": "Defines optional parameters to set."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000057",
+    "___s": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "remove",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#remove",
+    "access": null,
+    "description": "Removes a plugin by name after unloading it and clearing any event bindings automatically.",
+    "lineNumber": 905,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - Operation success."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>The plugin name to remove.</p>\n",
+        "descriptionRaw": "The plugin name to remove."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>Operation success.</p>\n",
+      "descriptionRaw": "Operation success."
+    },
+    "generator": false,
+    "___id": "T000002R000058",
+    "___s": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeAll",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#removeAll",
+    "access": null,
+    "description": "Removes all plugins after unloading them and clearing any event bindings automatically.",
+    "lineNumber": 929,
+    "params": [],
+    "generator": false,
+    "___id": "T000002R000059",
+    "___s": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_removeEventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_removeEventbus",
+    "access": "private",
+    "description": "<p>Provides the eventbus callback which may prevent removal if optional <code>noEventRemoval</code> is enabled. This disables\nthe ability for plugins to be removed via events preventing any external code removing plugins in this manner.</p>\n",
+    "lineNumber": 953,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} - Operation success."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginName",
+        "description": "<p>The plugin name to remove.</p>\n",
+        "descriptionRaw": "The plugin name to remove."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>Operation success.</p>\n",
+      "descriptionRaw": "Operation success."
+    },
+    "generator": false,
+    "___id": "T000002R000060",
+    "___s": true,
+    "descriptionRaw": "Provides the eventbus callback which may prevent removal if optional `noEventRemoval` is enabled. This disables\nthe ability for plugins to be removed via events preventing any external code removing plugins in this manner."
+  },
+  {
+    "__docId__": 59,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_removeAllEventbus",
+    "memberof": "src/PluginManager.js~PluginManager",
+    "longname": "src/PluginManager.js~PluginManager#_removeAllEventbus",
+    "access": "private",
+    "description": "<p>Provides the eventbus callback which may prevent removal if optional <code>noEventRemoval</code> is enabled. This disables\nthe ability for plugins to be removed via events preventing any external code removing plugins in this manner.</p>\n",
+    "lineNumber": 966,
+    "params": [],
+    "generator": false,
+    "___id": "T000002R000061",
+    "___s": true,
+    "descriptionRaw": "Provides the eventbus callback which may prevent removal if optional `noEventRemoval` is enabled. This disables\nthe ability for plugins to be removed via events preventing any external code removing plugins in this manner."
+  },
+  {
+    "__docId__": 60,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_INVOKE_SYNC_EVENTS",
+    "memberof": "src/PluginManager.js",
+    "longname": "src/PluginManager.js~s_INVOKE_SYNC_EVENTS",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-plugin-manager/src/PluginManager.js",
+    "importStyle": null,
+    "description": "Private implementation to invoke synchronous events. This allows internal calls in PluginManager for\n`onPluginLoad` and `onPluginUnload` callbacks to bypass optional error checking.\n\nThis dispatch method synchronously passes to and returns from any invoked targets a PluginEvent.",
+    "lineNumber": 996,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{PluginEvent}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "methodName",
+        "description": "Method name to invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "copyProps",
+        "description": "plugin event object."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "passthruProps",
+        "description": "if true, event has plugin option."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "Array<string>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nameOrList",
+        "description": "An optional plugin name or array / iterable of plugin names to\n                                                 invoke."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Map<string, PluginEvent>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pluginMap",
+        "description": "Stores the plugins by name with an associated PluginEntry."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "Defines options for throwing exceptions. Turned off by default."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "performErrorCheck",
+        "description": "If false optional error checking is disabled."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "PluginEvent"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000062",
+    "___s": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_GET_ALL_PROPERTY_NAMES",
+    "memberof": "src/PluginManager.js",
+    "longname": "src/PluginManager.js~s_GET_ALL_PROPERTY_NAMES",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-plugin-manager/src/PluginManager.js",
+    "importStyle": null,
+    "description": "Walks an objects inheritance tree collecting property names stopping before `Object` is reached.",
+    "lineNumber": 1093,
+    "ignore": true,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "obj",
+        "description": "object to walks."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000063",
+    "___s": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/types/types.js",
+    "memberof": null,
+    "longname": "src/types/types.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/**\n * @typedef {object} PluginConfig\n *\n * @property {string}   name - Defines the name of the plugin; if no `target` entry is present the name\n *                             doubles as the target (please see target).\n *\n * @property {string}   [target] - Defines the target NPM module to load or defines a local file (full\n *                                 path or relative to current working directory to load.\n *\n * @property {string}   [instance] - Defines an existing object instance to use as the plugin.\n *\n * @property {object}   [options] - Defines an object of options for the plugin.\n */\n\n/**\n * @typedef {object} ManagerOptions\n *\n * @property {boolean}   [noEventAdd] - If true this prevents plugins from being added by `plugin:add` and\n *                                      `plugin:add:all` events forcing direct method invocation for addition.\n *\n * @property {boolean}   [noEventRemoval] - If true this prevents plugins from being removed by `plugin:remove` and\n *                                          `plugin:remove:all` events forcing direct method invocation for removal.\n *\n * @property {boolean}   [throwNoMethod] - If true then when a method fails to be invoked by any plugin an exception\n *                                         will be thrown.\n *\n * @property {boolean}   [throwNoPlugin] - If true then when no plugin is matched to be invoked an exception will be\n *                                         thrown.\n */\n\n/**\n * @external {EventProxy} https://docs.typhonjs.io/typhonjs-backbone-esnext/backbone-esnext-events/class/src/EventProxy.js~EventProxy.html\n */\n\n/**\n * @external {TyphonEvents} https://docs.typhonjs.io/typhonjs-backbone-esnext/backbone-esnext-events/class/src/TyphonEvents.js~TyphonEvents.html\n */\n",
+    "___id": "T000002R000064",
+    "___s": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "PluginConfig",
+    "memberof": "src/types/types.js",
+    "longname": "src/types/types.js~PluginConfig",
+    "access": null,
+    "description": "",
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>Defines the name of the plugin; if no <code>target</code> entry is present the name\n                            doubles as the target (please see target).</p>\n",
+        "descriptionRaw": "Defines the name of the plugin; if no `target` entry is present the name\n                            doubles as the target (please see target)."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "target",
+        "description": "<p>Defines the target NPM module to load or defines a local file (full\n                                path or relative to current working directory to load.</p>\n",
+        "descriptionRaw": "Defines the target NPM module to load or defines a local file (full\n                                path or relative to current working directory to load."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "instance",
+        "description": "<p>Defines an existing object instance to use as the plugin.</p>\n",
+        "descriptionRaw": "Defines an existing object instance to use as the plugin."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "<p>Defines an object of options for the plugin.</p>\n",
+        "descriptionRaw": "Defines an object of options for the plugin."
+      }
+    ],
+    "type": {
+      "types": [
+        "object"
+      ],
+      "optional": false,
+      "name": "PluginConfig"
+    },
+    "___id": "T000002R000065",
+    "___s": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "ManagerOptions",
+    "memberof": "src/types/types.js",
+    "longname": "src/types/types.js~ManagerOptions",
+    "access": null,
+    "description": "",
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "noEventAdd",
+        "description": "<p>If true this prevents plugins from being added by <code>plugin:add</code> and\n                                     <code>plugin:add:all</code> events forcing direct method invocation for addition.</p>\n",
+        "descriptionRaw": "If true this prevents plugins from being added by `plugin:add` and\n                                     `plugin:add:all` events forcing direct method invocation for addition."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "noEventRemoval",
+        "description": "<p>If true this prevents plugins from being removed by <code>plugin:remove</code> and\n                                         <code>plugin:remove:all</code> events forcing direct method invocation for removal.</p>\n",
+        "descriptionRaw": "If true this prevents plugins from being removed by `plugin:remove` and\n                                         `plugin:remove:all` events forcing direct method invocation for removal."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "throwNoMethod",
+        "description": "<p>If true then when a method fails to be invoked by any plugin an exception\n                                        will be thrown.</p>\n",
+        "descriptionRaw": "If true then when a method fails to be invoked by any plugin an exception\n                                        will be thrown."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "throwNoPlugin",
+        "description": "<p>If true then when no plugin is matched to be invoked an exception will be\n                                        thrown.</p>\n",
+        "descriptionRaw": "If true then when no plugin is matched to be invoked an exception will be\n                                        thrown."
+      }
+    ],
+    "type": {
+      "types": [
+        "object"
+      ],
+      "optional": false,
+      "name": "ManagerOptions"
+    },
+    "___id": "T000002R000066",
+    "___s": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EventProxy",
+    "externalLink": "https://docs.typhonjs.io/typhonjs-backbone-esnext/backbone-esnext-events/class/src/EventProxy.js~EventProxy.html",
+    "memberof": "src/types/types.js",
+    "longname": "src/types/types.js~EventProxy",
+    "access": null,
+    "description": "",
+    "___id": "T000002R000067",
+    "___s": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TyphonEvents",
+    "externalLink": "https://docs.typhonjs.io/typhonjs-backbone-esnext/backbone-esnext-events/class/src/TyphonEvents.js~TyphonEvents.html",
+    "memberof": "src/types/types.js",
+    "longname": "src/types/types.js~TyphonEvents",
+    "access": null,
+    "description": "",
+    "___id": "T000002R000068",
+    "___s": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000069",
+    "___s": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000070",
+    "___s": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000071",
+    "___s": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000072",
+    "___s": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000073",
+    "___s": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000074",
+    "___s": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000075",
+    "___s": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000076",
+    "___s": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000077",
+    "___s": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000078",
+    "___s": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000079",
+    "___s": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000080",
+    "___s": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000081",
+    "___s": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000082",
+    "___s": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000083",
+    "___s": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000084",
+    "___s": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000085",
+    "___s": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000086",
+    "___s": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000087",
+    "___s": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000088",
+    "___s": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000089",
+    "___s": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000090",
+    "___s": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000091",
+    "___s": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000092",
+    "___s": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000093",
+    "___s": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000094",
+    "___s": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000095",
+    "___s": true
+  },
+  {
+    "__docId__": 95,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000096",
+    "___s": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000097",
+    "___s": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000098",
+    "___s": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000099",
+    "___s": true
+  },
+  {
+    "__docId__": 99,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000100",
+    "___s": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000101",
+    "___s": true
+  },
+  {
+    "__docId__": 101,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000102",
+    "___s": true
+  },
+  {
+    "__docId__": 102,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000103",
+    "___s": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000104",
+    "___s": true
+  },
+  {
+    "__docId__": 104,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000105",
+    "___s": true
+  },
+  {
+    "__docId__": 105,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000106",
+    "___s": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000107",
+    "___s": true
+  },
+  {
+    "__docId__": 107,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000108",
+    "___s": true
+  },
+  {
+    "__docId__": 108,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000109",
+    "___s": true
+  },
+  {
+    "__docId__": 109,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000110",
+    "___s": true
+  },
+  {
+    "__docId__": 110,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000111",
+    "___s": true
+  },
+  {
+    "__docId__": 111,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000112",
+    "___s": true
+  },
+  {
+    "__docId__": 112,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000113",
+    "___s": true
+  },
+  {
+    "__docId__": 113,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000114",
+    "___s": true
+  },
+  {
+    "__docId__": 114,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true,
+    "___id": "T000002R000115",
+    "___s": true
+  },
+  {
+    "__docId__": 116,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000116",
+    "___s": true
+  },
+  {
+    "__docId__": 117,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000117",
+    "___s": true
+  },
+  {
+    "__docId__": 118,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000118",
+    "___s": true
+  },
+  {
+    "__docId__": 119,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000119",
+    "___s": true
+  },
+  {
+    "__docId__": 120,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000120",
+    "___s": true
+  },
+  {
+    "__docId__": 121,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000121",
+    "___s": true
+  },
+  {
+    "__docId__": 122,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000122",
+    "___s": true
+  },
+  {
+    "__docId__": 123,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true,
+    "___id": "T000002R000123",
+    "___s": true
+  },
+  {
+    "__docId__": 124,
+    "kind": "testFile",
+    "static": true,
+    "variation": null,
+    "name": "src/pluginmanager.js",
+    "memberof": null,
+    "longname": "src/pluginmanager.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "// import Events         from 'backbone-esnext-events';\nimport { assert }     from 'chai';\n\nimport PluginManager  from '../../src/PluginManager.js';\n\nclass PluginTest { test(event) { event.data.result.count++; assert.strictEqual(event.pluginName, 'PluginTest'); } }\n\nconst pluginTest = { test: (event) => { event.data.result.count++; assert.strictEqual(event.pluginName, 'pluginTest'); } };\n\n// class PluginTestNoName { test(event) { event.data.result.count++; } }\nclass PluginTestNoName2 { test2(event) { event.data.result.count++; } }\n\nclass PluginTestSync\n{\n   constructor() { this.c = 3; }\n   test(a, b) { return a + b + this.c; }\n}\n\nsuite('PluginManager:', () =>\n{\n   let pluginManager, testData;\n\n   beforeEach(() => { pluginManager = new PluginManager(); testData = { result: { count: 0 } }; });\n\n   test('PluginManager constructor function is exported', () =>\n   {\n      assert.isFunction(PluginManager);\n   });\n\n   test('PluginManager instance is object', () =>\n   {\n      assert.isObject(pluginManager);\n   });\n\n   test('PluginManager throws when invoke is called with empty parameters', () =>\n   {\n      assert.throws(() => { pluginManager.invokeSyncEvent(); });\n   });\n\n   test('PluginManager throws w/ add (no options)', () =>\n   {\n      assert.throws(() => { pluginManager.add(); });\n   });\n\n   test('PluginManager has empty result', () =>\n   {\n      const event = pluginManager.invokeSyncEvent('test');\n\n      assert.isObject(event);\n      assert.lengthOf(Object.keys(event), 2);\n      assert(event.$$plugin_invoke_count === 0);\n   });\n\n   test('PluginManager w/ plugin and missing method has empty event result', () =>\n   {\n      pluginManager.add({ name: 'PluginTest', instance: new PluginTest() });\n\n      const event = pluginManager.invokeSyncEvent('nop');\n\n      assert.isObject(event);\n      assert.lengthOf(Object.keys(event), 2);\n      assert.strictEqual(event.$$plugin_invoke_count, 0);\n   });\n\n   test('PluginManager has valid test / class result (pass through)', () =>\n   {\n      pluginManager.add({ name: 'PluginTest', instance: new PluginTest() });\n\n      const event = pluginManager.invokeSyncEvent('test', void 0, testData);\n\n      assert.isObject(event);\n      assert.strictEqual(event.result.count, 1);\n      assert.strictEqual(testData.result.count, 1);\n      assert.strictEqual(event.$$plugin_invoke_count, 1);\n   });\n\n   test('PluginManager has valid test / object result (pass through)', () =>\n   {\n      pluginManager.add({ name: 'pluginTest', instance: pluginTest });\n\n      const event = pluginManager.invokeSyncEvent('test', void 0, testData);\n\n      assert.isObject(event);\n      assert.strictEqual(event.result.count, 1);\n      assert.strictEqual(testData.result.count, 1);\n   });\n\n   test('PluginManager has invoked both plugins (pass through)', () =>\n   {\n      pluginManager.add({ name: 'PluginTest', instance: new PluginTest() });\n      pluginManager.add({ name: 'pluginTest', instance: pluginTest });\n\n      const event = pluginManager.invokeSyncEvent('test', void 0, testData);\n\n      assert.isObject(event);\n      assert.strictEqual(event.result.count, 2);\n      assert.strictEqual(testData.result.count, 2);\n   });\n\n   test('PluginManager has valid test / class result (copy)', () =>\n   {\n      pluginManager.add({ name: 'PluginTest', instance: new PluginTest() });\n\n      const event = pluginManager.invokeSyncEvent('test', testData);\n\n      assert.isObject(event);\n      assert.strictEqual(event.result.count, 1);\n      assert.strictEqual(testData.result.count, 0);\n      assert.strictEqual(event.$$plugin_invoke_count, 1);\n      assert.strictEqual(event.$$plugin_invoke_names[0], 'PluginTest');\n   });\n\n   test('PluginManager has valid test / object result (copy)', () =>\n   {\n      pluginManager.add({ name: 'pluginTest', instance: pluginTest });\n\n      const event = pluginManager.invokeSyncEvent('test', testData);\n\n      assert.isObject(event);\n      assert.strictEqual(event.result.count, 1);\n      assert.strictEqual(testData.result.count, 0);\n   });\n\n   test('PluginManager has invoked both plugins (copy)', () =>\n   {\n      pluginManager.add({ name: 'PluginTest', instance: new PluginTest() });\n      pluginManager.add({ name: 'pluginTest', instance: pluginTest });\n\n      const event = pluginManager.invokeSyncEvent('test', testData);\n\n      assert.isObject(event);\n      assert.strictEqual(event.result.count, 2);\n      assert.strictEqual(testData.result.count, 0);\n   });\n\n   test('PluginManager has invoked one result (sync)', () =>\n   {\n      pluginManager.add({ name: 'PluginTestSync', instance: new PluginTestSync() });\n\n      const result = pluginManager.invokeSync('PluginTestSync', 'test', 1, 2);\n\n      assert.isNumber(result);\n      assert.strictEqual(result, 6);\n   });\n\n   test('PluginManager has invoked two results (sync)', () =>\n   {\n      pluginManager.add({ name: 'PluginTestSync', instance: new PluginTestSync() });\n      pluginManager.add({ name: 'PluginTestSync2', instance: new PluginTestSync() });\n\n      const result = pluginManager.invokeSync(void 0, 'test', 1, 2);\n\n      assert.isArray(result);\n      assert.strictEqual(result[0], 6);\n      assert.strictEqual(result[1], 6);\n   });\n\n   test('PluginManager get unique method names', () =>\n   {\n      pluginManager.add({ name: 'PluginTestSync', instance: new PluginTestSync() });\n      pluginManager.add({ name: 'PluginTestNoName2', instance: new PluginTestNoName2() });\n\n      const results = pluginManager.getMethodNames();\n\n      assert.isArray(results);\n      assert.lengthOf(results, 2);\n      assert.strictEqual(results[0], 'test');\n      assert.strictEqual(results[1], 'test2');\n   });\n\n   test('PluginManager get plugin names', () =>\n   {\n      pluginManager.add({ name: 'PluginTestSync', instance: new PluginTestSync() });\n      pluginManager.add({ name: 'PluginTestSync2', instance: new PluginTestSync() });\n\n      const results = pluginManager.getPluginNames();\n\n      assert.isArray(results);\n      assert.lengthOf(results, 2);\n      assert.strictEqual(results[0], 'PluginTestSync');\n      assert.strictEqual(results[1], 'PluginTestSync2');\n   });\n\n   test('PluginManager get plugin / method names', () =>\n   {\n      pluginManager.add({ name: 'PluginTestSync', instance: new PluginTestSync() });\n      pluginManager.add({ name: 'PluginTestNoName2', instance: new PluginTestNoName2() });\n\n      const results = pluginManager.getPluginMethodNames();\n\n      assert.isArray(results);\n      assert.lengthOf(results, 2);\n      assert.strictEqual(results[0].plugin, 'PluginTestSync');\n      assert.strictEqual(results[0].method, 'test');\n      assert.strictEqual(results[1].plugin, 'PluginTestNoName2');\n      assert.strictEqual(results[1].method, 'test2');\n   });\n});\n",
+    "___id": "T000002R000124",
+    "___s": true
+  },
+  {
+    "__docId__": 125,
+    "kind": "testDescribe",
+    "static": true,
+    "variation": null,
+    "name": "suite0",
+    "testId": 0,
+    "memberof": "src/pluginmanager.js",
+    "testDepth": 0,
+    "longname": "src/pluginmanager.js~suite0",
+    "access": null,
+    "description": "PluginManager:",
+    "lineNumber": 19,
+    "___id": "T000002R000125",
+    "___s": true
+  },
+  {
+    "__docId__": 126,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test1",
+    "testId": 1,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test1",
+    "access": null,
+    "description": "PluginManager constructor function is exported",
+    "lineNumber": 25,
+    "___id": "T000002R000126",
+    "___s": true
+  },
+  {
+    "__docId__": 127,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test2",
+    "testId": 2,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test2",
+    "access": null,
+    "description": "PluginManager instance is object",
+    "lineNumber": 30,
+    "___id": "T000002R000127",
+    "___s": true
+  },
+  {
+    "__docId__": 128,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test3",
+    "testId": 3,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test3",
+    "access": null,
+    "description": "PluginManager throws when invoke is called with empty parameters",
+    "lineNumber": 35,
+    "___id": "T000002R000128",
+    "___s": true
+  },
+  {
+    "__docId__": 129,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test4",
+    "testId": 4,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test4",
+    "access": null,
+    "description": "PluginManager throws w/ add (no options)",
+    "lineNumber": 40,
+    "___id": "T000002R000129",
+    "___s": true
+  },
+  {
+    "__docId__": 130,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test5",
+    "testId": 5,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test5",
+    "access": null,
+    "description": "PluginManager has empty result",
+    "lineNumber": 45,
+    "___id": "T000002R000130",
+    "___s": true
+  },
+  {
+    "__docId__": 131,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test6",
+    "testId": 6,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test6",
+    "access": null,
+    "description": "PluginManager w/ plugin and missing method has empty event result",
+    "lineNumber": 54,
+    "___id": "T000002R000131",
+    "___s": true
+  },
+  {
+    "__docId__": 132,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test7",
+    "testId": 7,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test7",
+    "access": null,
+    "description": "PluginManager has valid test / class result (pass through)",
+    "lineNumber": 65,
+    "___id": "T000002R000132",
+    "___s": true
+  },
+  {
+    "__docId__": 133,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test8",
+    "testId": 8,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test8",
+    "access": null,
+    "description": "PluginManager has valid test / object result (pass through)",
+    "lineNumber": 77,
+    "___id": "T000002R000133",
+    "___s": true
+  },
+  {
+    "__docId__": 134,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test9",
+    "testId": 9,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test9",
+    "access": null,
+    "description": "PluginManager has invoked both plugins (pass through)",
+    "lineNumber": 88,
+    "___id": "T000002R000134",
+    "___s": true
+  },
+  {
+    "__docId__": 135,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test10",
+    "testId": 10,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test10",
+    "access": null,
+    "description": "PluginManager has valid test / class result (copy)",
+    "lineNumber": 100,
+    "___id": "T000002R000135",
+    "___s": true
+  },
+  {
+    "__docId__": 136,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test11",
+    "testId": 11,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test11",
+    "access": null,
+    "description": "PluginManager has valid test / object result (copy)",
+    "lineNumber": 113,
+    "___id": "T000002R000136",
+    "___s": true
+  },
+  {
+    "__docId__": 137,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test12",
+    "testId": 12,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test12",
+    "access": null,
+    "description": "PluginManager has invoked both plugins (copy)",
+    "lineNumber": 124,
+    "___id": "T000002R000137",
+    "___s": true
+  },
+  {
+    "__docId__": 138,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test13",
+    "testId": 13,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test13",
+    "access": null,
+    "description": "PluginManager has invoked one result (sync)",
+    "lineNumber": 136,
+    "___id": "T000002R000138",
+    "___s": true
+  },
+  {
+    "__docId__": 139,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test14",
+    "testId": 14,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test14",
+    "access": null,
+    "description": "PluginManager has invoked two results (sync)",
+    "lineNumber": 146,
+    "___id": "T000002R000139",
+    "___s": true
+  },
+  {
+    "__docId__": 140,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test15",
+    "testId": 15,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test15",
+    "access": null,
+    "description": "PluginManager get unique method names",
+    "lineNumber": 158,
+    "___id": "T000002R000140",
+    "___s": true
+  },
+  {
+    "__docId__": 141,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test16",
+    "testId": 16,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test16",
+    "access": null,
+    "description": "PluginManager get plugin names",
+    "lineNumber": 171,
+    "___id": "T000002R000141",
+    "___s": true
+  },
+  {
+    "__docId__": 142,
+    "kind": "testIt",
+    "static": true,
+    "variation": null,
+    "name": "test17",
+    "testId": 17,
+    "memberof": "src/pluginmanager.js~suite0",
+    "testDepth": 1,
+    "longname": "src/pluginmanager.js~suite0.test17",
+    "access": null,
+    "description": "PluginManager get plugin / method names",
+    "lineNumber": 184,
+    "___id": "T000002R000142",
+    "___s": true
+  }
+]
