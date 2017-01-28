@@ -1,0 +1,1739 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/IceCap.js",
+    "memberof": null,
+    "longname": "src/IceCap.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import cheerio from 'cheerio';\n\n/**\n * IceCap process HTML template with programmable.\n *\n * @example\n * import IceCap from 'typhonjs-ice-cap';\n *\n * const ice = new IceCap('<p data-ice=\"name\"></p>');\n * ice.text('name', 'Alice');\n * console.log(ice.html); // <p data-ice=\"name\">Alice</p>\n */\nexport default class IceCap\n{\n   static get MODE_APPEND() { return 'append'; }\n\n   static get MODE_WRITE() { return 'write'; }\n\n   static get MODE_REMOVE() { return 'remove'; }\n\n   static get MODE_PREPEND() { return 'prepend'; }\n\n   static get CALLBACK_TEXT() { return 'text'; }\n\n   static get CALLBACK_LOAD() { return 'html'; }\n\n   static set debug(v) { this._debug = v; }\n\n   /**\n    * Create instance with HTML template.\n    *\n    * @param {!string}     html -\n    *\n    * @param {{ autoClose: boolean, autoDrop: boolean}} options -\n    *\n    * @param {EventProxy}  eventbus -\n    */\n   constructor(html, options = { autoClose: true, autoDrop: true }, eventbus = void 0)\n   {\n      if (!html)\n      {\n         throw new Error('html must be specified.');\n      }\n\n      if (typeof html === 'string')\n      {\n         this._$root = cheerio.load(html).root();\n      }\n      else if (html.find)\n      {\n         this._$root = html;\n      }\n\n      this._options = options;\n\n      this._eventbus = eventbus;\n   }\n\n   attr(id, key, value, mode = IceCap.MODE_APPEND)\n   {\n      const nodes = this._nodes(id);\n      let transformedValue;\n\n      if (value === null || value === undefined) { value = ''; }\n\n      for (const node of nodes.iterator)\n      {\n         const currentValue = node.attr(key) || '';\n\n         switch (mode)\n         {\n            case IceCap.MODE_WRITE:\n               transformedValue = value;\n               break;\n\n            case IceCap.MODE_APPEND:\n               transformedValue = currentValue + value;\n               break;\n\n            case IceCap.MODE_REMOVE:\n               transformedValue = currentValue.replace(new RegExp(value, 'g'), '');\n               break;\n\n            case IceCap.MODE_PREPEND:\n               transformedValue = value + currentValue;\n               break;\n\n            default:\n               throw Error(`unknown mode. mode = \"${mode}\"`);\n         }\n\n         node.attr(key, transformedValue);\n      }\n\n      return this;\n   }\n\n   get autoClose()\n   {\n      return this._options.autoClose;\n   }\n\n   set autoClose(val)\n   {\n      this._options.autoClose = val;\n   }\n\n   set autoDrop(val)\n   {\n      this._options.autoDrop = val;\n   }\n\n   get autoDrop()\n   {\n      return this._options.autoDrop;\n   }\n\n   close()\n   {\n      if (!this._$root) { return this; }\n\n      this._html = this._takeHTML();\n      this._$root = null;\n\n      return this;\n   }\n\n   drop(id, isDrop = true)\n   {\n      if (!isDrop) { return; }\n\n      const nodes = this._nodes(id);\n\n      nodes.remove();\n\n      return this;\n   }\n\n   _filter(nodes)\n   {\n      const results = [];\n\n      for (let cntr = 0; cntr < nodes.length; cntr++)\n      {\n         const node = nodes.eq(cntr);\n         const length = node.parents('[data-ice-loaded]').length;\n\n         if (length === 0) { results.push(node[0]); }\n      }\n\n      const $result = cheerio(results);\n\n      Object.defineProperty($result, 'iterator',\n      {\n         get: function()\n         {\n            const nodes = [];\n\n            for (let cntr = 0; cntr < this.length; cntr++) { nodes.push(this.eq(cntr)); }\n\n            return nodes;\n         }\n      });\n\n      return $result;\n   }\n\n   get html()\n   {\n      if (!this._$root) { return this._html; }\n\n      this._html = this._takeHTML();\n\n      if (this._options.autoClose) { this.close(); }\n\n      return this._html;\n   }\n\n   load(id, ice, mode = IceCap.MODE_APPEND)\n   {\n      let html = '';\n\n      if (ice instanceof IceCap)\n      {\n         html = ice.html;\n      }\n      else if (ice)\n      {\n         html = ice.toString();\n      }\n\n      const nodes = this._nodes(id);\n\n      if (this._options.autoDrop && !html)\n      {\n         nodes.remove();\n\n         return;\n      }\n\n      nodes.attr('data-ice-loaded', '1');\n\n      let transformedValue;\n\n      for (const node of nodes.iterator)\n      {\n         const currentValue = node.html() || '';\n\n         switch (mode)\n         {\n            case IceCap.MODE_WRITE:\n               node.text('');\n               transformedValue = html;\n               break;\n\n            case IceCap.MODE_APPEND:\n               transformedValue = currentValue + html;\n               break;\n\n            case IceCap.MODE_REMOVE:\n               transformedValue = currentValue.replace(new RegExp(html, 'g'), '');\n               break;\n\n            case IceCap.MODE_PREPEND:\n               transformedValue = html + currentValue;\n               break;\n\n            default:\n               throw Error(`unknown mode. mode = \"${mode}\"`);\n         }\n\n         node.html(transformedValue);\n      }\n\n      return this;\n   }\n\n   loop(id, values, callback)\n   {\n      if (!Array.isArray(values))\n      {\n         throw new Error(`values must be array. values = \"${values}\"`);\n      }\n\n      if (['function', 'string'].indexOf(typeof callback) === -1)\n      {\n         throw new Error(`callback must be function. callback = \"${callback}\"`);\n      }\n\n      if (typeof callback === 'string')\n      {\n         switch (callback)\n         {\n            case IceCap.CALLBACK_TEXT:\n               callback = (i, value, ice) => { ice.text(id, value); };\n               break;\n\n            case IceCap.CALLBACK_LOAD:\n               callback = (i, value, ice) => { ice.load(id, value); };\n               break;\n\n            default:\n               throw Error(`unknown callback. callback = \"${callback}\"`);\n         }\n      }\n\n      const nodes = this._nodes(id);\n\n      if (values.length === 0)\n      {\n         nodes.remove();\n\n         return;\n      }\n\n      for (const node of nodes.iterator)\n      {\n         const results = [];\n\n         for (let j = 0; j < values.length; j++)\n         {\n            const parent = cheerio.load('<div/>').root();\n            const clonedNode = node.clone();\n            const textNode = cheerio.load('\\n').root();\n\n            parent.append(clonedNode);\n            results.push(clonedNode[0]);\n            results.push(textNode[0]);\n\n            const ice = new IceCap(parent);\n\n            callback(j, values[j], ice);\n         }\n\n         if (node.parent().length)\n         {\n            node.parent().append(results);\n         }\n         else\n         {\n            this._$root.append(results);\n         }\n\n         node.remove();\n      }\n\n      return this;\n   }\n\n   into(id, value, callback)\n   {\n      const nodes = this._nodes(id);\n\n      if (value === '' || value === null || value === undefined)\n      {\n         nodes.remove();\n\n         return;\n      }\n      else if (Array.isArray(value))\n      {\n         if (value.length === 0)\n         {\n            nodes.remove();\n\n            return;\n         }\n      }\n\n      if (typeof callback !== 'function')\n      {\n         throw new Error(`callback must be function. callback = \"${callback}\"`);\n      }\n\n      for (const node of nodes.iterator)\n      {\n         callback(value, new IceCap(node));\n      }\n\n      return this;\n   }\n\n   _nodes(id)\n   {\n      if (!this._$root) { throw new Error('can not operation after close.'); }\n      if (!id) { throw new Error('id must be specified.'); }\n\n      const $nodes = this._$root.find(`[data-ice=\"${id}\"]`);\n\n      const filtered = this._filter($nodes);\n\n      if (filtered.length === 0 && IceCap._debug && this._eventbus)\n      {\n         this._eventbus.trigger('log:debug', `node not found. id = ${id}`);\n      }\n\n      return filtered;\n   }\n\n   _takeHTML()\n   {\n      const loadedNodes = this._$root.find('[data-ice-loaded]').removeAttr('data-ice-loaded');\n\n      const html = this._$root.html();\n\n      loadedNodes.attr('data-ice-loaded', 1);\n\n      return html;\n   }\n\n   /**\n    * Apply value to DOM that is specified with id.\n    *\n    * @param {!string} id -\n    * @param {string} value -\n    * @param {string} [mode=IceCap.MODE_APPEND] -\n    *\n    * @return {IceCap} self instance.\n    */\n   text(id, value, mode = IceCap.MODE_APPEND)\n   {\n      const nodes = this._nodes(id);\n\n      if (this._options.autoDrop && !value)\n      {\n         nodes.remove();\n\n         return;\n      }\n\n      if (value === null || value === undefined) { value = ''; }\n\n      let transformedValue;\n\n      for (const node of nodes.iterator)\n      {\n         const currentValue = node.text() || '';\n\n         switch (mode)\n         {\n            case IceCap.MODE_WRITE:\n               transformedValue = value;\n               break;\n\n            case IceCap.MODE_APPEND:\n               transformedValue = currentValue + value;\n               break;\n\n            case IceCap.MODE_REMOVE:\n               transformedValue = currentValue.replace(new RegExp(value, 'g'), '');\n               break;\n\n            case IceCap.MODE_PREPEND:\n               transformedValue = value + currentValue;\n               break;\n\n            default:\n               throw Error(`unknown mode. mode = \"${mode}\"`);\n         }\n\n         node.text(transformedValue);\n      }\n\n      return this;\n   }\n}\n\n/**\n * Wires up Logger on the plugin eventbus.\n *\n * @param {PluginEvent} ev - The plugin event.\n *\n * @see https://www.npmjs.com/package/typhonjs-plugin-manager\n *\n * @ignore\n */\nexport function onPluginLoad(ev)\n{\n   const eventbus = ev.eventbus;\n\n   let eventPrepend = '';\n\n   const options = ev.pluginOptions;\n\n   // Apply any plugin options.\n   if (typeof options === 'object')\n   {\n      // If `eventPrepend` is defined then it is prepended before all event bindings.\n      if (typeof options.eventPrepend === 'string') { eventPrepend = `${options.eventPrepend}:`; }\n   }\n\n   eventbus.on(`${eventPrepend}ice:cap:create`, (html, options = { autoClose: true, autoDrop: true },\n    targetEventbus = eventbus) =>\n   {\n      return new IceCap(html, options, targetEventbus);\n   });\n\n   eventbus.on(`${eventPrepend}ice:cap:set:debug`, (debug) => { IceCap.debug = debug; });\n}\n",
+    "___id": "T000002R000002",
+    "___s": true
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "IceCap",
+    "memberof": "src/IceCap.js",
+    "longname": "src/IceCap.js~IceCap",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-ice-cap/src/IceCap.js",
+    "importStyle": "IceCap",
+    "description": "IceCap process HTML template with programmable.",
+    "examples": [
+      "import IceCap from 'typhonjs-ice-cap';\n\nconst ice = new IceCap('<p data-ice=\"name\"></p>');\nice.text('name', 'Alice');\nconsole.log(ice.html); // <p data-ice=\"name\">Alice</p>"
+    ],
+    "lineNumber": 13,
+    "interface": false,
+    "___id": "T000002R000003",
+    "___s": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "get",
+    "static": true,
+    "variation": null,
+    "name": "MODE_APPEND",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.MODE_APPEND",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000004",
+    "___s": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "get",
+    "static": true,
+    "variation": null,
+    "name": "MODE_WRITE",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.MODE_WRITE",
+    "access": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000005",
+    "___s": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "get",
+    "static": true,
+    "variation": null,
+    "name": "MODE_REMOVE",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.MODE_REMOVE",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000006",
+    "___s": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "get",
+    "static": true,
+    "variation": null,
+    "name": "MODE_PREPEND",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.MODE_PREPEND",
+    "access": null,
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000007",
+    "___s": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "get",
+    "static": true,
+    "variation": null,
+    "name": "CALLBACK_TEXT",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.CALLBACK_TEXT",
+    "access": null,
+    "description": null,
+    "lineNumber": 23,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000008",
+    "___s": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "get",
+    "static": true,
+    "variation": null,
+    "name": "CALLBACK_LOAD",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.CALLBACK_LOAD",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000009",
+    "___s": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "set",
+    "static": true,
+    "variation": null,
+    "name": "debug",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap.debug",
+    "access": null,
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000010",
+    "___s": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "member",
+    "static": true,
+    "variation": null,
+    "name": "_debug",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap._debug",
+    "access": null,
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000011",
+    "___s": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#constructor",
+    "access": null,
+    "description": "Create instance with HTML template.",
+    "lineNumber": 38,
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "html",
+        "description": "",
+        "descriptionRaw": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "{ autoClose: boolean, autoDrop: boolean}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "",
+        "descriptionRaw": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "EventProxy"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "eventbus",
+        "description": "",
+        "descriptionRaw": ""
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000012",
+    "___s": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_$root",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_$root",
+    "access": null,
+    "description": null,
+    "lineNumber": 47,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000013",
+    "___s": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_$root",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_$root",
+    "access": null,
+    "description": null,
+    "lineNumber": 51,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000014",
+    "___s": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_options",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_options",
+    "access": null,
+    "description": null,
+    "lineNumber": 54,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000015",
+    "___s": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_eventbus",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_eventbus",
+    "access": null,
+    "description": null,
+    "lineNumber": 56,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000016",
+    "___s": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "attr",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#attr",
+    "access": null,
+    "description": null,
+    "lineNumber": 59,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "value",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "mode",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000017",
+    "___s": true
+  },
+  {
+    "__docId__": 16,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "autoClose",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#autoClose",
+    "access": null,
+    "description": null,
+    "lineNumber": 98,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000018",
+    "___s": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "set",
+    "static": false,
+    "variation": null,
+    "name": "autoClose",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#autoClose",
+    "access": null,
+    "description": null,
+    "lineNumber": 103,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000019",
+    "___s": true
+  },
+  {
+    "__docId__": 18,
+    "kind": "set",
+    "static": false,
+    "variation": null,
+    "name": "autoDrop",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#autoDrop",
+    "access": null,
+    "description": null,
+    "lineNumber": 108,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000020",
+    "___s": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "autoDrop",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#autoDrop",
+    "access": null,
+    "description": null,
+    "lineNumber": 113,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000021",
+    "___s": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "close",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#close",
+    "access": null,
+    "description": null,
+    "lineNumber": 118,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000022",
+    "___s": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_html",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_html",
+    "access": null,
+    "description": null,
+    "lineNumber": 122,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000023",
+    "___s": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_$root",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_$root",
+    "access": null,
+    "description": null,
+    "lineNumber": 123,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000024",
+    "___s": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "drop",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#drop",
+    "access": null,
+    "description": null,
+    "lineNumber": 128,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "isDrop",
+        "optional": true,
+        "types": [
+          "boolean"
+        ],
+        "defaultRaw": true,
+        "defaultValue": "true"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000025",
+    "___s": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_filter",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_filter",
+    "access": null,
+    "description": null,
+    "lineNumber": 139,
+    "undocument": true,
+    "params": [
+      {
+        "name": "nodes",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000026",
+    "___s": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "html",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#html",
+    "access": null,
+    "description": null,
+    "lineNumber": 168,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000027",
+    "___s": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_html",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_html",
+    "access": null,
+    "description": null,
+    "lineNumber": 172,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000028",
+    "___s": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "load",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#load",
+    "access": null,
+    "description": null,
+    "lineNumber": 179,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "ice",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "mode",
+        "optional": true,
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000029",
+    "___s": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "loop",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#loop",
+    "access": null,
+    "description": null,
+    "lineNumber": 238,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "values",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "callback",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000030",
+    "___s": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "into",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#into",
+    "access": null,
+    "description": null,
+    "lineNumber": 310,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "value",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "callback",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000031",
+    "___s": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_nodes",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_nodes",
+    "access": null,
+    "description": null,
+    "lineNumber": 343,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000032",
+    "___s": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_takeHTML",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#_takeHTML",
+    "access": null,
+    "description": null,
+    "lineNumber": 360,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000033",
+    "___s": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "text",
+    "memberof": "src/IceCap.js~IceCap",
+    "longname": "src/IceCap.js~IceCap#text",
+    "access": null,
+    "description": "Apply value to DOM that is specified with id.",
+    "lineNumber": 380,
+    "params": [
+      {
+        "nullable": false,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": "",
+        "descriptionRaw": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "",
+        "descriptionRaw": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "IceCap.MODE_APPEND",
+        "defaultRaw": "IceCap.MODE_APPEND",
+        "name": "mode",
+        "description": "",
+        "descriptionRaw": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "IceCap"
+      ],
+      "spread": false,
+      "description": "<p>self instance.</p>\n",
+      "descriptionRaw": "self instance."
+    },
+    "generator": false,
+    "___id": "T000002R000034",
+    "___s": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "onPluginLoad",
+    "memberof": "src/IceCap.js",
+    "longname": "src/IceCap.js~onPluginLoad",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-ice-cap/src/IceCap.js",
+    "importStyle": "{onPluginLoad}",
+    "description": "Wires up Logger on the plugin eventbus.",
+    "see": [
+      "https://www.npmjs.com/package/typhonjs-plugin-manager"
+    ],
+    "lineNumber": 437,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "PluginEvent"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "ev",
+        "description": "The plugin event."
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000035",
+    "___s": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000036",
+    "___s": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000037",
+    "___s": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000038",
+    "___s": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000039",
+    "___s": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000040",
+    "___s": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000041",
+    "___s": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000042",
+    "___s": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000043",
+    "___s": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000044",
+    "___s": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000045",
+    "___s": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000046",
+    "___s": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000047",
+    "___s": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000048",
+    "___s": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000049",
+    "___s": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000050",
+    "___s": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000051",
+    "___s": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000052",
+    "___s": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000053",
+    "___s": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000054",
+    "___s": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000055",
+    "___s": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000056",
+    "___s": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000057",
+    "___s": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000058",
+    "___s": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000059",
+    "___s": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000060",
+    "___s": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000061",
+    "___s": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000062",
+    "___s": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000063",
+    "___s": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000064",
+    "___s": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000065",
+    "___s": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000066",
+    "___s": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000067",
+    "___s": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000068",
+    "___s": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000069",
+    "___s": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000070",
+    "___s": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000071",
+    "___s": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000072",
+    "___s": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000073",
+    "___s": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000074",
+    "___s": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000075",
+    "___s": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000076",
+    "___s": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000077",
+    "___s": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000078",
+    "___s": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000079",
+    "___s": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000080",
+    "___s": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000081",
+    "___s": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true,
+    "___id": "T000002R000082",
+    "___s": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000083",
+    "___s": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000084",
+    "___s": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000085",
+    "___s": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000086",
+    "___s": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000087",
+    "___s": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000088",
+    "___s": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000089",
+    "___s": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true,
+    "___id": "T000002R000090",
+    "___s": true
+  }
+]
