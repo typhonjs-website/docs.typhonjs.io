@@ -336,10 +336,376 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber5",
+    "IceCap:",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber245",
+    "IceCap: #attr",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber256",
+    "IceCap: #attr process attr with append mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber247",
+    "IceCap: #attr process attr with default mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber283",
+    "IceCap: #attr process attr with prepend mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber274",
+    "IceCap: #attr process attr with remove mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber265",
+    "IceCap: #attr process attr with write mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber292",
+    "IceCap: #attr throws error if id is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber308",
+    "IceCap: #attr throws error with unknown mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber565",
+    "IceCap: #close",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber567",
+    "IceCap: #close can not process after close.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber7",
+    "IceCap: #constructor",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber23",
+    "IceCap: #constructor has options.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber9",
+    "IceCap: #constructor throws error if html is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber528",
+    "IceCap: #drop",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber539",
+    "IceCap: #drop does not drop node.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber530",
+    "IceCap: #drop drops node.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber548",
+    "IceCap: #drop throws error if id is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber590",
+    "IceCap: #html",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber612",
+    "IceCap: #html does not process auto close after html.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber592",
+    "IceCap: #html process auto close after html.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber445",
+    "IceCap: #into",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber486",
+    "IceCap: #into drops element with empty array value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber459",
+    "IceCap: #into drops element with empty string value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber468",
+    "IceCap: #into drops element with null value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber477",
+    "IceCap: #into drops element with undefined value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber447",
+    "IceCap: #into process into.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber495",
+    "IceCap: #into throws error if id is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber511",
+    "IceCap: #into throws error with non-function callback.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber136",
+    "IceCap: #load",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber192",
+    "IceCap: #load does not process auto drop with empty value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber183",
+    "IceCap: #load process auto drop with empty value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber147",
+    "IceCap: #load process html with append mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber138",
+    "IceCap: #load process html with default mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber174",
+    "IceCap: #load process html with prepend mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber165",
+    "IceCap: #load process html with remove mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber156",
+    "IceCap: #load process html with write mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber201",
+    "IceCap: #load process other ice cap.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber212",
+    "IceCap: #load throws error if id is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber228",
+    "IceCap: #load throws error with unknown mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber325",
+    "IceCap: #loop",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber371",
+    "IceCap: #loop process loop with empty values.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber348",
+    "IceCap: #loop process loop with load callback.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber357",
+    "IceCap: #loop process loop with multi root template.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber339",
+    "IceCap: #loop process loop with text callback.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber327",
+    "IceCap: #loop process loop.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber396",
+    "IceCap: #loop throws error if id is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber380",
+    "IceCap: #loop throws error with non-array values.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber412",
+    "IceCap: #loop throws error with non-function callback.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber428",
+    "IceCap: #loop throws error with unknown callback.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber38",
+    "IceCap: #text",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber94",
+    "IceCap: #text does not process auto drop with empty value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber85",
+    "IceCap: #text process auto drop with empty value.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber49",
+    "IceCap: #text process text with append mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber40",
+    "IceCap: #text process text with default mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber76",
+    "IceCap: #text process text with prepend mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber67",
+    "IceCap: #text process text with remove mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber58",
+    "IceCap: #text process text with write mode.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber103",
+    "IceCap: #text throws error if id is not specified.",
+    "test"
+  ],
+  [
+    "",
+    "test-file/src/IceCap.js.html#lineNumber119",
+    "IceCap: #text throws error with unknown mode.",
+    "test"
+  ],
+  [
     "src/icecap.js",
     "file/src/IceCap.js.html",
     "src/IceCap.js",
     "file"
+  ],
+  [
+    "src/icecap.js",
+    "test-file/src/IceCap.js.html",
+    "src/IceCap.js",
+    "testFile"
   ],
   [
     "src/icecap.js~icecap#_$root",
@@ -391,13 +757,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/icecap.js~icecap#autoclose",
-    "class/src/IceCap.js~IceCap.html#instance-get-autoClose",
+    "class/src/IceCap.js~IceCap.html#instance-set-autoClose",
     "src/IceCap.js~IceCap#autoClose",
     "member"
   ],
   [
     "src/icecap.js~icecap#autoclose",
-    "class/src/IceCap.js~IceCap.html#instance-set-autoClose",
+    "class/src/IceCap.js~IceCap.html#instance-get-autoClose",
     "src/IceCap.js~IceCap#autoClose",
     "member"
   ],
