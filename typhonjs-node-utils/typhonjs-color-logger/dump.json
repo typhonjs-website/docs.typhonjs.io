@@ -1,0 +1,3352 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/ColorLogger.js",
+    "memberof": null,
+    "longname": "src/ColorLogger.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import TraceFilter from './TraceFilter.js';\n\n/**\n * Provides a color coded logger for ANSI terminal usage. In addition to providing a global scope logger\n * `typhonjs-color-logger` is optionally plugin enabled via `typhonjs-plugin-manager` and can self-register on an\n * eventbus with all methods exposed as event bindings.\n *\n * In the future an option to use CSS colors for browser usage will be enabled.\n *\n * There are several format options to display additional data / info including location where the log method is\n * invoked in addition to a time stamp. By default the time stamp option is disabled.\n *\n * When passing in an Error for logging the stack trace of the error will be used for info and trace creation. The\n * `trace` method will automatically generate a stack trace.\n *\n * format:\n * ``[LogLevel] [Time] [File] log text``\n *\n * Log level and color:\n * - fatal: light red\n * - error: red\n * - warn: yellow\n * - info: green\n * - debug: blue\n * - verbose: purple\n * - trace: light cyan\n *\n * Each log method for the log levels above have two alternate versions that are accessed by appending `NoColor` or\n * `Raw` to the method name. Or if using event bindings appending `:nocolor` or `:raw`. The no color option with, well,\n * no color outputting the message with the current log format and the raw format will output just the raw message with\n * no format or color applied.\n *\n * In addition trace inclusive and exclusive regexp filtering is available to eliminate spurious code removing it from\n * the stack trace. By default the typhonjs-color-logger and backbone-esnext-events is excluded from trace results.\n * Additionally the following events from typhonjs-plugin-manager are handled to automatically add and remove trace\n * filters from plugins added & removed via the event bindings: `typhonjs:plugin:manager:added:plugin`,\n * `typhonjs:plugin:manager:plugin:changed:eventbus`, and `typhonjs:plugin:manager:removed:plugin`. To skip auto\n * filter registration for a particular plugin set `logAutoFilter` to false in the associated plugins options.\n\n * @example\n * import logger from 'typhonjs-color-logger';\n *\n * // simple usage\n * logger.error('An error occurred!');\n *\n * @example\n * import PluginManager    from 'typhonjs-plugin-manager';\n * import eventbus         from 'backbone-esnext-eventbus';\n *\n * const pluginManager = new PluginManager({ eventbus });\n *\n * // This will automatically wire up typhonjs-color-logger to the eventbus.\n * pluginManager.add({ name: typhonjs-color-logger });\n *\n * // simple usage\n * eventbus.trigger('log:error', 'An error occurred!');\n *\n * @see https://www.npmjs.com/package/typhonjs-plugin-manager\n * @see https://www.npmjs.com/package/backbone-esnext-eventbus\n */\nexport class ColorLogger\n{\n   /**\n    * Instantiates ColorLogger allowing optional options to be set.\n    *\n    * @param {ColorLoggerOptions}   [options] - Optional ColorLoggerOptions to set.\n    */\n   constructor(options = {})\n   {\n      if (typeof options !== 'object') { throw new TypeError(`'options' is not an object.`); }\n\n      /**\n       * Stores ColorLogger options.\n       * @type {ColorLoggerOptions}\n       * @private\n       */\n      this._options =\n      {\n         autoPluginFilters: false,\n         consoleEnabled: true,\n         filtersEnabled: true,\n         showDate: false,\n         showInfo: true\n      };\n\n      /**\n       * @type number\n       * @private\n       */\n      this._logLevel = s_LOG_LEVELS['info'];\n\n      /**\n       * Stores all exclusive trace filters.\n       * @type {Map<string, TraceFilter>}\n       * @private\n       */\n      this._exclusiveTraceFilters = new Map();\n\n      /**\n       * Stores all inclusive trace filters.\n       * @type {Map<string, TraceFilter>}\n       * @private\n       */\n      this._inclusiveTraceFilters = new Map();\n\n      this.addFilter({ type: 'exclusive', name: 'typhonjs-color-logger', filterString: 'ColorLogger' });\n      this.addFilter({ type: 'exclusive', name: 'backbone-esnext-events', filterString: 'backbone-esnext-events' });\n\n      this.setOptions(options);\n   }\n\n   /**\n    * Adds a new trace filter.\n    *\n    * @param {TraceFilterData}   config - The filter config to add.\n    *\n    * @returns {boolean} True if the filter was added.\n    */\n   addFilter(config)\n   {\n      if (typeof config !== 'object') { throw new TypeError(`'filterConfig' is not an 'object'.`); }\n      if (typeof config.name !== 'string') { throw new TypeError(`'config.name' is not a 'string'.`); }\n      if (typeof config.filterString !== 'string') { throw new TypeError(`'config.filterString' is not a 'string'.`); }\n\n      if (config.type !== 'exclusive' && config.type !== 'inclusive')\n      {\n         this.error(`'config.type' must be 'exclusive' or 'inclusive'`);\n\n         return false;\n      }\n\n      const filterMap = config.type === 'exclusive' ? this._exclusiveTraceFilters : this._inclusiveTraceFilters;\n\n      if (filterMap.has(config.name))\n      {\n         this.warn(`A filter with name: '${config.name} already exists.`);\n\n         return false;\n      }\n\n      const filter = new TraceFilter(config.name, config.filterString);\n\n      if (typeof config.enabled === 'boolean') { filter.enabled = config.enabled; }\n\n      filterMap.set(config.name, filter);\n\n      return true;\n   }\n\n   /**\n    * Initializes multiple trace filters in a single call.\n    *\n    * @param {Array<TraceFilterData>} filterConfigs - An array of filter config object hash entries.\n    *\n    * @returns {boolean} If true all filters were added successfully.\n    */\n   addFilters(filterConfigs = [])\n   {\n      if (!Array.isArray(filterConfigs)) { throw new TypeError(`'plugins' is not an array.`); }\n\n      let success = true;\n\n      for (const config of filterConfigs)\n      {\n         if (!this.addFilter(config)) { success = false; }\n      }\n\n      return success;\n   }\n\n   /**\n    * Applies any exclusive then inclusive filters against a given value.\n    *\n    * @param {string}   value - A value to test against all filters.\n    *\n    * @returns {boolean} If true then the value matched a filter.\n    * @private\n    */\n   _applyFilters(value)\n   {\n      // Early out if there are no trace filters.\n      if (this._exclusiveTraceFilters.size === 0 && this._inclusiveTraceFilters.size === 0) { return false; }\n\n      // Start filtered as false and if an exclusive filter matches then set it to true..\n      let filtered = false;\n\n      for (const filter of this._exclusiveTraceFilters.values())\n      {\n         if (filter.test(value)) { filtered = true; break; }\n      }\n\n      // If an exclusive filter matched then exit early.\n      if (filtered) { return filtered; }\n\n      // Invert filtered to being true if there are any inclusive filters. If an inclusive filter matches then set\n      // it to false.\n      filtered = this._inclusiveTraceFilters.size > 0;\n\n      for (const filter of this._inclusiveTraceFilters.values())\n      {\n         if (filter.test(value)) { filtered = false; break; }\n      }\n\n      return filtered;\n   }\n\n\n   /**\n    * Gets the filter data for a trace filter by name.\n    *\n    * @param {boolean|undefined} enabled - If enabled is a boolean it will return filters given their enabled state.\n    *\n    * @returns {Array<TraceFilterData>}\n    */\n   getAllFilterData(enabled = void 0)\n   {\n      if (typeof enabled !== 'boolean' && typeof enabled !== 'undefined')\n      {\n         throw new TypeError(`'enabled' is not a 'boolean' or 'undefined'.`);\n      }\n\n      const results = [];\n\n      // Return all filter data if enabled is not defined.\n      const allFilters = typeof enabled === 'undefined';\n\n      for (const filter of this._exclusiveTraceFilters.values())\n      {\n         if (allFilters || filter.enabled === enabled)\n         {\n            results.push(\n            {\n               enabled: filter.enabled,\n               filterString: filter.filterString,\n               name: filter.name,\n               type: 'exclusive'\n            });\n         }\n      }\n\n      for (const filter of this._inclusiveTraceFilters.values())\n      {\n         if (allFilters || filter.enabled === enabled)\n         {\n            results.push(\n            {\n               enabled: filter.enabled,\n               filterString: filter.filterString,\n               name: filter.name,\n               type: 'inclusive'\n            });\n         }\n      }\n\n      return results;\n   }\n\n   /**\n    * Gets the filter data for a trace filter by name.\n    *\n    * @param {string}   type - The type of filter; must be 'exclusive' or 'inclusive'.\n    *\n    * @param {string}   name - The name of the filter.\n    *\n    * @returns {TraceFilterData|undefined}\n    */\n   getFilterData(type, name)\n   {\n      if (type !== 'exclusive' && type !== 'inclusive')\n      {\n         throw new Error(`'type' must be 'exclusive' or 'inclusive'`);\n      }\n\n      const filterMap = type === 'exclusive' ? this._exclusiveTraceFilters : this._inclusiveTraceFilters;\n\n      const filter = filterMap.get(name);\n\n      if (filter instanceof TraceFilter)\n      {\n         return {\n            enabled: filter.enabled,\n            filterString: filter.filterString,\n            name: filter.name,\n            type\n         };\n      }\n\n      return void 0;\n   }\n\n   /**\n    * Gets a trace filter enabled state.\n    *\n    * @param {string}   type - The type of filter; must be 'exclusive' or 'inclusive'.\n    *\n    * @param {string}   name - The name of the filter.\n    *\n    * @returns {boolean} True if the filter enabled state was modified.\n    */\n   getFilterEnabled(type, name)\n   {\n      if (type !== 'exclusive' && type !== 'inclusive')\n      {\n         throw new Error(`'type' must be 'exclusive' or 'inclusive'`);\n      }\n\n      const filterMap = type === 'exclusive' ? this._exclusiveTraceFilters : this._inclusiveTraceFilters;\n\n      const filter = filterMap.get(name);\n\n      if (filter instanceof TraceFilter)\n      {\n         return filter.enabled;\n      }\n\n      return false;\n   }\n\n   /**\n    * Get the log level\n    *\n    * @returns {*}\n    */\n   getLogLevel()\n   {\n      return this._logLevel;\n   }\n\n   /**\n    * Returns a copy of the logger options.\n    *\n    * @returns {ColorLoggerOptions} - Logger options.\n    */\n   getOptions()\n   {\n      return JSON.parse(JSON.stringify(this._options));\n   }\n\n   /**\n    * Generates log information from where the logger invocation originated.\n    *\n    * @param {Error}    error - An optional Error to trace instead of artificially generating one.\n    *\n    * @param {boolean}  [isTrace=false] - If true then process remaining trace.\n    *\n    * @return {{info: string, trace: String[]}} info: file name and line number; trace: remaining stack trace if\n    *                                           enabled.\n    * @private\n    */\n   getTraceInfo(error, isTrace = false)\n   {\n      let info = 'no stack trace';\n      const trace = [];\n\n      let processError = error;\n\n      if (!(processError instanceof Error))\n      {\n         try { throw new Error(); }\n         catch (err) { processError = err; }\n      }\n\n      // Make sure there is a entry in `processError`.\n      if (typeof processError.stack === 'string')\n      {\n         const lines = processError.stack.split('\\n');\n\n         let cntr = 0;\n\n         for (; cntr < lines.length; cntr++)\n         {\n            if (this._options.filtersEnabled && this._applyFilters(lines[cntr])) { continue; }\n\n            const matched = lines[cntr].match(/([\\w\\d\\-_.]*:\\d+:\\d+)/);\n\n            if (matched !== null)\n            {\n               info = matched[1];\n               break;\n            }\n         }\n\n         // If gathering trace info continue to push lines to `trace`. Ignoring any lines that originate from\n         // ColorLogger or `backbone-esnext-events` plus an optional filter.\n         if (isTrace)\n         {\n            for (; cntr < lines.length; cntr++)\n            {\n               if (this._options.filtersEnabled && this._applyFilters(lines[cntr])) { continue; }\n\n               trace.push(lines[cntr]);\n            }\n         }\n      }\n\n      return { info, trace };\n   }\n\n   /**\n    * Returns whether the given log level is enabled.\n    *\n    * @param {string}   level - log level\n    * @returns {boolean}\n    */\n   isLevelEnabled(level)\n   {\n      const requestedLevel = s_LOG_LEVELS[level];\n\n      if (typeof requestedLevel === 'undefined' || requestedLevel === null)\n      {\n         console.log(`isLevelEnabled - unknown log level: ${level}`);\n         return false;\n      }\n\n      return s_IS_LEVEL_ENABLED(this.getLogLevel(), requestedLevel);\n   }\n\n   /**\n    * Display log message.\n    *\n    * @param {string}   level - log level: `fatal`, `error`, `warn`, `info`, `debug`, `verbose`, `trace`.\n    * @param {boolean}  [nocolor=false] - If true then no color is applied.\n    * @param {boolean}  [raw=false] - If true then just the raw message is logged at the given level.\n    *\n    * @param {...*}     msg - log message.\n    *\n    * @returns {string|undefined} formatted log message or undefined if log level is not enabled.\n    * @private\n    */\n   _output(level, nocolor = false, raw = false, ...msg)\n   {\n      if (!s_IS_LEVEL_ENABLED(this.getLogLevel(), s_LOG_LEVELS[level])) { return; }\n\n      const text = [];\n\n      let isTrace = level === 'trace';\n\n      for (const m of msg)\n      {\n         if (typeof m === 'object' && !(m instanceof Error))\n         {\n            text.push(JSON.stringify(m, null, 3));\n         }\n         else if (m instanceof Error)\n         {\n            const result = this.getTraceInfo(m, true);\n\n            text.push(`${m.message}\\n${result.trace.join('\\n')}`);\n         }\n         else\n         {\n            text.push(m);\n         }\n      }\n\n      const color = nocolor ? '' : s_LEVEL_TO_COLOR[level];\n\n      const spacer = raw ? '' : ' ';\n\n      let info = '';\n      let trace = '';\n\n      if (this._options.showInfo && !raw)\n      {\n         const infoSpace = nocolor ? '' : ' ';\n\n         const result = this.getTraceInfo(void 0, isTrace);\n\n         info = `${infoSpace}[${result.info}]`;\n         trace = isTrace ? `\\n${result.trace.join('\\n')}\\n` : '';\n      }\n\n      let now = '';\n\n      if (this._options.showDate && !raw)\n      {\n         const d = new Date();\n\n         let month = d.getMonth() + 1;\n         if (month < 10) { month = `0${month}`; }\n\n         let date = d.getDate();\n         if (date < 10) { date = `0${date}`; }\n\n         let hour = d.getHours();\n         if (hour < 10) { hour = `0${hour}`; }\n\n         let minutes = d.getMinutes();\n         if (minutes < 10) { minutes = `0${minutes}`; }\n\n         let sec = d.getSeconds();\n         if (sec < 10) { sec = `0${sec}`; }\n\n         now = ` [${d.getFullYear()}-${month}-${date}T${hour}:${minutes}:${sec}.${d.getMilliseconds()}Z]`;\n      }\n\n      const log = `${color}${now}${info}${spacer}${trace}${text.join('\\n')}\u001b[0m`;\n\n      if (this._options.consoleEnabled)\n      {\n         console.log(log);\n      }\n\n      return log;\n   }\n\n   /**\n    * Removes all trace filters.\n    */\n   removeAllFilters()\n   {\n      this._exclusiveTraceFilters.clear();\n      this._inclusiveTraceFilters.clear();\n   }\n\n   /**\n    * Removes a trace filter by name\n    *\n    * @param {string}   type - The type of filter; must be 'exclusive' or 'inclusive'.\n    *\n    * @param {string}   name - The name of the filter.\n    *\n    * @returns {boolean} True if the filter was removed.\n    */\n   removeFilter(type, name)\n   {\n      if (type !== 'exclusive' && type !== 'inclusive')\n      {\n         throw new Error(`'type' must be 'exclusive' or 'inclusive'`);\n      }\n\n      const filterMap = type === 'exclusive' ? this._exclusiveTraceFilters : this._inclusiveTraceFilters;\n\n      return filterMap.delete(name);\n   }\n\n   /**\n    * Sets a trace filters enabled state.\n    *\n    * @param {string}   type - The type of filter; must be 'exclusive' or 'inclusive'.\n    *\n    * @param {string}   name - The name of the filter.\n    *\n    * @param {boolean}  enabled - The new enabled state.\n    *\n    * @returns {boolean} True if the filter enabled state was modified.\n    */\n   setFilterEnabled(type, name, enabled)\n   {\n      if (type !== 'exclusive' && type !== 'inclusive')\n      {\n         throw new Error(`'type' must be 'exclusive' or 'inclusive'`);\n      }\n\n      const filterMap = type === 'exclusive' ? this._exclusiveTraceFilters : this._inclusiveTraceFilters;\n\n      const filter = filterMap.get(name);\n\n      if (filter instanceof TraceFilter)\n      {\n         filter.enabled = enabled;\n         return true;\n      }\n\n      return false;\n   }\n\n   /**\n    * Sets the current log level.\n    *\n    * @param {string}   level - log level\n    * @returns {boolean}\n    */\n   setLogLevel(level)\n   {\n      const requestedLevel = s_LOG_LEVELS[level];\n\n      if (typeof requestedLevel === 'undefined' || requestedLevel === null)\n      {\n         console.log(`setLogLevel - unknown log level: ${level}`);\n         return false;\n      }\n\n      this._logLevel = requestedLevel;\n      return true;\n   }\n\n   /**\n    * Set optional parameters.\n    *\n    * @param {ColorLoggerOptions} options - Defines optional parameters to set.\n    */\n   setOptions(options = {})\n   {\n      if (typeof options !== 'object') { throw new TypeError(`'options' is not an object.`); }\n\n      if (typeof options.autoPluginFilters === 'boolean')\n      {\n         this._options.autoPluginFilters = options.autoPluginFilters;\n      }\n\n      if (typeof options.consoleEnabled === 'boolean') { this._options.consoleEnabled = options.consoleEnabled; }\n      if (typeof options.filtersEnabled === 'boolean') { this._options.filtersEnabled = options.filtersEnabled; }\n      if (typeof options.showDate === 'boolean') { this._options.showDate = options.showDate; }\n      if (typeof options.showInfo === 'boolean') { this._options.showInfo = options.showInfo; }\n   }\n\n   // Logging methods -----------------------------------------------------------------------------------------------\n\n   /**\n    * Display fatal (light red) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   fatal(...msg) { return this._output('fatal', false, false, ...msg); }\n\n   /**\n    * Display fatal log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   fatalNoColor(...msg) { return this._output('fatal', true, false, ...msg); }\n\n   /**\n    * Display raw fatal log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   fatalRaw(...msg) { return this._output('fatal', true, true, ...msg); }\n\n   /**\n    * Display error(red) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   error(...msg) { return this._output('error', false, false, ...msg); }\n\n   /**\n    * Display error log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   errorNoColor(...msg) { return this._output('error', true, false, ...msg); }\n\n   /**\n    * Display raw error log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   errorRaw(...msg) { return this._output('error', true, true, ...msg); }\n\n   /**\n    * Display warning (yellow) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   warn(...msg) { return this._output('warn', false, false, ...msg); }\n\n   /**\n    * Display warning log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   warnNoColor(...msg) { return this._output('warn', true, false, ...msg); }\n\n   /**\n    * Display raw warn log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   warnRaw(...msg) { return this._output('warn', true, true, ...msg); }\n\n   /**\n    * Display info (green) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   info(...msg) { return this._output('info', false, false, ...msg); }\n\n   /**\n    * Display info log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   infoNoColor(...msg) { return this._output('info', true, false, ...msg); }\n\n   /**\n    * Display raw info log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   infoRaw(...msg) { return this._output('info', true, true, ...msg); }\n\n   /**\n    * Display debug (blue) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   debug(...msg) { return this._output('debug', false, false, ...msg); }\n\n   /**\n    * Display debug log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   debugNoColor(...msg) { return this._output('debug', true, false, ...msg); }\n\n   /**\n    * Display raw debug log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   debugRaw(...msg) { return this._output('debug', true, true, ...msg); }\n\n   /**\n    * Display verbose (purple) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   verbose(...msg) { return this._output('verbose', false, false, ...msg); }\n\n   /**\n    * Display verbose log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   verboseNoColor(...msg) { return this._output('verbose', true, false, ...msg); }\n\n   /**\n    * Display raw verbose log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   verboseRaw(...msg) { return this._output('verbose', true, true, ...msg); }\n\n   /**\n    * Display trace (purple) log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   trace(...msg) { return this._output('trace', false, false, ...msg); }\n\n   /**\n    * Display trace log.\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   traceNoColor(...msg) { return this._output('trace', true, false, ...msg); }\n\n   /**\n    * Display raw trace log (no style / no color).\n    * @param {...*} msg - log message.\n    * @returns {string} formatted log message.\n    */\n   traceRaw(...msg) { return this._output('trace', true, true, ...msg); }\n}\n\n/**\n * ASCII ESCAPE SEQUENCE https://en.wikipedia.org/wiki/ANSI_escape_code#Colors\n * @type {{n: string, v: string, d: string, i: string, w: string, e: string}}\n */\nconst s_LEVEL_TO_COLOR =\n{\n   fatal: '\u001b[1;31m[F]', // light red\n   error: '\u001b[31m[E]',   // red\n   warn: '\u001b[33m[W]',    // yellow\n   info: '\u001b[32m[I]',    // green\n   debug: '\u001b[34m[D]',   // blue\n   verbose: '\u001b[35m[V]', // purple\n   trace: '\u001b[1;36m[T]'  // light cyan\n};\n\n/**\n * Stores the log level name to level value.\n * @type {{off: number, fatal: number, error: number, warn: number, info: number, verbose: number, debug: number, trace: number, all: number}}\n */\nconst s_LOG_LEVELS =\n{\n   off: 8,\n   fatal: 7,\n   error: 6,\n   warn: 5,\n   info: 4,\n   verbose: 3,\n   debug: 2,\n   trace: 1,\n   all: 0\n};\n\n/**\n * Validates that the current / requested levels are numbers and that current level is less than requested level.\n *\n * @param {number}   currentLevel - The current ColorLogger level.\n *\n * @param {number}   requestedLevel - The requested level to log.\n *\n * @returns {boolean} True if the requested level is greater than or equal to the current enabled log level.\n */\nconst s_IS_LEVEL_ENABLED = (currentLevel, requestedLevel) =>\n{\n   return Number.isInteger(currentLevel) && Number.isInteger(requestedLevel) && currentLevel <= requestedLevel;\n};\n\n/**\n * The default logger instance.\n * @type {ColorLogger}\n */\nconst logger = new ColorLogger();\n\nexport default logger;\n\n/**\n * Wires up Logger on the plugin eventbus.\n *\n * @param {PluginEvent} ev - The plugin event.\n *\n * @see https://www.npmjs.com/package/typhonjs-plugin-manager\n *\n * @ignore\n */\nexport function onPluginLoad(ev)\n{\n   const eventbus = ev.eventbus;\n\n   let eventPrepend = '';\n\n   const options = ev.pluginOptions;\n\n   // Apply any plugin options.\n   if (typeof options === 'object')\n   {\n      logger.setOptions(options);\n\n      // If `eventPrepend` is defined then it is prepended before all event bindings.\n      if (typeof options.eventPrepend === 'string') { eventPrepend = `${options.eventPrepend}:`; }\n\n      if (Array.isArray(options.filterConfigs)) { logger.addFilters(options.filterConfigs); }\n   }\n\n   eventbus.on(`${eventPrepend}log:fatal`, logger.fatal, logger);\n   eventbus.on(`${eventPrepend}log:fatal:nocolor`, logger.fatalNoColor, logger);\n   eventbus.on(`${eventPrepend}log:fatal:raw`, logger.fatalRaw, logger);\n   eventbus.on(`${eventPrepend}log:error`, logger.error, logger);\n   eventbus.on(`${eventPrepend}log:error:nocolor`, logger.errorNoColor, logger);\n   eventbus.on(`${eventPrepend}log:error:raw`, logger.errorRaw, logger);\n   eventbus.on(`${eventPrepend}log:warn`, logger.warn, logger);\n   eventbus.on(`${eventPrepend}log:warn:nocolor`, logger.warnNoColor, logger);\n   eventbus.on(`${eventPrepend}log:warn:raw`, logger.warnRaw, logger);\n   eventbus.on(`${eventPrepend}log:info`, logger.info, logger);\n   eventbus.on(`${eventPrepend}log:info:nocolor`, logger.infoNoColor, logger);\n   eventbus.on(`${eventPrepend}log:info:raw`, logger.infoRaw, logger);\n   eventbus.on(`${eventPrepend}log:debug`, logger.debug, logger);\n   eventbus.on(`${eventPrepend}log:debug:nocolor`, logger.debugNoColor, logger);\n   eventbus.on(`${eventPrepend}log:debug:raw`, logger.debugRaw, logger);\n   eventbus.on(`${eventPrepend}log:verbose`, logger.verbose, logger);\n   eventbus.on(`${eventPrepend}log:verbose:nocolor`, logger.verboseNoColor, logger);\n   eventbus.on(`${eventPrepend}log:verbose:raw`, logger.verboseRaw, logger);\n   eventbus.on(`${eventPrepend}log:trace`, logger.trace, logger);\n   eventbus.on(`${eventPrepend}log:trace:nocolor`, logger.traceNoColor, logger);\n   eventbus.on(`${eventPrepend}log:trace:raw`, logger.traceRaw, logger);\n\n   eventbus.on(`${eventPrepend}log:add:filter`, logger.addFilter, logger);\n   eventbus.on(`${eventPrepend}log:get:all:filter:data`, logger.getAllFilterData, logger);\n   eventbus.on(`${eventPrepend}log:get:filter:data`, logger.getFilterData, logger);\n   eventbus.on(`${eventPrepend}log:get:filter:enabled`, logger.getFilterEnabled, logger);\n   eventbus.on(`${eventPrepend}log:get:level`, logger.getLogLevel, logger);\n   eventbus.on(`${eventPrepend}log:get:options`, logger.getOptions, logger);\n   eventbus.on(`${eventPrepend}log:get:trace:info`, logger.getTraceInfo, logger);\n   eventbus.on(`${eventPrepend}log:is:level:enabled`, logger.isLevelEnabled, logger);\n   eventbus.on(`${eventPrepend}log:remove:all:filters`, logger.removeAllFilters, logger);\n   eventbus.on(`${eventPrepend}log:remove:filter`, logger.removeFilter, logger);\n   eventbus.on(`${eventPrepend}log:set:filter:enabled`, logger.setFilterEnabled, logger);\n   eventbus.on(`${eventPrepend}log:set:level`, logger.setLogLevel, logger);\n   eventbus.on(`${eventPrepend}log:set:options`, logger.setOptions, logger);\n\n   // Add plugin auto filter support for added plugins.\n   eventbus.on('typhonjs:plugin:manager:added:plugin', (plugin) =>\n   {\n      // Always ignore adding an inclusive filter when typhonjs-color-logger is added.\n      if (typeof plugin.name === 'string' && plugin.name === 'typhonjs-color-logger') { return; }\n\n      if (logger.getOptions().autoPluginFilters && typeof plugin.scopedName === 'string' &&\n       typeof plugin.targetEscaped === 'string' && typeof plugin.options === 'object')\n      {\n         // Skip auto filtering if the given plugin has logAutoFilter defined and it is false.\n         if (typeof plugin.options.logAutoFilter === 'boolean' && !plugin.options.logAutoFilter) { return; }\n\n         // Allow plugin options to override default 'inclusive' filter potentially making it 'exclusive'.\n         const type = plugin.options.logAutoFilterType !== 'exclusive' ? 'inclusive' : 'exclusive';\n\n         logger.addFilter({ type, name: plugin.scopedName, filterString: plugin.targetEscaped });\n      }\n   });\n\n   // Add plugin auto filter re-registration support when plugin managers change eventbus / event binding prepend.\n   eventbus.on('typhonjs:plugin:manager:plugin:changed:eventbus', (plugin) =>\n   {\n      if (logger.getOptions().autoPluginFilters && typeof plugin.scopedName === 'string' &&\n       typeof plugin.targetEscaped === 'string' && typeof plugin.options === 'object')\n      {\n         // Skip auto filtering if the given plugin has logAutoFilter defined and it is false.\n         if (typeof plugin.options.logAutoFilter === 'boolean' && !plugin.options.logAutoFilter) { return; }\n\n         // Allow plugin options to override default 'inclusive' filter potentially making it 'exclusive'.\n         const type = plugin.options.logAutoFilterType !== 'exclusive' ? 'inclusive' : 'exclusive';\n\n         logger.removeFilter(type, plugin.oldScopedName);\n         logger.addFilter({ type, name: plugin.newScopedName, filterString: plugin.targetEscaped });\n      }\n   });\n\n   // Add plugin auto filter support for removed plugins.\n   eventbus.on('typhonjs:plugin:manager:removed:plugin', (plugin) =>\n   {\n      if (logger.getOptions().autoPluginFilters && typeof plugin.scopedName === 'string' &&\n       typeof plugin.options === 'object')\n      {\n         // Skip auto filtering if the given plugin has logAutoFilter defined and it is false.\n         if (typeof plugin.options.logAutoFilter === 'boolean' && !plugin.options.logAutoFilter) { return; }\n\n         // Allow plugin options to override default 'inclusive' filter potentially making it 'exclusive'.\n         const type = plugin.options.logAutoFilterType !== 'exclusive' ? 'inclusive' : 'exclusive';\n\n         logger.removeFilter(type, plugin.scopedName);\n      }\n   });\n}\n",
+    "___id": "T000002R000002",
+    "___s": true
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "ColorLogger",
+    "memberof": "src/ColorLogger.js",
+    "longname": "src/ColorLogger.js~ColorLogger",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-color-logger/src/ColorLogger.js",
+    "importStyle": "{ColorLogger}",
+    "description": "Provides a color coded logger for ANSI terminal usage. In addition to providing a global scope logger\n`typhonjs-color-logger` is optionally plugin enabled via `typhonjs-plugin-manager` and can self-register on an\neventbus with all methods exposed as event bindings.\n\nIn the future an option to use CSS colors for browser usage will be enabled.\n\nThere are several format options to display additional data / info including location where the log method is\ninvoked in addition to a time stamp. By default the time stamp option is disabled.\n\nWhen passing in an Error for logging the stack trace of the error will be used for info and trace creation. The\n`trace` method will automatically generate a stack trace.\n\nformat:\n``[LogLevel] [Time] [File] log text``\n\nLog level and color:\n- fatal: light red\n- error: red\n- warn: yellow\n- info: green\n- debug: blue\n- verbose: purple\n- trace: light cyan\n\nEach log method for the log levels above have two alternate versions that are accessed by appending `NoColor` or\n`Raw` to the method name. Or if using event bindings appending `:nocolor` or `:raw`. The no color option with, well,\nno color outputting the message with the current log format and the raw format will output just the raw message with\nno format or color applied.\n\nIn addition trace inclusive and exclusive regexp filtering is available to eliminate spurious code removing it from\nthe stack trace. By default the typhonjs-color-logger and backbone-esnext-events is excluded from trace results.\nAdditionally the following events from typhonjs-plugin-manager are handled to automatically add and remove trace\nfilters from plugins added & removed via the event bindings: `typhonjs:plugin:manager:added:plugin`,\n`typhonjs:plugin:manager:plugin:changed:eventbus`, and `typhonjs:plugin:manager:removed:plugin`. To skip auto\nfilter registration for a particular plugin set `logAutoFilter` to false in the associated plugins options.",
+    "examples": [
+      "import logger from 'typhonjs-color-logger';\n\n// simple usage\nlogger.error('An error occurred!');",
+      "import PluginManager    from 'typhonjs-plugin-manager';\nimport eventbus         from 'backbone-esnext-eventbus';\n\nconst pluginManager = new PluginManager({ eventbus });\n\n// This will automatically wire up typhonjs-color-logger to the eventbus.\npluginManager.add({ name: typhonjs-color-logger });\n\n// simple usage\neventbus.trigger('log:error', 'An error occurred!');"
+    ],
+    "see": [
+      "<a href=\"https://www.npmjs.com/package/typhonjs-plugin-manager\">https://www.npmjs.com/package/typhonjs-plugin-manager</a>",
+      "<a href=\"https://www.npmjs.com/package/backbone-esnext-eventbus\">https://www.npmjs.com/package/backbone-esnext-eventbus</a>"
+    ],
+    "lineNumber": 61,
+    "interface": false,
+    "___id": "T000002R000003",
+    "___s": true
+  },
+  {
+    "__docId__": 2,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#constructor",
+    "access": null,
+    "description": "Instantiates ColorLogger allowing optional options to be set.",
+    "lineNumber": 68,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "ColorLoggerOptions"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options",
+        "description": "<p>Optional ColorLoggerOptions to set.</p>\n",
+        "descriptionRaw": "Optional ColorLoggerOptions to set."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000004",
+    "___s": true
+  },
+  {
+    "__docId__": 3,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_options",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_options",
+    "access": "private",
+    "description": "<p>Stores ColorLogger options.</p>\n",
+    "lineNumber": 77,
+    "type": {
+      "nullable": null,
+      "types": [
+        "ColorLoggerOptions"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000005",
+    "___s": true,
+    "descriptionRaw": "Stores ColorLogger options."
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_logLevel",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_logLevel",
+    "access": "private",
+    "description": "",
+    "lineNumber": 90,
+    "type": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000006",
+    "___s": true,
+    "descriptionRaw": ""
+  },
+  {
+    "__docId__": 5,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_exclusiveTraceFilters",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_exclusiveTraceFilters",
+    "access": "private",
+    "description": "<p>Stores all exclusive trace filters.</p>\n",
+    "lineNumber": 97,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<string, TraceFilter>"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000007",
+    "___s": true,
+    "descriptionRaw": "Stores all exclusive trace filters."
+  },
+  {
+    "__docId__": 6,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_inclusiveTraceFilters",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_inclusiveTraceFilters",
+    "access": "private",
+    "description": "<p>Stores all inclusive trace filters.</p>\n",
+    "lineNumber": 104,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<string, TraceFilter>"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000008",
+    "___s": true,
+    "descriptionRaw": "Stores all inclusive trace filters."
+  },
+  {
+    "__docId__": 7,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addFilter",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#addFilter",
+    "access": null,
+    "description": "Adds a new trace filter.",
+    "lineNumber": 119,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} True if the filter was added."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "TraceFilterData"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": "<p>The filter config to add.</p>\n",
+        "descriptionRaw": "The filter config to add."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True if the filter was added.</p>\n",
+      "descriptionRaw": "True if the filter was added."
+    },
+    "generator": false,
+    "___id": "T000002R000009",
+    "___s": true
+  },
+  {
+    "__docId__": 8,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addFilters",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#addFilters",
+    "access": null,
+    "description": "Initializes multiple trace filters in a single call.",
+    "lineNumber": 157,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} If true all filters were added successfully."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<TraceFilterData>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filterConfigs",
+        "description": "<p>An array of filter config object hash entries.</p>\n",
+        "descriptionRaw": "An array of filter config object hash entries."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>If true all filters were added successfully.</p>\n",
+      "descriptionRaw": "If true all filters were added successfully."
+    },
+    "generator": false,
+    "___id": "T000002R000010",
+    "___s": true
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_applyFilters",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_applyFilters",
+    "access": "private",
+    "description": "<p>Applies any exclusive then inclusive filters against a given value.</p>\n",
+    "lineNumber": 179,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} If true then the value matched a filter."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "<p>A value to test against all filters.</p>\n",
+        "descriptionRaw": "A value to test against all filters."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>If true then the value matched a filter.</p>\n",
+      "descriptionRaw": "If true then the value matched a filter."
+    },
+    "generator": false,
+    "___id": "T000002R000011",
+    "___s": true,
+    "descriptionRaw": "Applies any exclusive then inclusive filters against a given value."
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getAllFilterData",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#getAllFilterData",
+    "access": null,
+    "description": "Gets the filter data for a trace filter by name.",
+    "lineNumber": 215,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array<TraceFilterData>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean",
+          "undefined"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>If enabled is a boolean it will return filters given their enabled state.</p>\n",
+        "descriptionRaw": "If enabled is a boolean it will return filters given their enabled state."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<TraceFilterData>"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000012",
+    "___s": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getFilterData",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#getFilterData",
+    "access": null,
+    "description": "Gets the filter data for a trace filter by name.",
+    "lineNumber": 267,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{TraceFilterData|undefined}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "<p>The type of filter; must be &#39;exclusive&#39; or &#39;inclusive&#39;.</p>\n",
+        "descriptionRaw": "The type of filter; must be 'exclusive' or 'inclusive'."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The name of the filter.</p>\n",
+        "descriptionRaw": "The name of the filter."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "TraceFilterData",
+        "undefined"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000013",
+    "___s": true
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getFilterEnabled",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#getFilterEnabled",
+    "access": null,
+    "description": "Gets a trace filter enabled state.",
+    "lineNumber": 300,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} True if the filter enabled state was modified."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "<p>The type of filter; must be &#39;exclusive&#39; or &#39;inclusive&#39;.</p>\n",
+        "descriptionRaw": "The type of filter; must be 'exclusive' or 'inclusive'."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The name of the filter.</p>\n",
+        "descriptionRaw": "The name of the filter."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True if the filter enabled state was modified.</p>\n",
+      "descriptionRaw": "True if the filter enabled state was modified."
+    },
+    "generator": false,
+    "___id": "T000002R000014",
+    "___s": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getLogLevel",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#getLogLevel",
+    "access": null,
+    "description": "Get the log level",
+    "lineNumber": 324,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000015",
+    "___s": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getOptions",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#getOptions",
+    "access": null,
+    "description": "Returns a copy of the logger options.",
+    "lineNumber": 334,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{ColorLoggerOptions} - Logger options."
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "ColorLoggerOptions"
+      ],
+      "spread": false,
+      "description": "<p>Logger options.</p>\n",
+      "descriptionRaw": "Logger options."
+    },
+    "generator": false,
+    "___id": "T000002R000016",
+    "___s": true
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getTraceInfo",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#getTraceInfo",
+    "access": "private",
+    "description": "<p>Generates log information from where the logger invocation originated.</p>\n",
+    "lineNumber": 350,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Error"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "error",
+        "description": "<p>An optional Error to trace instead of artificially generating one.</p>\n",
+        "descriptionRaw": "An optional Error to trace instead of artificially generating one."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "isTrace",
+        "description": "<p>If true then process remaining trace.</p>\n",
+        "descriptionRaw": "If true then process remaining trace."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "{info: string, trace: String[]}"
+      ],
+      "spread": false,
+      "description": "<p>info: file name and line number; trace: remaining stack trace if\n                                          enabled.</p>\n",
+      "descriptionRaw": "info: file name and line number; trace: remaining stack trace if\n                                          enabled."
+    },
+    "generator": false,
+    "___id": "T000002R000017",
+    "___s": true,
+    "descriptionRaw": "Generates log information from where the logger invocation originated."
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "isLevelEnabled",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#isLevelEnabled",
+    "access": null,
+    "description": "Returns whether the given log level is enabled.",
+    "lineNumber": 405,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "level",
+        "description": "<p>log level</p>\n",
+        "descriptionRaw": "log level"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000018",
+    "___s": true
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_output",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_output",
+    "access": "private",
+    "description": "<p>Display log message.</p>\n",
+    "lineNumber": 430,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string|undefined} formatted log message or undefined if log level is not enabled."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "level",
+        "description": "<p>log level: <code>fatal</code>, <code>error</code>, <code>warn</code>, <code>info</code>, <code>debug</code>, <code>verbose</code>, <code>trace</code>.</p>\n",
+        "descriptionRaw": "log level: `fatal`, `error`, `warn`, `info`, `debug`, `verbose`, `trace`."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "nocolor",
+        "description": "<p>If true then no color is applied.</p>\n",
+        "descriptionRaw": "If true then no color is applied."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "raw",
+        "description": "<p>If true then just the raw message is logged at the given level.</p>\n",
+        "descriptionRaw": "If true then just the raw message is logged at the given level."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string",
+        "undefined"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message or undefined if log level is not enabled.</p>\n",
+      "descriptionRaw": "formatted log message or undefined if log level is not enabled."
+    },
+    "generator": false,
+    "___id": "T000002R000019",
+    "___s": true,
+    "descriptionRaw": "Display log message."
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeAllFilters",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#removeAllFilters",
+    "access": null,
+    "description": "Removes all trace filters.",
+    "lineNumber": 510,
+    "params": [],
+    "generator": false,
+    "___id": "T000002R000020",
+    "___s": true
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeFilter",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#removeFilter",
+    "access": null,
+    "description": "Removes a trace filter by name",
+    "lineNumber": 525,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} True if the filter was removed."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "<p>The type of filter; must be &#39;exclusive&#39; or &#39;inclusive&#39;.</p>\n",
+        "descriptionRaw": "The type of filter; must be 'exclusive' or 'inclusive'."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The name of the filter.</p>\n",
+        "descriptionRaw": "The name of the filter."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True if the filter was removed.</p>\n",
+      "descriptionRaw": "True if the filter was removed."
+    },
+    "generator": false,
+    "___id": "T000002R000021",
+    "___s": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "setFilterEnabled",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#setFilterEnabled",
+    "access": null,
+    "description": "Sets a trace filters enabled state.",
+    "lineNumber": 548,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} True if the filter enabled state was modified."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "<p>The type of filter; must be &#39;exclusive&#39; or &#39;inclusive&#39;.</p>\n",
+        "descriptionRaw": "The type of filter; must be 'exclusive' or 'inclusive'."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The name of the filter.</p>\n",
+        "descriptionRaw": "The name of the filter."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>The new enabled state.</p>\n",
+        "descriptionRaw": "The new enabled state."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "<p>True if the filter enabled state was modified.</p>\n",
+      "descriptionRaw": "True if the filter enabled state was modified."
+    },
+    "generator": false,
+    "___id": "T000002R000022",
+    "___s": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "setLogLevel",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#setLogLevel",
+    "access": null,
+    "description": "Sets the current log level.",
+    "lineNumber": 574,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "level",
+        "description": "<p>log level</p>\n",
+        "descriptionRaw": "log level"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000023",
+    "___s": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_logLevel",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#_logLevel",
+    "access": null,
+    "description": null,
+    "lineNumber": 584,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000024",
+    "___s": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "setOptions",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#setOptions",
+    "access": null,
+    "description": "Set optional parameters.",
+    "lineNumber": 593,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "ColorLoggerOptions"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "<p>Defines optional parameters to set.</p>\n",
+        "descriptionRaw": "Defines optional parameters to set."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000025",
+    "___s": true
+  },
+  {
+    "__docId__": 24,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "fatal",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#fatal",
+    "access": null,
+    "description": "Display fatal (light red) log.",
+    "lineNumber": 615,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000026",
+    "___s": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "fatalNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#fatalNoColor",
+    "access": null,
+    "description": "Display fatal log.",
+    "lineNumber": 622,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000027",
+    "___s": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "fatalRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#fatalRaw",
+    "access": null,
+    "description": "Display raw fatal log (no style / no color).",
+    "lineNumber": 629,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000028",
+    "___s": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "error",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#error",
+    "access": null,
+    "description": "Display error(red) log.",
+    "lineNumber": 636,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000029",
+    "___s": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "errorNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#errorNoColor",
+    "access": null,
+    "description": "Display error log.",
+    "lineNumber": 643,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000030",
+    "___s": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "errorRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#errorRaw",
+    "access": null,
+    "description": "Display raw error log (no style / no color).",
+    "lineNumber": 650,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000031",
+    "___s": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "warn",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#warn",
+    "access": null,
+    "description": "Display warning (yellow) log.",
+    "lineNumber": 657,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000032",
+    "___s": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "warnNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#warnNoColor",
+    "access": null,
+    "description": "Display warning log.",
+    "lineNumber": 664,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000033",
+    "___s": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "warnRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#warnRaw",
+    "access": null,
+    "description": "Display raw warn log (no style / no color).",
+    "lineNumber": 671,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000034",
+    "___s": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "info",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#info",
+    "access": null,
+    "description": "Display info (green) log.",
+    "lineNumber": 678,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000035",
+    "___s": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "infoNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#infoNoColor",
+    "access": null,
+    "description": "Display info log.",
+    "lineNumber": 685,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000036",
+    "___s": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "infoRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#infoRaw",
+    "access": null,
+    "description": "Display raw info log (no style / no color).",
+    "lineNumber": 692,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000037",
+    "___s": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "debug",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#debug",
+    "access": null,
+    "description": "Display debug (blue) log.",
+    "lineNumber": 699,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000038",
+    "___s": true
+  },
+  {
+    "__docId__": 37,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "debugNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#debugNoColor",
+    "access": null,
+    "description": "Display debug log.",
+    "lineNumber": 706,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000039",
+    "___s": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "debugRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#debugRaw",
+    "access": null,
+    "description": "Display raw debug log (no style / no color).",
+    "lineNumber": 713,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000040",
+    "___s": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "verbose",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#verbose",
+    "access": null,
+    "description": "Display verbose (purple) log.",
+    "lineNumber": 720,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000041",
+    "___s": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "verboseNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#verboseNoColor",
+    "access": null,
+    "description": "Display verbose log.",
+    "lineNumber": 727,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000042",
+    "___s": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "verboseRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#verboseRaw",
+    "access": null,
+    "description": "Display raw verbose log (no style / no color).",
+    "lineNumber": 734,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000043",
+    "___s": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "trace",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#trace",
+    "access": null,
+    "description": "Display trace (purple) log.",
+    "lineNumber": 741,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000044",
+    "___s": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "traceNoColor",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#traceNoColor",
+    "access": null,
+    "description": "Display trace log.",
+    "lineNumber": 748,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000045",
+    "___s": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "traceRaw",
+    "memberof": "src/ColorLogger.js~ColorLogger",
+    "longname": "src/ColorLogger.js~ColorLogger#traceRaw",
+    "access": null,
+    "description": "Display raw trace log (no style / no color).",
+    "lineNumber": 755,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} formatted log message."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...*"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "msg",
+        "description": "<p>log message.</p>\n",
+        "descriptionRaw": "log message."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "<p>formatted log message.</p>\n",
+      "descriptionRaw": "formatted log message."
+    },
+    "generator": false,
+    "___id": "T000002R000046",
+    "___s": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_LEVEL_TO_COLOR",
+    "memberof": "src/ColorLogger.js",
+    "longname": "src/ColorLogger.js~s_LEVEL_TO_COLOR",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-color-logger/src/ColorLogger.js",
+    "importStyle": null,
+    "description": "ASCII ESCAPE SEQUENCE https://en.wikipedia.org/wiki/ANSI_escape_code#Colors",
+    "lineNumber": 762,
+    "type": {
+      "nullable": null,
+      "types": [
+        "{n: string, v: string, d: string, i: string, w: string, e: string}"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000047",
+    "___s": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_LOG_LEVELS",
+    "memberof": "src/ColorLogger.js",
+    "longname": "src/ColorLogger.js~s_LOG_LEVELS",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-color-logger/src/ColorLogger.js",
+    "importStyle": null,
+    "description": "Stores the log level name to level value.",
+    "lineNumber": 777,
+    "type": {
+      "nullable": null,
+      "types": [
+        "{off: number, fatal: number, error: number, warn: number, info: number, verbose: number, debug: number, trace: number, all: number}"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000048",
+    "___s": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "s_IS_LEVEL_ENABLED",
+    "memberof": "src/ColorLogger.js",
+    "longname": "src/ColorLogger.js~s_IS_LEVEL_ENABLED",
+    "access": null,
+    "export": false,
+    "importPath": "typhonjs-color-logger/src/ColorLogger.js",
+    "importStyle": null,
+    "description": "Validates that the current / requested levels are numbers and that current level is less than requested level.",
+    "lineNumber": 799,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean} True if the requested level is greater than or equal to the current enabled log level."
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "currentLevel",
+        "description": "The current ColorLogger level."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "requestedLevel",
+        "description": "The requested level to log."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "True if the requested level is greater than or equal to the current enabled log level."
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000049",
+    "___s": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "onPluginLoad",
+    "memberof": "src/ColorLogger.js",
+    "longname": "src/ColorLogger.js~onPluginLoad",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-color-logger/src/ColorLogger.js",
+    "importStyle": "{onPluginLoad}",
+    "description": "Wires up Logger on the plugin eventbus.",
+    "see": [
+      "https://www.npmjs.com/package/typhonjs-plugin-manager"
+    ],
+    "lineNumber": 821,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "PluginEvent"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "ev",
+        "description": "The plugin event."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000050",
+    "___s": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/TraceFilter.js",
+    "memberof": null,
+    "longname": "src/TraceFilter.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/**\n * Defines a trace filter to apply against stack traces allowing inclusive / exclusive filtering.\n */\nexport default class TraceFilter\n{\n   /**\n    * Instantiates the filter.\n    *\n    * @param {string}   name - The name of the filter.\n    *\n    * @param {string}   filterString - The raw filter string.\n    */\n   constructor(name, filterString)\n   {\n      /**\n       * The filter enabled state.\n       * @type {boolean}\n       * @private\n       */\n      this._enabled = true;\n\n      /**\n       * The RegExp filter.\n       * @type {RegExp}\n       * @private\n       */\n      this._filter = new RegExp(filterString);\n\n      /**\n       * The raw filter string.\n       * @type {string}\n       * @private\n       */\n      this._filterString = filterString;\n\n      /**\n       * The name of the filter\n       * @type {string}\n       * @private\n       */\n      this._name = name;\n   }\n\n   /**\n    * Get enabled.\n    *\n    * @returns {boolean}\n    */\n   get enabled() { return this._enabled; }\n\n\n   /**\n    * Set enabled.\n    *\n    * @param {boolean} enabled - New enabled state.\n    */\n   set enabled(enabled)\n   {\n      this._enabled = enabled;\n   }\n\n   /**\n    * Get original filter string\n    *\n    * @returns {*}\n    */\n   get filter() { return this._filter; }\n\n   /**\n    * Get original filter string\n    *\n    * @returns {*}\n    */\n   get filterString() { return this._filterString; }\n\n   /**\n    * Get name.\n    *\n    * @returns {string}\n    */\n   get name() { return this._name; }\n\n   /**\n    * Tests a value against the RegExp filter.\n    *\n    * @param {string}   value - A value to test against the filter.\n    *\n    * @returns {boolean}\n    */\n   test(value)\n   {\n      return this._enabled && this._filter.test(value);\n   }\n}\n",
+    "___id": "T000002R000051",
+    "___s": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "TraceFilter",
+    "memberof": "src/TraceFilter.js",
+    "longname": "src/TraceFilter.js~TraceFilter",
+    "access": null,
+    "export": true,
+    "importPath": "typhonjs-color-logger/src/TraceFilter.js",
+    "importStyle": "TraceFilter",
+    "description": "Defines a trace filter to apply against stack traces allowing inclusive / exclusive filtering.",
+    "lineNumber": 4,
+    "interface": false,
+    "___id": "T000002R000052",
+    "___s": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#constructor",
+    "access": null,
+    "description": "Instantiates the filter.",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The name of the filter.</p>\n",
+        "descriptionRaw": "The name of the filter."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filterString",
+        "description": "<p>The raw filter string.</p>\n",
+        "descriptionRaw": "The raw filter string."
+      }
+    ],
+    "generator": false,
+    "___id": "T000002R000053",
+    "___s": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_enabled",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#_enabled",
+    "access": "private",
+    "description": "<p>The filter enabled state.</p>\n",
+    "lineNumber": 20,
+    "type": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000054",
+    "___s": true,
+    "descriptionRaw": "The filter enabled state."
+  },
+  {
+    "__docId__": 53,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_filter",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#_filter",
+    "access": "private",
+    "description": "<p>The RegExp filter.</p>\n",
+    "lineNumber": 27,
+    "type": {
+      "nullable": null,
+      "types": [
+        "RegExp"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000055",
+    "___s": true,
+    "descriptionRaw": "The RegExp filter."
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_filterString",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#_filterString",
+    "access": "private",
+    "description": "<p>The raw filter string.</p>\n",
+    "lineNumber": 34,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000056",
+    "___s": true,
+    "descriptionRaw": "The raw filter string."
+  },
+  {
+    "__docId__": 55,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_name",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#_name",
+    "access": "private",
+    "description": "<p>The name of the filter</p>\n",
+    "lineNumber": 41,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    },
+    "___id": "T000002R000057",
+    "___s": true,
+    "descriptionRaw": "The name of the filter"
+  },
+  {
+    "__docId__": 56,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "enabled",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#enabled",
+    "access": null,
+    "description": "Get enabled.",
+    "lineNumber": 49,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000058",
+    "___s": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "set",
+    "static": false,
+    "variation": null,
+    "name": "enabled",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#enabled",
+    "access": null,
+    "description": "Set enabled.",
+    "lineNumber": 57,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "enabled",
+        "description": "<p>New enabled state.</p>\n",
+        "descriptionRaw": "New enabled state."
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000059",
+    "___s": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_enabled",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#_enabled",
+    "access": null,
+    "description": null,
+    "lineNumber": 59,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "___id": "T000002R000060",
+    "___s": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "filter",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#filter",
+    "access": null,
+    "description": "Get original filter string",
+    "lineNumber": 67,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000061",
+    "___s": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "filterString",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#filterString",
+    "access": null,
+    "description": "Get original filter string",
+    "lineNumber": 74,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000062",
+    "___s": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "get",
+    "static": false,
+    "variation": null,
+    "name": "name",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#name",
+    "access": null,
+    "description": "Get name.",
+    "lineNumber": 81,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false,
+    "___id": "T000002R000063",
+    "___s": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "test",
+    "memberof": "src/TraceFilter.js~TraceFilter",
+    "longname": "src/TraceFilter.js~TraceFilter#test",
+    "access": null,
+    "description": "Tests a value against the RegExp filter.",
+    "lineNumber": 90,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "<p>A value to test against the filter.</p>\n",
+        "descriptionRaw": "A value to test against the filter."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": "",
+      "descriptionRaw": ""
+    },
+    "generator": false,
+    "___id": "T000002R000064",
+    "___s": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/types/types.js",
+    "memberof": null,
+    "longname": "src/types/types.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "/**\n * Provides ColorLoggerOptions\n * @typedef {object}    ColorLoggerOptions\n * @property {boolean}  [autoPluginFilters=false] - If true inclusive trace filters are added / removed automatically in\n *                                                 response to 'typhonjs:plugin:manager:added:plugin' and\n *                                                 'typhonjs:plugin:manager:removed:plugin'.\n * @property {boolean}  [consoleEnabled=true] - If true output to `console.log` is enabled.\n * @property {boolean}  [filtersEnabled=true] - If true trace filters are applied in `_getInfo`.\n * @property {boolean}  [showDate=false] - If true the date is added to format results\n * @property {boolean}  [showInfo=true] - If true the location of where the log method is invoked is added to output.\n */\n\n/**\n * Defines a trace filter.\n * @typedef {object}    TraceFilterData\n * @property {boolean}  [enabled=true] - The enabled state of the filter.\n * @property {string}   filterString - The raw filter string used to create the RegExp.\n * @property {string}   name - The filter name.\n * @property {string}   type - The filter type: 'exclusive' or 'inclusive'.\n */\n",
+    "___id": "T000002R000065",
+    "___s": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "ColorLoggerOptions",
+    "memberof": "src/types/types.js",
+    "longname": "src/types/types.js~ColorLoggerOptions",
+    "access": null,
+    "description": "Provides ColorLoggerOptions",
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "autoPluginFilters",
+        "description": "<p>If true inclusive trace filters are added / removed automatically in\n                                                response to &#39;typhonjs:plugin:manager:added:plugin&#39; and\n                                                &#39;typhonjs:plugin:manager:removed:plugin&#39;.</p>\n",
+        "descriptionRaw": "If true inclusive trace filters are added / removed automatically in\n                                                response to 'typhonjs:plugin:manager:added:plugin' and\n                                                'typhonjs:plugin:manager:removed:plugin'."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "consoleEnabled",
+        "description": "<p>If true output to <code>console.log</code> is enabled.</p>\n",
+        "descriptionRaw": "If true output to `console.log` is enabled."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "filtersEnabled",
+        "description": "<p>If true trace filters are applied in <code>_getInfo</code>.</p>\n",
+        "descriptionRaw": "If true trace filters are applied in `_getInfo`."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "showDate",
+        "description": "<p>If true the date is added to format results</p>\n",
+        "descriptionRaw": "If true the date is added to format results"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "showInfo",
+        "description": "<p>If true the location of where the log method is invoked is added to output.</p>\n",
+        "descriptionRaw": "If true the location of where the log method is invoked is added to output."
+      }
+    ],
+    "type": {
+      "types": [
+        "object"
+      ],
+      "optional": false,
+      "name": "ColorLoggerOptions"
+    },
+    "___id": "T000002R000066",
+    "___s": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "TraceFilterData",
+    "memberof": "src/types/types.js",
+    "longname": "src/types/types.js~TraceFilterData",
+    "access": null,
+    "description": "Defines a trace filter.",
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "enabled",
+        "description": "<p>The enabled state of the filter.</p>\n",
+        "descriptionRaw": "The enabled state of the filter."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "filterString",
+        "description": "<p>The raw filter string used to create the RegExp.</p>\n",
+        "descriptionRaw": "The raw filter string used to create the RegExp."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": "<p>The filter name.</p>\n",
+        "descriptionRaw": "The filter name."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "<p>The filter type: &#39;exclusive&#39; or &#39;inclusive&#39;.</p>\n",
+        "descriptionRaw": "The filter type: 'exclusive' or 'inclusive'."
+      }
+    ],
+    "type": {
+      "types": [
+        "object"
+      ],
+      "optional": false,
+      "name": "TraceFilterData"
+    },
+    "___id": "T000002R000067",
+    "___s": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000068",
+    "___s": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000069",
+    "___s": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000070",
+    "___s": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000071",
+    "___s": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000072",
+    "___s": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000073",
+    "___s": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000074",
+    "___s": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000075",
+    "___s": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000076",
+    "___s": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000077",
+    "___s": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000078",
+    "___s": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000079",
+    "___s": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000080",
+    "___s": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000081",
+    "___s": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000082",
+    "___s": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000083",
+    "___s": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000084",
+    "___s": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000085",
+    "___s": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000086",
+    "___s": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000087",
+    "___s": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000088",
+    "___s": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000089",
+    "___s": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000090",
+    "___s": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000091",
+    "___s": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000092",
+    "___s": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000093",
+    "___s": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000094",
+    "___s": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000095",
+    "___s": true
+  },
+  {
+    "__docId__": 95,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000096",
+    "___s": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000097",
+    "___s": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000098",
+    "___s": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000099",
+    "___s": true
+  },
+  {
+    "__docId__": 99,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000100",
+    "___s": true
+  },
+  {
+    "__docId__": 100,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000101",
+    "___s": true
+  },
+  {
+    "__docId__": 101,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000102",
+    "___s": true
+  },
+  {
+    "__docId__": 102,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000103",
+    "___s": true
+  },
+  {
+    "__docId__": 103,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000104",
+    "___s": true
+  },
+  {
+    "__docId__": 104,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000105",
+    "___s": true
+  },
+  {
+    "__docId__": 105,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000106",
+    "___s": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000107",
+    "___s": true
+  },
+  {
+    "__docId__": 107,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000108",
+    "___s": true
+  },
+  {
+    "__docId__": 108,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000109",
+    "___s": true
+  },
+  {
+    "__docId__": 109,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000110",
+    "___s": true
+  },
+  {
+    "__docId__": 110,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000111",
+    "___s": true
+  },
+  {
+    "__docId__": 111,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000112",
+    "___s": true
+  },
+  {
+    "__docId__": 112,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000113",
+    "___s": true
+  },
+  {
+    "__docId__": 113,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true,
+    "___id": "T000002R000114",
+    "___s": true
+  },
+  {
+    "__docId__": 115,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000115",
+    "___s": true
+  },
+  {
+    "__docId__": 116,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000116",
+    "___s": true
+  },
+  {
+    "__docId__": 117,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000117",
+    "___s": true
+  },
+  {
+    "__docId__": 118,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000118",
+    "___s": true
+  },
+  {
+    "__docId__": 119,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000119",
+    "___s": true
+  },
+  {
+    "__docId__": 120,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000120",
+    "___s": true
+  },
+  {
+    "__docId__": 121,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true,
+    "___id": "T000002R000121",
+    "___s": true
+  },
+  {
+    "__docId__": 122,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true,
+    "___id": "T000002R000122",
+    "___s": true
+  }
+]
