@@ -1,0 +1,17 @@
+{
+  "coverage": "100%",
+  "expectCount": 63,
+  "actualCount": 63,
+  "files": {
+    "src/ColorLogger.js": {
+      "expectCount": 51,
+      "actualCount": 51,
+      "undocumentLines": []
+    },
+    "src/TraceFilter.js": {
+      "expectCount": 12,
+      "actualCount": 12,
+      "undocumentLines": []
+    }
+  }
+}
