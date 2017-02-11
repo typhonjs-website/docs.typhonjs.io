@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/ObjectUtil.js | typhonjs-object-util API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-utils/typhonjs-object-util" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1486852332292" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-utils/typhonjs-object-util/tree/master/src" data-scm-type="github">src</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-utils/typhonjs-object-util/tree/master/src/ObjectUtil.js" data-scm-type="github">ObjectUtil.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/ObjectUtil.js~ObjectUtil.html" data-scm-link="https://github.com/typhonjs-node-utils/typhonjs-object-util/tree/master/src/ObjectUtil.js#L7" data-scm-type="github">ObjectUtil</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/ObjectUtil.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Provides common object manipulation utilities including depth traversal, obtaining accessors, safely setting values /
+ * equality tests, and validation.
+ *
+ * Support for typhonjs-plugin-manager is enabled.
+ */
+export default class ObjectUtil
+{
+   /**
+    * Performs a naive depth traversal of an object / array. The data structure _must not_ have circular references.
+    * The result of the callback function is used to modify in place the given data.
+    *
+    * @param {object|Array}   data - An object or array.
+    *
+    * @param {function}       func - A callback function to process leaf values in children arrays or object members.
+    *
+    * @returns {*}
+    */
+   static depthTraverse(data, func)
+   {
+      /* istanbul ignore if */
+      if (typeof data !== &apos;object&apos;) { throw new TypeError(&apos;depthTraverse error: \&apos;data\&apos; is not an \&apos;object\&apos;.&apos;); }
+
+      /* istanbul ignore if */
+      if (typeof func !== &apos;function&apos;) { throw new TypeError(&apos;depthTraverse error: \&apos;func\&apos; is not a \&apos;function\&apos;.&apos;); }
+
+      return _depthTraverse(data, func);
+   }
+
+   /**
+    * Returns a list of accessor keys by traversing the given object.
+    *
+    * @param {object}   data - An object to traverse for accessor keys.
+    *
+    * @returns {Array}
+    */
+   static getAccessorList(data)
+   {
+      if (typeof data !== &apos;object&apos;) { throw new TypeError(`getAccessorList error: &apos;data&apos; is not an &apos;object&apos;.`); }
+
+      return _getAccessorList(data);
+   }
+
+   /**
+    * Provides a way to safely access an objects data / entries given an accessor string which describes the
+    * entries to walk. To access deeper entries into the object format the accessor string with `.` between entries
+    * to walk.
+    *
+    * @param {object}   data - An object to access entry data.
+    *
+    * @param {string}   accessor - A string describing the entries to access.
+    *
+    * @param {*}        defaultValue - (Optional) A default value to return if an entry for accessor is not found.
+    *
+    * @returns {*}
+    */
+   static safeAccess(data, accessor, defaultValue = void 0)
+   {
+      if (typeof data !== &apos;object&apos;) { return defaultValue; }
+      if (typeof accessor !== &apos;string&apos;) { return defaultValue; }
+
+      const access = accessor.split(&apos;.&apos;);
+
+      // Walk through the given object by the accessor indexes.
+      for (let cntr = 0; cntr &lt; access.length; cntr++)
+      {
+         // If the next level of object access is undefined or null then return the empty string.
+         if (typeof data[access[cntr]] === &apos;undefined&apos; || data[access[cntr]] === null) { return defaultValue; }
+
+         data = data[access[cntr]];
+      }
+
+      return data;
+   }
+
+   /**
+    * Compares a source object and values of entries against a target object. If the entries in the source object match
+    * the target object then `true` is returned otherwise `false`. If either object is undefined or null then false
+    * is returned.
+    *
+    * @param {object}   source - Source object.
+    *
+    * @param {object}   target - Target object.
+    *
+    * @returns {boolean}
+    */
+   static safeEqual(source, target)
+   {
+      if (typeof source === &apos;undefined&apos; || source === null || typeof target === &apos;undefined&apos; || target === null)
+      {
+         return false;
+      }
+
+      const sourceAccessors = ObjectUtil.getAccessorList(source);
+
+      for (let cntr = 0; cntr &lt; sourceAccessors.length; cntr++)
+      {
+         const accessor = sourceAccessors[cntr];
+
+         const sourceObjectValue = ObjectUtil.safeAccess(source, accessor);
+         const targetObjectValue = ObjectUtil.safeAccess(target, accessor);
+
+         if (sourceObjectValue !== targetObjectValue) { return false; }
+      }
+
+      return true;
+   }
+
+   /**
+    * Provides a way to safely set an objects data / entries given an accessor string which describes the
+    * entries to walk. To access deeper entries into the object format the accessor string with `.` between entries
+    * to walk.
+    *
+    * @param {object}   data - An object to access entry data.
+    *
+    * @param {string}   accessor - A string describing the entries to access.
+    *
+    * @param {*}        value - A new value to set if an entry for accessor is found.
+    *
+    * @param {string}   operation - (Optional) Operation to perform including: &apos;add&apos;, &apos;div&apos;, &apos;mult&apos;, &apos;set&apos;, &apos;sub&apos;;
+    *                               default (`set`).
+    *
+    * @returns {boolean} True if successful.
+    */
+   static safeSet(data, accessor, value, operation = &apos;set&apos;)
+   {
+      if (typeof data !== &apos;object&apos;) { throw new TypeError(`safeSet Error: &apos;data&apos; is not an &apos;object&apos;.`); }
+      if (typeof accessor !== &apos;string&apos;) { throw new TypeError(`safeSet Error: &apos;accessor&apos; is not a &apos;string&apos;.`); }
+
+      const access = accessor.split(&apos;.&apos;);
+
+      // Walk through the given object by the accessor indexes.
+      for (let cntr = 0; cntr &lt; access.length; cntr++)
+      {
+         // If data is an array perform validation that the accessor is a positive integer otherwise quit.
+         if (Array.isArray(data))
+         {
+            const number = (+access[cntr]);
+
+            if (!Number.isInteger(number) || number &lt; 0) { return false; }
+         }
+
+         // If the next level of object access is undefined then create a new object entry.
+         if (typeof data[access[cntr]] === &apos;undefined&apos;) { data[access[cntr]] = {}; }
+
+         if (cntr === access.length - 1)
+         {
+            switch (operation)
+            {
+               case &apos;add&apos;:
+                  data[access[cntr]] += value;
+                  break;
+
+               case &apos;div&apos;:
+                  data[access[cntr]] /= value;
+                  break;
+
+               case &apos;mult&apos;:
+                  data[access[cntr]] *= value;
+                  break;
+
+               case &apos;set&apos;:
+                  data[access[cntr]] = value;
+                  break;
+
+               case &apos;sub&apos;:
+                  data[access[cntr]] -= value;
+                  break;
+            }
+         }
+         else
+         {
+            // Abort if the next level is null or not an object and containing a value.
+            if (data[access[cntr]] === null || typeof data[access[cntr]] !== &apos;object&apos;) { return false; }
+
+            data = data[access[cntr]];
+         }
+      }
+
+      return true;
+   }
+
+   /**
+    * Performs bulk setting of values to the given data object.
+    *
+    * @param {object}                  data - The data object to set data.
+    *
+    * @param {{key: string, value: *}} accessorValues - Object of accessor keys to values to set.
+    */
+   static safeSetAll(data, accessorValues)
+   {
+      if (typeof data !== &apos;object&apos;) { throw new TypeError(`&apos;data&apos; is not an &apos;object&apos;.`); }
+      if (typeof accessorValues !== &apos;object&apos;) { throw new TypeError(`&apos;accessorValues&apos; is not an &apos;object&apos;.`); }
+
+      for (const accessor of Object.keys(accessorValues))
+      {
+         if (!accessorValues.hasOwnProperty(accessor)) { continue; }
+
+         ObjectUtil.safeSet(data, accessor, accessorValues[accessor]);
+      }
+   }
+
+   /**
+    * Performs bulk validation of data given an object, `validationData`, which describes all entries to test.
+    *
+    * @param {object}   data - The data object to test.
+    *
+    * @param {object}   validationData - Key is the accessor / value is a validation entry.
+    *
+    * @param {string}   [dataName=&apos;data&apos;] - Optional name of data.
+    *
+    * @returns {boolean} True if validation passes otherwise an exception is thrown.
+    */
+   static validate(data, validationData = {}, dataName = &apos;data&apos;)
+   {
+      if (typeof data !== &apos;object&apos;) { throw new TypeError(`&apos;${dataName}&apos; is not an &apos;object&apos;.`); }
+      if (typeof validationData !== &apos;object&apos;) { throw new TypeError(`&apos;validationData&apos; is not an &apos;object&apos;.`); }
+
+      let result;
+
+      for (const key of Object.keys(validationData))
+      {
+         if (!validationData.hasOwnProperty(key)) { continue; }
+
+         const entry = validationData[key];
+
+         switch (entry.test)
+         {
+            case &apos;array&apos;:
+               result = ObjectUtil.validateArray(data, key, entry, dataName);
+               break;
+
+            case &apos;entry&apos;:
+               result = ObjectUtil.validateEntry(data, key, entry, dataName);
+               break;
+
+            case &apos;entry|array&apos;:
+               result = ObjectUtil.validateEntryOrArray(data, key, entry, dataName);
+               break;
+         }
+      }
+
+      return result;
+   }
+
+   // TODO: add docs after upgrading to latest WebStorm / better object destructuring support.
+   // /**
+   // * Validates all array entries against potential type and expected tests.
+   // *
+   // * @param {object}            data - The data object to test.
+   // *
+   // * @param {string}            accessor - A string describing the entries to access.
+   // *
+   // * @param {string}            [type] - Tests with a typeof check.
+   // *
+   // * @param {function|Set&lt;*&gt;}   [expected] - Optional function or set of expected values to test against.
+   // *
+   // * @param {string}            [message] - Optional message to include.
+   // *
+   // * @param {boolean}           [required] - When false if the accessor is missing validation is skipped.
+   // *
+   // * @param {string}            [dataName=&apos;data&apos;] - Optional name of data.
+   // *
+   // * @returns {boolean} True if validation passes otherwise an exception is thrown.
+   // */
+   static validateArray(data, accessor, { type = void 0, expected = void 0, message = void 0, required = true,
+    error = true } = {}, dataName = &apos;data&apos;)
+   {
+      const dataArray = ObjectUtil.safeAccess(data, accessor);
+
+      // A non-required entry is missing so return without validation.
+      if (!required &amp;&amp; typeof dataArray === &apos;undefined&apos;) { return true; }
+
+      if (!Array.isArray(dataArray))
+      {
+         if (error)
+         {
+            throw new TypeError(`&apos;${dataName}.${accessor}&apos; is not an &apos;array&apos;.`);
+         }
+         else
+         {
+            return false;
+         }
+      }
+
+      if (typeof type === &apos;string&apos;)
+      {
+         for (let cntr = 0; cntr &lt; dataArray.length; cntr++)
+         {
+            if (!(typeof dataArray[cntr] === type))
+            {
+               if (error)
+               {
+                  throw new Error(`&apos;${dataName}.${accessor}[${cntr}]&apos;: &apos;${dataArray[cntr]}&apos; is not a &apos;${type}&apos;.`);
+               }
+               else
+               {
+                  return false;
+               }
+            }
+         }
+      }
+
+      // If expected is a function then test all array entries against the test function. If expected is a Set then
+      // test all array entries for inclusion in the set. Otherwise if expected is a string then test that all array
+      // entries as a `typeof` test against expected.
+      if (expected instanceof Set)
+      {
+         for (let cntr = 0; cntr &lt; dataArray.length; cntr++)
+         {
+            if (!expected.has(dataArray[cntr]))
+            {
+               if (error)
+               {
+                  throw new Error(`&apos;${dataName}.${accessor}[${cntr}]&apos;: &apos;${
+                   dataArray[cntr]}&apos; is not an expected value: ${JSON.stringify(expected)}.`);
+               }
+               else
+               {
+                  return false;
+               }
+            }
+         }
+      }
+      else if (typeof expected === &apos;function&apos;)
+      {
+         for (let cntr = 0; cntr &lt; dataArray.length; cntr++)
+         {
+            try
+            {
+               const result = expected(dataArray[cntr]);
+
+               if (typeof result === &apos;undefined&apos; || !result)
+               {
+                  if (error)
+                  {
+                     throw new Error(message);
+                  }
+                  else
+                  {
+                     return false;
+                  }
+               }
+            }
+            catch (err)
+            {
+               if (error)
+               {
+                  throw new Error(`&apos;${dataName}.${accessor}[${cntr}]&apos;: &apos;${dataArray[cntr]}&apos; failed validation: ${
+                   err.message}.`);
+               }
+               else
+               {
+                  return false;
+               }
+            }
+         }
+      }
+
+      return true;
+   }
+
+   // TODO: add docs after upgrading to latest WebStorm / better object destructuring support.
+   // /**
+   // * Validates data entry with a typeof check and potentially tests against the values in any given expected set.
+   // *
+   // * @param {object}            data - The object data to validate.
+   // *
+   // * @param {string}            accessor - A string describing the entries to access.
+   // *
+   // * @param {string}            [type] - Tests with a typeof check.
+   // *
+   // * @param {function|Set&lt;*&gt;}   [expected] - Optional function or set of expected values to test against.
+   // *
+   // * @param {string}            [message] - Optional message to include.
+   // *
+   // * @param {boolean}           [required] - When false if the accessor is missing validation is skipped.
+   // *
+   // * @param {string}            [dataName=&apos;data&apos;] - Optional name of data.
+   // *
+   // * @returns {boolean} True if validation passes otherwise an exception is thrown.
+   // */
+   static validateEntry(data, accessor, { type = void 0, expected = void 0, message = void 0, required = true,
+    error = true } = {}, dataName = &apos;data&apos;)
+   {
+      const dataEntry = ObjectUtil.safeAccess(data, accessor);
+
+      // A non-required entry is missing so return without validation.
+      if (!required &amp;&amp; typeof dataEntry === &apos;undefined&apos;) { return true; }
+
+      if (type &amp;&amp; typeof dataEntry !== type)
+      {
+         if (error)
+         {
+            throw new TypeError(`&apos;${dataName}.${accessor}&apos; is not a &apos;${type}&apos;.`);
+         }
+         else
+         {
+            return false;
+         }
+      }
+
+      if (expected instanceof Set &amp;&amp; !expected.has(dataEntry))
+      {
+         if (error)
+         {
+            throw new Error(`&apos;${dataName}.${accessor}&apos;: &apos;${dataEntry}&apos; is not an expected value: ${
+             JSON.stringify(expected)}.`);
+         }
+         else
+         {
+            return false;
+         }
+      }
+      else if (typeof expected === &apos;function&apos;)
+      {
+         try
+         {
+            const result = expected(dataEntry);
+
+            if (typeof result === &apos;undefined&apos; || !result)
+            {
+               if (error)
+               {
+                  throw new Error(message);
+               }
+               else
+               {
+                  return false;
+               }
+            }
+         }
+         catch (err)
+         {
+            if (error)
+            {
+               throw new Error(`&apos;${dataName}.${accessor}&apos;: &apos;${dataEntry}&apos; failed to validate: ${err.message}.`);
+            }
+            else
+            {
+               return false;
+            }
+         }
+      }
+
+      return true;
+   }
+
+   /**
+    * Dispatches validation of data entry to string or array validation depending on data entry type.
+    *
+    * @param {object}            data - The data object to test.
+    *
+    * @param {string}            accessor - A string describing the entries to access.
+    *
+    * @param {object}            [entry] - A validation entry.
+    *
+    * @param {string}            [dataName=&apos;data&apos;] - Optional name of data.
+    *
+    * @returns {boolean} True if validation passes otherwise an exception is thrown.
+    */
+   static validateEntryOrArray(data, accessor, entry, dataName = &apos;data&apos;)
+   {
+      const dataEntry = ObjectUtil.safeAccess(data, accessor);
+
+      let result;
+
+      if (Array.isArray(dataEntry))
+      {
+         result = ObjectUtil.validateArray(data, accessor, entry, dataName);
+      }
+      else
+      {
+         result = ObjectUtil.validateEntry(data, accessor, entry, dataName);
+      }
+
+      return result;
+   }
+}
+
+/**
+ * Wires up ObjectUtil on the plugin eventbus. The following event bindings are available:
+ *
+ * `typhonjs:object:util:depth:traverse`: Invokes `depthTraverse`.
+ * `typhonjs:object:util:get:accessor:list`: Invokes `getAccessorList`.
+ * `typhonjs:object:util:safe:access`: Invokes `safeAccess`.
+ * `typhonjs:object:util:safe:equal`: Invokes `safeEqual`.
+ * `typhonjs:object:util:safe:set`: Invokes `safeSet`.
+ * `typhonjs:object:util:safe:set:all`: Invokes `safeSetAll`.
+ * `typhonjs:object:util:validate`: Invokes `validate`.
+ * `typhonjs:object:util:validate:array`: Invokes `validateArray`.
+ * `typhonjs:object:util:validate:entry`: Invokes `validateEntry`.
+ *
+ * @param {PluginEvent} ev - The plugin event.
+ * @ignore
+ */
+export function onPluginLoad(ev)
+{
+   const eventbus = ev.eventbus;
+
+   eventbus.on(&apos;typhonjs:object:util:depth:traverse&apos;, ObjectUtil.depthTraverse, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:get:accessor:list&apos;, ObjectUtil.getAccessorList, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:safe:access&apos;, ObjectUtil.safeAccess, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:safe:equal&apos;, ObjectUtil.safeEqual, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:safe:set&apos;, ObjectUtil.safeSet, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:safe:set:all&apos;, ObjectUtil.safeSetAll, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:validate&apos;, ObjectUtil.validate, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:validate:array&apos;, ObjectUtil.validateArray, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:validate:entry&apos;, ObjectUtil.validateEntry, ObjectUtil);
+   eventbus.on(&apos;typhonjs:object:util:validate:entry|array&apos;, ObjectUtil.validateEntryOrArray, ObjectUtil);
+}
+
+// Module private ---------------------------------------------------------------------------------------------------
+
+/**
+ * Private implementation of depth traversal.
+ *
+ * @param {object|Array}   data - An object or array.
+ *
+ * @param {function}       func - A callback function to process leaf values in children arrays or object members.
+ *
+ * @ignore
+ * @private
+ */
+function _depthTraverse(data, func)
+{
+   if (Array.isArray(data))
+   {
+      for (let cntr = 0; cntr &lt; data.length; cntr++) { _depthTraverse(data[cntr], func); }
+   }
+   else if (typeof data === &apos;object&apos;)
+   {
+      for (const key in data) { if (data.hasOwnProperty(key)) { _depthTraverse(data[key], func); } }
+   }
+   else
+   {
+      func(data);
+   }
+}
+
+/**
+ * Private implementation of `getAccessorList`.
+ *
+ * @param {object}   data - An object to traverse.
+ *
+ * @returns {Array}
+ * @ignore
+ * @private
+ */
+function _getAccessorList(data)
+{
+   const accessors = [];
+
+   for (const key in data)
+   {
+      if (data.hasOwnProperty(key))
+      {
+         if (typeof data[key] === &apos;object&apos;)
+         {
+            const childKeys = _getAccessorList(data[key]);
+
+            childKeys.forEach((childKey) =&gt;
+            {
+               accessors.push(Array.isArray(childKey) ? `${key}.${childKey.join(&apos;.&apos;)}` : `${key}.${childKey}`);
+            });
+         }
+         else
+         {
+            accessors.push(key);
+         }
+      }
+   }
+
+   return accessors;
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

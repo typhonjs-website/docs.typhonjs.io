@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/ObjectUtil.js | typhonjs-object-util API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.min.css">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/mdl/material.override.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/nav-accordion-style.css">
+  <link type="text/css" rel="stylesheet" href="css/navigation/esdoc-nav-style.css">
+  <link type="text/css" rel="stylesheet" href="css/scrollbar/webkit-style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+<div id="contextpopup">
+   <button id="context-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect hidden">
+      <i class="material-icons">more_vert</i>
+   </button>
+
+   <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="context-menu">
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li class="mdl-menu__item hidden" data-action="openLink">Open on ...</li>
+      <li disabled class="mdl-menu__item hidden">Version: ...</li>
+   </ul>
+</div>
+
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/typhonjs-node-utils/typhonjs-object-util" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><ul class="nav-accordion-menu animated hidden" data-nav-id="docs-nav-id-1486852332292" data-ice="navData">
+<li data-ice="navGroup" class="has-children"><input type="checkbox" name="group-0" id="group-0" checked><label for="group-0" class="nav-header">Local Source</label>
+   <ul>
+      
+   <li data-ice="navFolder" class="has-children"><input type="checkbox" name="folder-0" id="folder-0" checked><label for="folder-0" class="nav-dir-path" data-scm-link="https://github.com/typhonjs-node-utils/typhonjs-object-util/tree/master/src" data-scm-type="github">src</label>
+         <ul>
+            
+         <li data-ice="navFile" class="has-children nav-accordion-file"><input type="checkbox" name="file-0" id="file-0" checked><label for="file-0" class="nav-file hidden" data-scm-link="https://github.com/typhonjs-node-utils/typhonjs-object-util/tree/master/src/ObjectUtil.js" data-scm-type="github">ObjectUtil.js</label>
+               <ul>
+                  
+               <li data-ice="doc" class="nav-kind-class"><span data-ice="docLink"><a href="class/src/ObjectUtil.js~ObjectUtil.html" data-scm-link="https://github.com/typhonjs-node-utils/typhonjs-object-util/tree/master/src/ObjectUtil.js#L7" data-scm-type="github">ObjectUtil</a></span></li>
+</ul>
+            </li>
+</ul>
+      </li>
+</ul>
+</li>
+</ul></nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/ObjectUtil.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { assert } from &apos;chai&apos;;
+
+import ObjectUtil from &apos;../../src/ObjectUtil.js&apos;;
+
+const s_OBJECT_MIXED =
+{
+   a: 1,
+   b: 2,
+   c: 3,
+   array: [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;],
+   level1:
+   {
+      d: 4,
+      e: 5,
+      f: 6,
+      array1: [&apos;d&apos;, &apos;e&apos;, &apos;f&apos;],
+      level2:
+      {
+         g: 7,
+         h: 8,
+         i: 9,
+         array2: [&apos;g&apos;, &apos;h&apos;, &apos;i&apos;]
+      }
+   }
+};
+
+const s_OBJECT_MIXED_ORIG = JSON.parse(JSON.stringify(s_OBJECT_MIXED));
+
+// Last entry of array2 differs from s_OBJECT_MIXED
+const s_OBJECT_MIXED_ONE_MOD = { a: 1, b: 2, c: 3, array: [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;], level1: { d: 4, e: 5, f: 6, array1: [&apos;d&apos;, &apos;e&apos;, &apos;f&apos;], level2: { g: 7, h: 8, i: 9, array2: [&apos;g&apos;, &apos;h&apos;, &apos;z&apos;] } } };
+
+const s_OBJECT_NUM =
+{
+   a: 10,
+   b: 10,
+   c: 10,
+   array: [10, 10, 10],
+   level1:
+   {
+      d: 10,
+      e: 10,
+      f: 10,
+      array1: [10, 10, 10],
+      level2:
+      {
+         g: 10,
+         h: 10,
+         i: 10,
+         array2: [10, 10, 10]
+      }
+   }
+};
+
+const s_VERIFY_DEPTH_TRAVERSE = `[1,2,3,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,4,5,6,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,7,8,9,&quot;g&quot;,&quot;h&quot;,&quot;i&quot;]`;
+
+const s_VERIFY_ACCESSOR_LIST = `[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;array.0&quot;,&quot;array.1&quot;,&quot;array.2&quot;,&quot;level1.d&quot;,&quot;level1.e&quot;,&quot;level1.f&quot;,&quot;level1.array1.0&quot;,&quot;level1.array1.1&quot;,&quot;level1.array1.2&quot;,&quot;level1.level2.g&quot;,&quot;level1.level2.h&quot;,&quot;level1.level2.i&quot;,&quot;level1.level2.array2.0&quot;,&quot;level1.level2.array2.1&quot;,&quot;level1.level2.array2.2&quot;]`;
+
+const s_VERIFY_SAFESET_SET = `{&quot;a&quot;:&quot;aa&quot;,&quot;b&quot;:&quot;aa&quot;,&quot;c&quot;:&quot;aa&quot;,&quot;array&quot;:[&quot;aa&quot;,&quot;aa&quot;,&quot;aa&quot;],&quot;level1&quot;:{&quot;d&quot;:&quot;aa&quot;,&quot;e&quot;:&quot;aa&quot;,&quot;f&quot;:&quot;aa&quot;,&quot;array1&quot;:[&quot;aa&quot;,&quot;aa&quot;,&quot;aa&quot;],&quot;level2&quot;:{&quot;g&quot;:&quot;aa&quot;,&quot;h&quot;:&quot;aa&quot;,&quot;i&quot;:&quot;aa&quot;,&quot;array2&quot;:[&quot;aa&quot;,&quot;aa&quot;,&quot;aa&quot;]}}}`;
+const s_VERIFY_SAFESET_ADD = `{&quot;a&quot;:20,&quot;b&quot;:20,&quot;c&quot;:20,&quot;array&quot;:[20,20,20],&quot;level1&quot;:{&quot;d&quot;:20,&quot;e&quot;:20,&quot;f&quot;:20,&quot;array1&quot;:[20,20,20],&quot;level2&quot;:{&quot;g&quot;:20,&quot;h&quot;:20,&quot;i&quot;:20,&quot;array2&quot;:[20,20,20]}}}`;
+const s_VERIFY_SAFESET_DIV = `{&quot;a&quot;:1,&quot;b&quot;:1,&quot;c&quot;:1,&quot;array&quot;:[1,1,1],&quot;level1&quot;:{&quot;d&quot;:1,&quot;e&quot;:1,&quot;f&quot;:1,&quot;array1&quot;:[1,1,1],&quot;level2&quot;:{&quot;g&quot;:1,&quot;h&quot;:1,&quot;i&quot;:1,&quot;array2&quot;:[1,1,1]}}}`;
+const s_VERIFY_SAFESET_MULT = `{&quot;a&quot;:100,&quot;b&quot;:100,&quot;c&quot;:100,&quot;array&quot;:[100,100,100],&quot;level1&quot;:{&quot;d&quot;:100,&quot;e&quot;:100,&quot;f&quot;:100,&quot;array1&quot;:[100,100,100],&quot;level2&quot;:{&quot;g&quot;:100,&quot;h&quot;:100,&quot;i&quot;:100,&quot;array2&quot;:[100,100,100]}}}`;
+const s_VERIFY_SAFESET_SUB = `{&quot;a&quot;:0,&quot;b&quot;:0,&quot;c&quot;:0,&quot;array&quot;:[0,0,0],&quot;level1&quot;:{&quot;d&quot;:0,&quot;e&quot;:0,&quot;f&quot;:0,&quot;array1&quot;:[0,0,0],&quot;level2&quot;:{&quot;g&quot;:0,&quot;h&quot;:0,&quot;i&quot;:0,&quot;array2&quot;:[0,0,0]}}}`;
+
+describe(&apos;ObjectUtil:&apos;, () =&gt;
+{
+   it(&apos;depthTraverse:&apos;, () =&gt;
+   {
+      const output = [];
+
+      ObjectUtil.depthTraverse(s_OBJECT_MIXED, (data) =&gt; output.push(data));
+
+      assert.deepEqual(output, JSON.parse(s_VERIFY_DEPTH_TRAVERSE));
+      assert.deepEqual(s_OBJECT_MIXED, s_OBJECT_MIXED_ORIG);
+   });
+
+   it(&apos;getAccessorList:&apos;, () =&gt;
+   {
+      const accessors = ObjectUtil.getAccessorList(s_OBJECT_MIXED);
+
+      assert.deepEqual(accessors, JSON.parse(s_VERIFY_ACCESSOR_LIST));
+      assert.deepEqual(s_OBJECT_MIXED, s_OBJECT_MIXED_ORIG);
+   });
+
+   it(&apos;safeAccess:&apos;, () =&gt;
+   {
+      const output = [];
+      const accessors = ObjectUtil.getAccessorList(s_OBJECT_MIXED);
+
+      for (const accessor of accessors)
+      { output.push(ObjectUtil.safeAccess(s_OBJECT_MIXED, accessor)); }
+
+      assert.deepEqual(output, JSON.parse(s_VERIFY_DEPTH_TRAVERSE));
+      assert.deepEqual(s_OBJECT_MIXED, s_OBJECT_MIXED_ORIG);
+   });
+
+   it(&apos;safeEqual:&apos;, () =&gt;
+   {
+      assert.isTrue(ObjectUtil.safeEqual(s_OBJECT_MIXED, s_OBJECT_MIXED_ORIG));
+
+      assert.isFalse(ObjectUtil.safeEqual(s_OBJECT_MIXED, { a: 2 }));
+
+      assert.isFalse(ObjectUtil.safeEqual(s_OBJECT_MIXED, s_OBJECT_MIXED_ONE_MOD));
+
+      assert.deepEqual(s_OBJECT_MIXED, s_OBJECT_MIXED_ORIG);
+   });
+
+   describe(&apos;safeAccess:&apos;, () =&gt;
+   {
+      const accessors = ObjectUtil.getAccessorList(s_OBJECT_NUM);
+
+      let objectNumCopy;
+
+      beforeEach(() =&gt; { objectNumCopy = JSON.parse(JSON.stringify(s_OBJECT_NUM)); });
+
+      it(&apos;set&apos;, () =&gt;
+      {
+         for (const accessor of accessors)
+         { ObjectUtil.safeSet(objectNumCopy, accessor, &apos;aa&apos;); }
+
+         assert.deepEqual(objectNumCopy, JSON.parse(s_VERIFY_SAFESET_SET));
+      });
+
+      it(&apos;add&apos;, () =&gt;
+      {
+         for (const accessor of accessors)
+         { ObjectUtil.safeSet(objectNumCopy, accessor, 10, &apos;add&apos;); }
+
+         assert.deepEqual(objectNumCopy, JSON.parse(s_VERIFY_SAFESET_ADD));
+      });
+
+      it(&apos;div&apos;, () =&gt;
+      {
+         for (const accessor of accessors)
+         { ObjectUtil.safeSet(objectNumCopy, accessor, 10, &apos;div&apos;); }
+
+         assert.deepEqual(objectNumCopy, JSON.parse(s_VERIFY_SAFESET_DIV));
+      });
+
+      it(&apos;mult&apos;, () =&gt;
+      {
+         for (const accessor of accessors)
+         { ObjectUtil.safeSet(objectNumCopy, accessor, 10, &apos;mult&apos;); }
+
+         assert.deepEqual(objectNumCopy, JSON.parse(s_VERIFY_SAFESET_MULT));
+      });
+
+      it(&apos;sub&apos;, () =&gt;
+      {
+         for (const accessor of accessors)
+         { ObjectUtil.safeSet(objectNumCopy, accessor, 10, &apos;sub&apos;); }
+
+         assert.deepEqual(objectNumCopy, JSON.parse(s_VERIFY_SAFESET_SUB));
+      });
+
+      it(&apos;no array accessor / string&apos;, () =&gt;
+      {
+         ObjectUtil.safeSet(objectNumCopy, &apos;level1.level2.array2.bogus&apos;, &apos;bogus&apos;);
+
+         assert.deepEqual(objectNumCopy, s_OBJECT_NUM);
+      });
+
+      it(&apos;no array accessor / negative number&apos;, () =&gt;
+      {
+         ObjectUtil.safeSet(objectNumCopy, &apos;level1.level2.array2.-1&apos;, &apos;bogus&apos;);
+
+         assert.deepEqual(objectNumCopy, s_OBJECT_NUM);
+      });
+   });
+
+   describe(&apos;validate:&apos;, () =&gt;
+   {
+      describe(&apos;invalid throws:&apos;, () =&gt;
+      {
+         it(&apos;array (1 / throws)&apos;, () =&gt;
+         {
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;array&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;array&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;array&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;array&apos; } }));
+         });
+
+         it(&apos;entry (1 / throws)&apos;, () =&gt;
+         {
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;entry&apos;, type: &apos;string&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, type: &apos;string&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, expected: new Set(&apos;a&apos;) } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, expected: (v) =&gt; v === 2 } }));
+         });
+
+         it(&apos;entry|array (1 / throws)&apos;, () =&gt;
+         {
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;entry|array&apos;, type: &apos;string&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry|array&apos;, type: &apos;string&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry|array&apos;, expected: new Set(&apos;a&apos;) } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry|array&apos;, expected: (v) =&gt; v === 2 } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: true, test: &apos;entry|array&apos;, type: &apos;number&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry|array&apos;, type: &apos;number&apos; } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry|array&apos;, expected: new Set([10]) } }));
+
+            assert.throws(() =&gt; ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry|array&apos;, expected: (v) =&gt; (typeof v === &apos;number&apos;) } }));
+         });
+      });
+
+      describe(&apos;invalid return:&apos;, () =&gt;
+      {
+         it(&apos;entry (1 / false)&apos;, () =&gt;
+         {
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;entry&apos;, type: &apos;string&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, type: &apos;string&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, expected: new Set(&apos;a&apos;), error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, expected: (v) =&gt; v === 2, error: false } }));
+         });
+
+         it(&apos;entry|array (1 / false)&apos;, () =&gt;
+         {
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;entry|array&apos;, type: &apos;string&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry|array&apos;, type: &apos;string&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry|array&apos;, expected: new Set(&apos;a&apos;), error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry|array&apos;, expected: (v) =&gt; v === 2, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: true, test: &apos;entry|array&apos;, type: &apos;number&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry|array&apos;, type: &apos;number&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry|array&apos;, expected: new Set([10]), error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry|array&apos;, expected: (v) =&gt; (typeof v === &apos;number&apos;),
+              error: false } }));
+         });
+      });
+
+      describe(&apos;valid:&apos;, () =&gt;
+      {
+         it(&apos;array is entry (1 / false)&apos;, () =&gt;
+         {
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;array&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;array&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;array&apos;, error: false } }));
+
+            assert.isFalse(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;array&apos;, error: false } }));
+         });
+
+         it(&apos;entry is array (1 / true)&apos;, () =&gt;
+         {
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: true, test: &apos;entry&apos;, error: false } }));
+
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry&apos;, error: false } }));
+
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry&apos;, error: false } }));
+
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { array: { required: false, test: &apos;entry&apos;, error: false } }));
+         });
+
+         it(&apos;entry (1 / true)&apos;, () =&gt;
+         {
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: true, test: &apos;entry&apos;, type: &apos;number&apos;, error: false } }));
+
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, type: &apos;number&apos;, error: false } }));
+
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, expected: new Set([1, 2]), error: false } }));
+
+            assert.isTrue(ObjectUtil.validate(s_OBJECT_MIXED,
+             { a: { required: false, test: &apos;entry&apos;, expected: (v) =&gt; v === 1, error: false } }));
+         });
+      });
+   });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.0-alpha)</span></a>
+</footer>
+
+<script src="script/jquery/jquery.min.js"></script>
+<script src="script/navigation/enhancednav.js"></script>
+<script defer src="script/mdl/material.min.js"></script>
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
