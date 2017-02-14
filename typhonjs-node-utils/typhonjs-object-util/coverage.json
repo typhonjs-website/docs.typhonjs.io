@@ -1,0 +1,15 @@
+{
+  "coverage": "81.81%",
+  "expectCount": 11,
+  "actualCount": 9,
+  "files": {
+    "src/ObjectUtil.js": {
+      "expectCount": 11,
+      "actualCount": 9,
+      "undocumentLines": [
+        268,
+        408
+      ]
+    }
+  }
+}
