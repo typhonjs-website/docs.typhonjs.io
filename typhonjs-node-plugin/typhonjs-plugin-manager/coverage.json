@@ -1,0 +1,22 @@
+{
+  "coverage": "100%",
+  "expectCount": 71,
+  "actualCount": 71,
+  "files": {
+    "src/PluginEntry.js": {
+      "expectCount": 19,
+      "actualCount": 19,
+      "undocumentLines": []
+    },
+    "src/PluginEvent.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/PluginManager.js": {
+      "expectCount": 45,
+      "actualCount": 45,
+      "undocumentLines": []
+    }
+  }
+}
